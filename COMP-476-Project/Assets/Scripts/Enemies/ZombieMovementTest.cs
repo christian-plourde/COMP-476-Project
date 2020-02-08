@@ -27,7 +27,8 @@ public class ZombieMovementTest : MonoBehaviour
     void Move()
     {
         Vector3 Dir = (Target.position - transform.position);
-        Align(Dir);
+        //Align(Dir);
+
         //transform.Translate(Dir.normalized*mSpeed*Time.deltaTime);
     }
 
