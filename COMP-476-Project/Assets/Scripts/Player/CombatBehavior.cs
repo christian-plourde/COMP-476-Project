@@ -13,11 +13,19 @@ public class CombatBehavior : MonoBehaviour
     public Transform LaunchPoint;
     public Transform AttackTarget;
 
+    Transform PlayerMesh;
+
+    [Header("Weapon Slots")]
+    public GameObject BackBow;
+    public GameObject HandBow;
+
     public float mouseClickTime=0f;
 
     void Start()
     {
         animator = transform.GetChild(0).GetComponent<Animator>();
+        PlayerMesh = transform.GetChild(0);
+        HandBow.SetActive(false);
     }
 
     // Update is called once per frame
@@ -35,13 +43,15 @@ public class CombatBehavior : MonoBehaviour
             if (Attacking)
             {
                 Attacking = false;
-                animator.SetLayerWeight(1,0);
+                animator.SetLayerWeight(1, 0);
                 animator.SetBool("Shot", false);
                 animator.SetBool("Shooting", false);
+                UnEquipWeapon();
             }
             else
             {
                 Attacking = true;
+                EquipWeapon();
                 animator.SetLayerWeight(1, 1);
             }
         }
@@ -52,6 +62,14 @@ public class CombatBehavior : MonoBehaviour
             animator.SetBool("Shot", false);
             animator.SetBool("Shooting",true);
             mouseClickTime += Time.deltaTime;
+
+            //test
+            Vector3 PlayerMeshLookAt = AttackTarget.position;
+            PlayerMeshLookAt.y = transform.position.y;
+
+            PlayerMesh.LookAt(PlayerMeshLookAt);
+
+            Debug.DrawRay(PlayerMesh.position,PlayerMesh.forward,Color.yellow);
         }
 
         if (Input.GetMouseButtonUp(0) && Attacking)
@@ -65,10 +83,16 @@ public class CombatBehavior : MonoBehaviour
     }
 
     void EquipWeapon()
-    { }
+    {
+        HandBow.SetActive(true);
+        BackBow.SetActive(false);
+    }
 
     void UnEquipWeapon()
-    { }
+    {
+        HandBow.SetActive(false);
+        BackBow.SetActive(true);
+    }
 
     void Shoot()
     {
