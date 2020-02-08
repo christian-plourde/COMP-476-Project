@@ -11,6 +11,9 @@ public class CombatBehavior : MonoBehaviour
 
     public GameObject ProjectilePrefab;
     public Transform LaunchPoint;
+    public Transform AttackTarget;
+
+    public float mouseClickTime=0f;
 
     void Start()
     {
@@ -44,16 +47,20 @@ public class CombatBehavior : MonoBehaviour
         }
 
         // shooting controls
-        if (Input.GetMouseButtonDown(0) && Attacking)
+        if (Input.GetMouseButton(0) && Attacking)
         {
             animator.SetBool("Shot", false);
             animator.SetBool("Shooting",true);
+            mouseClickTime += Time.deltaTime;
         }
 
         if (Input.GetMouseButtonUp(0) && Attacking)
         {
-            animator.SetBool("Shooting", false);
+            
             animator.SetBool("Shot", true);
+            animator.SetBool("Shooting", false);
+            Shoot();
+            mouseClickTime = 0;
         }
     }
 
@@ -63,9 +70,26 @@ public class CombatBehavior : MonoBehaviour
     void UnEquipWeapon()
     { }
 
-    void ShootArrow()
+    void Shoot()
     {
+        
 
+        if (AttackTarget != null)
+        {
+            if (Vector3.Angle(LaunchPoint.forward, (AttackTarget.position - transform.position)) < 40)
+            {
+                GameObject obj = Instantiate(ProjectilePrefab, LaunchPoint.position, Quaternion.identity);
+                obj.GetComponent<Rigidbody>().AddForce((AttackTarget.position - transform.position).normalized * 25f, ForceMode.Impulse);
+            }
+            else
+            {
+                animator.SetBool("Shooting", false);
+            }
+        }
+        else
+        {
+            animator.SetBool("Shooting", false);
+        }
     }
 
 }

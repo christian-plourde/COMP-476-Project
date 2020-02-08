@@ -42,7 +42,7 @@ public class PlayerMovement : MonoBehaviour
         if(!isDead && !controlLock)
             Movement();
         // Force rotation = 0
-        //transform.rotation = Quaternion.Euler(Vector3.zero);
+        transform.rotation = Quaternion.Euler(Vector3.zero);
     }
 
     void Movement()
