@@ -18,6 +18,10 @@ public class PlayerMovement : MonoBehaviour
 
     private Transform PlayerMesh;
 
+    [Header("Player States")]
+    bool isRunning;
+    bool isBuilding;
+
 
     void Start()
     {
@@ -66,7 +70,19 @@ public class PlayerMovement : MonoBehaviour
         }
 
 
-
+        //animation:
+        if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D))
+        {
+            isRunning = true;
+            if (animator.GetFloat("Movement") < 1f)
+                animator.SetFloat("Movement", animator.GetFloat("Movement")+0.04f);
+        }
+        else
+        {
+            isRunning = false;
+            if (animator.GetFloat("Movement") > 0f)
+                animator.SetFloat("Movement", animator.GetFloat("Movement") - 0.04f);
+        }
 
         // orientation controls
         Debug.DrawRay(transform.position,FacingDirection,Color.red);
