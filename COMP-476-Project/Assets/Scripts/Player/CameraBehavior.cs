@@ -14,16 +14,23 @@ public class CameraBehavior : MonoBehaviour
     public float xOffset;
     public float zOffset;
 
+    private float xOldOffset;
+    private float yOldOffset;
+    private float zOldOffset;
+
     Vector3 velocity = Vector3.zero;
 
     void Start()
     {
-        
+        xOldOffset = xOffset;
+        yOldOffset = height;
+        zOldOffset = zOffset;
     }
 
     void Update()
     {
         CamControl();
+        ZoomControl();
     }
 
     void CamControl()
@@ -34,6 +41,38 @@ public class CameraBehavior : MonoBehaviour
         pos.z = Target.position.z+zOffset;
 
         transform.position = Vector3.SmoothDamp(transform.position, pos, ref velocity, smoothValue);
+    }
+
+    void ZoomControl()
+    {
+        if (Input.GetKey(KeyCode.KeypadPlus))
+        {
+            if(height>2)
+                height -= 0.2f;
+            if(xOffset>2)
+                xOffset -= 0.2f;
+            if(zOffset<-2)
+                zOffset += 0.2f;
+        }
+
+        if (Input.GetKey(KeyCode.KeypadMinus))
+        {
+            if(height<15)
+                height += 0.2f;
+            if(xOffset<15)
+                xOffset += 0.2f;
+            if(zOffset>-15)
+                zOffset -= 0.2f;
+        }
+
+        if (Input.GetKey(KeyCode.R))
+        {
+            //Reset Camera
+            Debug.Log("Resetting Camera Offsets to Default");
+            height = yOldOffset;
+            xOffset = xOldOffset;
+            zOffset = zOldOffset;
+        }
     }
     
 }
