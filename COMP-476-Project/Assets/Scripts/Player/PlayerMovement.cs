@@ -11,6 +11,7 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Movement Parameters")]
     public float mSpeed=5f;
+    public float sprintMultiplier=1f;
 
     private Animator animator;
 
@@ -21,19 +22,27 @@ public class PlayerMovement : MonoBehaviour
     [Header("Player States")]
     bool isRunning;
     bool isBuilding;
+    bool controlLock;
+    bool isDead;
+
+    // to hard code orientation
+    public float PlayerRotAngle = 0;
 
 
     void Start()
     {
         PlayerMesh = transform.GetChild(0);
+        Debug.Log("Playermesh is:"+PlayerMesh.name);
         animator = PlayerMesh.GetComponent<Animator>();
         //Target = transform.GetChild(2);
     }
 
     void Update()
     {
-        Movement();
-        //PlayerMesh.transform.Rotate(Vector3.up * 10f);
+        if(!isDead && !controlLock)
+            Movement();
+        // Force rotation = 0
+        //transform.rotation = Quaternion.Euler(Vector3.zero);
     }
 
     void Movement()
@@ -42,34 +51,53 @@ public class PlayerMovement : MonoBehaviour
 
         if (Input.GetKey(KeyCode.W))
         {
-            transform.Translate(transform.forward * mSpeed * Time.deltaTime);
+            transform.Translate(transform.forward.normalized *sprintMultiplier* mSpeed * Time.deltaTime);
             FacingDirection += transform.forward;
             //delegate align towards facing direction.
             AlignOrientation(FacingDirection);
+
+            PlayerRotAngle = 0;
         }
         if (Input.GetKey(KeyCode.S))
         {
-            transform.Translate(-1 * transform.forward * mSpeed * Time.deltaTime);
+            transform.Translate(-1 * transform.forward.normalized * sprintMultiplier * mSpeed * Time.deltaTime);
             FacingDirection+= (transform.forward * -1);
             //delegate align towards facing direction.
             AlignOrientation(FacingDirection);
+
+            PlayerRotAngle = 180;
         }
         if (Input.GetKey(KeyCode.D))
         {
-            transform.Translate(transform.right * mSpeed * Time.deltaTime);
+            transform.Translate(transform.right.normalized * sprintMultiplier * mSpeed * Time.deltaTime);
             FacingDirection += transform.right;
             //delegate align towards facing direction.
             AlignOrientation(FacingDirection);
+
+            PlayerRotAngle = 90;
         }
         if (Input.GetKey(KeyCode.A))
         {
-            transform.Translate(-1 * transform.right * mSpeed * Time.deltaTime);
+            transform.Translate(-1 * transform.right.normalized * sprintMultiplier * mSpeed * Time.deltaTime);
             FacingDirection += (transform.right * -1);
             //delegate align towards facing direction.
             AlignOrientation(FacingDirection);
+
+            PlayerRotAngle = -90;
         }
 
 
+        // sprint multipler
+        if (Input.GetKey(KeyCode.LeftShift))
+        {
+            animator.SetFloat("SprintMultiplier",1.6f);      // animation speed multipler
+            sprintMultiplier = 1.4f;                        // translation speed multiplier
+        }
+        else
+        {
+            animator.SetFloat("SprintMultiplier", 1);
+            sprintMultiplier = 1;
+        }
         //animation:
         if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D))
         {
@@ -100,9 +128,10 @@ public class PlayerMovement : MonoBehaviour
 
         //set quaternion to this dir
         lookDirection = Quaternion.LookRotation(FaceDir, Vector3.up);
-        //transform.rotation = Quaternion.RotateTowards(transform.rotation, lookDirection, align_Rotation_Speed);
-        //transform.rotation = Quaternion.RotateTowards(PlayerMesh.rotation, lookDirection, 4);
-        //transform.rotation = Quaternion.RotateTowards(PlayerMesh.rotation, lookDirection, 4);
-        PlayerMesh.localRotation= Quaternion.RotateTowards(PlayerMesh.rotation, lookDirection, 4);
+        //transform.rotation = Quaternion.RotateTowards(PlayerMesh.localRotation, lookDirection, 4);
+        PlayerMesh.localRotation = Quaternion.RotateTowards(PlayerMesh.localRotation, lookDirection, 4);
+
+
+        // PlayerMesh.rotation = Quaternion.Euler(new Vector3(0,PlayerRotAngle,0)) ;
     }
 }
