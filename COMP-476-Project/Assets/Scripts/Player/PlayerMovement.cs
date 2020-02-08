@@ -14,18 +14,22 @@ public class PlayerMovement : MonoBehaviour
 
     private Animator animator;
 
-    private Transform Target;
+    //private Transform Target;
+
+    private Transform PlayerMesh;
 
 
     void Start()
     {
-        animator = GetComponent<Animator>();
-        Target = transform.GetChild(2);
+        PlayerMesh = transform.GetChild(0);
+        animator = PlayerMesh.GetComponent<Animator>();
+        //Target = transform.GetChild(2);
     }
 
     void Update()
     {
         Movement();
+        //PlayerMesh.transform.Rotate(Vector3.up * 10f);
     }
 
     void Movement()
@@ -74,13 +78,15 @@ public class PlayerMovement : MonoBehaviour
 
     void AlignOrientation(Vector3 FaceDir)
     {
+        
         Quaternion lookDirection;
-        FaceDir.y = 0;
+        //FaceDir.y = 0;
 
         //set quaternion to this dir
         lookDirection = Quaternion.LookRotation(FaceDir, Vector3.up);
         //transform.rotation = Quaternion.RotateTowards(transform.rotation, lookDirection, align_Rotation_Speed);
-        transform.rotation = Quaternion.RotateTowards(transform.rotation, lookDirection, 4);
-
+        //transform.rotation = Quaternion.RotateTowards(PlayerMesh.rotation, lookDirection, 4);
+        //transform.rotation = Quaternion.RotateTowards(PlayerMesh.rotation, lookDirection, 4);
+        PlayerMesh.localRotation= Quaternion.RotateTowards(PlayerMesh.rotation, lookDirection, 4);
     }
 }
