@@ -4,12 +4,17 @@ using UnityEngine;
 
 public class CameraBehavior : MonoBehaviour
 {
+    // 3rd Person
+    // has reference to target, rotate target with rotation on X axis
     public Transform Target;
+    public float smoothValue = 0.3f;
 
-    [Header("Offsets")]
+    [Header("Camera Offsets")]
+    public float height;
     public float xOffset;
-    public float yOffset;
     public float zOffset;
+
+    Vector3 velocity = Vector3.zero;
 
     void Start()
     {
@@ -18,15 +23,17 @@ public class CameraBehavior : MonoBehaviour
 
     void Update()
     {
-        Vector3 Pos=transform.position;
-        Pos.x = Target.position.x+xOffset;
-        Pos.y = Target.position.y+yOffset;
-        Pos.z = Target.position.z+zOffset;
-
-        transform.position = Pos;
-
-        Vector3 LookAtPosition=Target.position;
-        LookAtPosition.y += 3;
-        transform.LookAt(LookAtPosition);
+        CamControl();
     }
+
+    void CamControl()
+    {
+        Vector3 pos = new Vector3();
+        pos.x = Target.position.x+xOffset;
+        pos.y = Target.position.y+height;
+        pos.z = Target.position.z+zOffset;
+
+        transform.position = Vector3.SmoothDamp(transform.position, pos, ref velocity, smoothValue);
+    }
+    
 }
