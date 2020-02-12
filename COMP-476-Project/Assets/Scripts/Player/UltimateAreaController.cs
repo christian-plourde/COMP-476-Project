@@ -17,7 +17,7 @@ public class UltimateAreaController : MonoBehaviour
     public GameObject arrowPrefab;
 
     float timer=0f;
-    float howOftenArrows=0.15f;
+    float howOftenArrows=0.1f;
 
 
     void Start()

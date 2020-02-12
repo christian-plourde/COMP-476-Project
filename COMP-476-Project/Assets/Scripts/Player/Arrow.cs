@@ -35,7 +35,7 @@ public class Arrow : MonoBehaviour
                 gb = Instantiate(arrowPrefab, transform.position, transform.rotation,collision.transform);
 
             gb.transform.Translate(gb.transform.forward * 0.8f);
-            Destroy(gb.gameObject, 20f);            // destroy spawned arrow after 60 secs
+            Destroy(gb.gameObject, 10f);            // destroy spawned arrow after 60 secs
 
             // damage if its an enemy
             if (collision.collider.tag == "Enemy")
