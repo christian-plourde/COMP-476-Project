@@ -18,14 +18,17 @@ public class CombatBehavior : MonoBehaviour
     [Header("Weapon Slots")]
     public GameObject BackBow;
     public GameObject HandBow;
+    public GameObject HeldArrow;
 
-    public float mouseClickTime=0f;
+    float mouseClickTime=0f;
 
     void Start()
     {
         animator = transform.GetChild(0).GetComponent<Animator>();
         PlayerMesh = transform.GetChild(0);
         HandBow.SetActive(false);
+
+        HeldArrow.SetActive(false);
     }
 
     // Update is called once per frame
@@ -75,10 +78,18 @@ public class CombatBehavior : MonoBehaviour
 
         if (Input.GetMouseButtonUp(0) && Attacking)
         {
-            
-            animator.SetBool("Shot", true);
-            animator.SetBool("Shooting", false);
-            Shoot();
+            if (mouseClickTime > 0.9f)
+            {
+                animator.SetBool("Shot", true);
+                animator.SetBool("Shooting", false);
+            }
+            else
+            {
+                animator.SetBool("Shot", false);
+                animator.SetBool("Shooting", false);
+                Invoke("ArcherArrowSheath",0.4f);
+            }
+            //Shoot();
             mouseClickTime = 0;
         }
     }
@@ -95,7 +106,7 @@ public class CombatBehavior : MonoBehaviour
         BackBow.SetActive(true);
     }
 
-    void Shoot()
+    public void ArcherShoot()
     {
         
 
@@ -123,6 +134,19 @@ public class CombatBehavior : MonoBehaviour
         {
             animator.SetBool("Shooting", false);
         }
+
+        ArcherArrowSheath();
     }
 
+    public void ArcherArrowSheath()
+    {
+        HeldArrow.SetActive(false);
+    }
+
+    public void ArcherArrowEquip()
+    {
+        HeldArrow.SetActive(true);
+    }
+
+    
 }

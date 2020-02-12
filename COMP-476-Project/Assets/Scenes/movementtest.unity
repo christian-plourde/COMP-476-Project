@@ -834,7 +834,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mSpeed: 5
   sprintMultiplier: 1
-  PlayerRotAngle: 0
 --- !u!54 &972470365
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -898,7 +897,7 @@ MonoBehaviour:
   AttackTarget: {fileID: 4813289796336921455}
   BackBow: {fileID: 299726149}
   HandBow: {fileID: 7392412426209159688}
-  mouseClickTime: 0
+  HeldArrow: {fileID: 1437528003}
 --- !u!4 &1199900218 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400002, guid: 432dd2b7c2581c744a40ca43b1307c17,
@@ -997,6 +996,12 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1206809004}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &1437528003 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 100002, guid: 432dd2b7c2581c744a40ca43b1307c17,
+    type: 3}
+  m_PrefabInstance: {fileID: 246853305}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1503745379
 GameObject:
   m_ObjectHideFlags: 0
@@ -4303,6 +4308,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7164459040524149176}
   - component: {fileID: 7075409910751456948}
+  - component: {fileID: 7160987498900892187}
   m_Layer: 0
   m_Name: ArcherElf
   m_TagString: Untagged
@@ -4310,6 +4316,18 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &7160987498900892187
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7160987498900892186}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f7727452a05019d40aaf6d0031130444, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7161895341188498214
 GameObject:
   m_ObjectHideFlags: 0
