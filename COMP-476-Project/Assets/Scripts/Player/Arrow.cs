@@ -9,14 +9,24 @@ public class Arrow : MonoBehaviour
 
     public GameObject arrowPrefab;
 
-    void Start()
+    float Timer;
+
+    private void Update()
     {
-        
+        Timer += Time.deltaTime;
+        if (Timer > 120)
+            Destroy(this.gameObject);             // just incase arrow doesnt collide with anything
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnCollisionEnter(Collision collision)
     {
-        
+        if (collision.collider.tag != "Player")
+        {
+            GameObject gb = Instantiate(arrowPrefab, transform.position, transform.rotation,collision.transform);
+            gb.transform.Translate(gb.transform.forward * 0.4f);
+            Debug.Log("Hit Object " + collision.transform.name);
+            Destroy(gb.gameObject, 120f);            // destroy spawned arrow after 120 secs
+            Destroy(this.gameObject);                // Destroy Rigid body arrow.
+        }
     }
 }

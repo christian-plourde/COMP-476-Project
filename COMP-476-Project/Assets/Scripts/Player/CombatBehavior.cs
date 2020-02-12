@@ -50,6 +50,7 @@ public class CombatBehavior : MonoBehaviour
                 animator.SetBool("Shot", false);
                 animator.SetBool("Shooting", false);
                 UnEquipWeapon();
+                ArcherArrowSheath();
             }
             else
             {
