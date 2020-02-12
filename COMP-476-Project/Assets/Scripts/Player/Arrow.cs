@@ -22,10 +22,14 @@ public class Arrow : MonoBehaviour
     {
         if (collision.collider.tag != "Player")
         {
-            GameObject gb = Instantiate(arrowPrefab, transform.position, transform.rotation,collision.transform);
-            gb.transform.Translate(gb.transform.forward * 0.4f);
-            Debug.Log("Hit Object " + collision.transform.name);
-            Destroy(gb.gameObject, 120f);            // destroy spawned arrow after 120 secs
+            GameObject gb;
+            if (collision.collider.tag=="Map")
+                gb = Instantiate(arrowPrefab, transform.position, transform.rotation);
+            else
+                gb = Instantiate(arrowPrefab, transform.position, transform.rotation,collision.transform);
+
+            gb.transform.Translate(gb.transform.forward * 0.8f);
+            Destroy(gb.gameObject, 20f);            // destroy spawned arrow after 60 secs
             Destroy(this.gameObject);                // Destroy Rigid body arrow.
         }
     }

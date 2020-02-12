@@ -20,10 +20,10 @@ public class PlayerMovement : MonoBehaviour
     private Transform PlayerMesh;
 
     [Header("Player States")]
-    bool isRunning;
+    public bool isRunning;
     bool isBuilding;
-    bool controlLock;
-    bool isDead;
+    public bool controlLock;
+    public bool isDead;
 
 
 

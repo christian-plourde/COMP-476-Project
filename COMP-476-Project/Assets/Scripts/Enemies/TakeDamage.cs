@@ -24,7 +24,8 @@ public class TakeDamage : MonoBehaviour
     {
         if (collision.collider.tag == "PlayerWeapon")
         {
-            health -= 2;
+            Debug.Log("Hit");
+            health -= 5;
             GetComponent<Rigidbody>().velocity = Vector3.zero;
             if (health < 0)
             {

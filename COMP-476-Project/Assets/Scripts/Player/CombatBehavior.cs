@@ -19,8 +19,16 @@ public class CombatBehavior : MonoBehaviour
     public GameObject BackBow;
     public GameObject HandBow;
     public GameObject HeldArrow;
+    public GameObject AbilityCircle;
 
     float mouseClickTime=0f;
+
+    PlayerMovement PlayerMovementRef;
+
+
+
+    [HideInInspector]public bool ultimateCooldown;
+    float ultimateCooldownTimer = 0;
 
     void Start()
     {
@@ -29,12 +37,25 @@ public class CombatBehavior : MonoBehaviour
         HandBow.SetActive(false);
 
         HeldArrow.SetActive(false);
+
+        PlayerMovementRef=GetComponent<PlayerMovement>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        Controls();
+        if(!PlayerMovementRef.controlLock)
+            Controls();
+
+        if (ultimateCooldown)
+        {
+            ultimateCooldownTimer += Time.deltaTime;
+            if (ultimateCooldownTimer > 30f)
+            {
+                ultimateCooldown = false;
+                ultimateCooldownTimer = 0;
+            }
+        }
     }
 
     void Controls()
@@ -92,6 +113,15 @@ public class CombatBehavior : MonoBehaviour
             }
             //Shoot();
             mouseClickTime = 0;
+        }
+
+
+        // ultimate
+        if(Attacking && Input.GetMouseButtonDown(1) && !ultimateCooldown)
+        {
+            animator.SetFloat("Movement", 0);
+            animator.SetFloat("SprintMultiplier", 1);
+            Instantiate(AbilityCircle,transform.position,Quaternion.identity);
         }
     }
 
