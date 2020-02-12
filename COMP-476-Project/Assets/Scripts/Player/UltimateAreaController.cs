@@ -16,6 +16,7 @@ public class UltimateAreaController : MonoBehaviour
     public float MovementSmoothness = 0.3f;
     public GameObject arrowPrefab;
 
+    float takeDamageTimer = 0f;
     float timer=0f;
     float howOftenArrows=0.1f;
 
@@ -59,7 +60,7 @@ public class UltimateAreaController : MonoBehaviour
             PlayerRef.GetComponent<PlayerMovement>().controlLock = false;
             GetComponent<Renderer>().material = targetSetMat;
             GameObject.FindGameObjectWithTag("Player").GetComponent<CombatBehavior>().ultimateCooldown = true;
-            Destroy(this.gameObject, 15f);
+            Destroy(this.gameObject, 13f);
         }
         if (Input.GetMouseButtonDown(1))
         {
@@ -85,7 +86,7 @@ public class UltimateAreaController : MonoBehaviour
         spawnPos.x += randomXoffset;
         spawnPos.z += randomZoffset;
 
-        if (timer > howOftenArrows)
+        if (timer > howOftenArrows && takeDamageTimer<11)
         {
             timer = 0;
             GameObject gb= Instantiate(arrowPrefab, spawnPos, Quaternion.identity);
@@ -93,6 +94,21 @@ public class UltimateAreaController : MonoBehaviour
             gb.transform.Rotate(new Vector3(90, 0, 0));
             gb.GetComponent<Rigidbody>().AddForce(Vector3.down*7.5f,ForceMode.Impulse);
         }
+
+        takeDamageTimer += Time.deltaTime;
      
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.tag == "Enemy" && targetSet && takeDamageTimer>1.9f)
+        {
+            int r = Random.Range(0, 101);
+            if (r < 4)
+            {
+                // hurt
+                other.GetComponent<EnemyAttributes>().DealDamage(2);
+            }
+        }
     }
 }
