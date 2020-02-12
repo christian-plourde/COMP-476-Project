@@ -25,8 +25,6 @@ public class PlayerMovement : MonoBehaviour
     bool controlLock;
     bool isDead;
 
-    // to hard code orientation
-    public float PlayerRotAngle = 0;
 
 
     void Start()
@@ -34,7 +32,6 @@ public class PlayerMovement : MonoBehaviour
         PlayerMesh = transform.GetChild(0);
         Debug.Log("Playermesh is:"+PlayerMesh.name);
         animator = PlayerMesh.GetComponent<Animator>();
-        //Target = transform.GetChild(2);
     }
 
     void Update()
@@ -56,7 +53,6 @@ public class PlayerMovement : MonoBehaviour
             //delegate align towards facing direction.
             AlignOrientation(FacingDirection);
 
-            PlayerRotAngle = 0;
         }
         if (Input.GetKey(KeyCode.S))
         {
@@ -65,7 +61,6 @@ public class PlayerMovement : MonoBehaviour
             //delegate align towards facing direction.
             AlignOrientation(FacingDirection);
 
-            PlayerRotAngle = 180;
         }
         if (Input.GetKey(KeyCode.D))
         {
@@ -74,7 +69,6 @@ public class PlayerMovement : MonoBehaviour
             //delegate align towards facing direction.
             AlignOrientation(FacingDirection);
 
-            PlayerRotAngle = 90;
         }
         if (Input.GetKey(KeyCode.A))
         {
@@ -82,8 +76,6 @@ public class PlayerMovement : MonoBehaviour
             FacingDirection += (transform.right * -1);
             //delegate align towards facing direction.
             AlignOrientation(FacingDirection);
-
-            PlayerRotAngle = -90;
         }
 
 

@@ -41,6 +41,19 @@ public class CameraBehavior : MonoBehaviour
         pos.z = Target.position.z+zOffset;
 
         transform.position = Vector3.SmoothDamp(transform.position, pos, ref velocity, smoothValue);
+
+
+        // move on z axis
+        if (Input.GetKey(KeyCode.RightArrow))
+        {
+            if(zOffset<-2)
+                zOffset += 0.2f;
+        }
+        if (Input.GetKey(KeyCode.LeftArrow))
+        {
+            if(zOffset>-10)
+                zOffset -= 0.2f;
+        }
     }
 
     void ZoomControl()
