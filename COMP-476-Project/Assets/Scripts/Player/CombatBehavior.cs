@@ -7,7 +7,7 @@ public class CombatBehavior : MonoBehaviour
     // Start is called before the first frame update
 
     private Animator animator;
-    bool Attacking; // if true, means you are using your bow, this value is set to true after build phase is over
+    public bool Attacking; // if true, means you are using your bow, this value is set to true after build phase is over
 
     public GameObject ProjectilePrefab;
     public Transform LaunchPoint;
@@ -85,7 +85,7 @@ public class CombatBehavior : MonoBehaviour
         if (Input.GetMouseButton(0) && Attacking)
         {
             animator.SetBool("Shot", false);
-            animator.SetBool("Shooting",true);
+            animator.SetBool("Shooting", true);
             mouseClickTime += Time.deltaTime;
 
             //test
@@ -95,7 +95,13 @@ public class CombatBehavior : MonoBehaviour
             PlayerMesh.LookAt(PlayerMeshLookAt);
 
             //Debug.DrawRay(PlayerMesh.position,PlayerMesh.forward,Color.yellow);
-            Debug.DrawRay(LaunchPoint.position,LaunchPoint.forward,Color.yellow);
+            Debug.DrawRay(LaunchPoint.position, LaunchPoint.forward, Color.yellow);
+        }
+        else if(Input.GetMouseButton(0) && !Attacking)
+        {
+            Attacking = true;
+            EquipWeapon();
+            animator.SetLayerWeight(1, 1);
         }
 
         if (Input.GetMouseButtonUp(0) && Attacking)

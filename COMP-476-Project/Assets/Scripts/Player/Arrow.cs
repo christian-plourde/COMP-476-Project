@@ -9,6 +9,7 @@ public class Arrow : MonoBehaviour
 
     public GameObject arrowPrefab;
 
+    public int baseDamage=5;
     float Timer;
 
     private void Update()
@@ -16,6 +17,11 @@ public class Arrow : MonoBehaviour
         Timer += Time.deltaTime;
         if (Timer > 120)
             Destroy(this.gameObject);             // just incase arrow doesnt collide with anything
+    }
+
+    public void SetArrowDamage(int dmg)
+    {
+        baseDamage = dmg;
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -30,6 +36,14 @@ public class Arrow : MonoBehaviour
 
             gb.transform.Translate(gb.transform.forward * 0.8f);
             Destroy(gb.gameObject, 20f);            // destroy spawned arrow after 60 secs
+
+            // damage if its an enemy
+            if (collision.collider.tag == "Enemy")
+            {
+                collision.collider.GetComponent<EnemyAttributes>().DealDamage(baseDamage);
+            }
+
+
             Destroy(this.gameObject);                // Destroy Rigid body arrow.
         }
     }

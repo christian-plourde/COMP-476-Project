@@ -104,6 +104,9 @@ public class PlayerMovement : MonoBehaviour
                 animator.SetFloat("Movement", animator.GetFloat("Movement") - 0.04f);
         }
 
+
+
+
         // orientation controls
         Debug.DrawRay(transform.position,FacingDirection,Color.red);
 

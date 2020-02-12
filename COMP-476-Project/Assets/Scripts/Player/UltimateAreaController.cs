@@ -89,6 +89,7 @@ public class UltimateAreaController : MonoBehaviour
         {
             timer = 0;
             GameObject gb= Instantiate(arrowPrefab, spawnPos, Quaternion.identity);
+            gb.GetComponent<Arrow>().SetArrowDamage(20);
             gb.transform.Rotate(new Vector3(90, 0, 0));
             gb.GetComponent<Rigidbody>().AddForce(Vector3.down*7.5f,ForceMode.Impulse);
         }
