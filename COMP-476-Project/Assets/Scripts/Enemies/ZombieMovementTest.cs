@@ -30,7 +30,7 @@ public class ZombieMovementTest : MonoBehaviour
         //Align(Dir);
 
         //transform.Translate(Dir.normalized*mSpeed*Time.deltaTime);
-        transform.Translate(transform.forward*-2f*Time.deltaTime);
+        transform.Translate(transform.forward*-mSpeed*Time.deltaTime);
     }
 
     void Align(Vector3 FaceDir)
