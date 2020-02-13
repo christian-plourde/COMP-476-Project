@@ -39,7 +39,9 @@ public class EnemyAttributes : MonoBehaviour
         animator.SetBool("Dead", true);
         isDead = true;
         GameObject playerRef = GameObject.FindGameObjectWithTag("Player");
-        if (playerRef.GetComponent<CombatBehavior>().AttackTarget.name == transform.name)
+        if (playerRef.GetComponent<CombatBehavior>().AttackTarget!=null 
+            &&
+            playerRef.GetComponent<CombatBehavior>().AttackTarget.name == transform.name)
         {
             playerRef.GetComponent<CombatBehavior>().AttackTarget = null;
             playerRef.GetComponent<CombatBehavior>().AcquireTarget();

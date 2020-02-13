@@ -81,6 +81,16 @@ public class CombatBehavior : MonoBehaviour
             }
         }
 
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            if (AttackTarget == null)
+                AcquireTarget();
+            else
+                AcquireNextTarget();
+        }
+
+
+
         // shooting controls
         if (Input.GetMouseButton(0) && Attacking)
         {
@@ -215,6 +225,8 @@ public class CombatBehavior : MonoBehaviour
             }
         }
 
+
+
         if (potentialTarget != null)
         {
             AttackTarget = potentialTarget.transform;
@@ -225,6 +237,48 @@ public class CombatBehavior : MonoBehaviour
             else
             {
                 Debug.Log("Missing Targetmesh on target or wrong index in hierarchy. Object: "+AttackTarget.name);
+            }
+        }
+    }
+
+
+    void AcquireNextTarget()
+    {
+        // try to find someone else who is not current target if possible.
+        // switch to new target. If no new target available dont do anything
+        Collider[] arr = Physics.OverlapSphere(transform.position, 45);
+
+        float closestTarget = 1000f;
+        GameObject potentialTarget = null;
+        foreach (Collider c in arr)
+        {
+            if (c.tag == "Enemy")
+            {
+                if (!c.GetComponent<EnemyAttributes>().isDead && c.name != AttackTarget.name)
+                {
+                    if (Vector3.Distance(c.transform.position, transform.position) < closestTarget)
+                    {
+                        closestTarget = Vector3.Distance(c.transform.position, transform.position);
+                        potentialTarget = c.gameObject;
+                    }
+                }
+            }
+        }
+
+        if (potentialTarget != null)
+        {
+            // turn off targetmesh for old target
+            AttackTarget.transform.GetChild(0).gameObject.SetActive(false);
+
+
+            AttackTarget = potentialTarget.transform;
+            if (AttackTarget.transform.GetChild(0).name == "TargetMesh")
+            {
+                AttackTarget.transform.GetChild(0).gameObject.SetActive(true);
+            }
+            else
+            {
+                Debug.Log("Missing Targetmesh on target or wrong index in hierarchy. Object: " + AttackTarget.name);
             }
         }
     }
