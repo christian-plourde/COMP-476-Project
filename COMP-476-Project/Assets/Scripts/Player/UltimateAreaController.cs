@@ -49,7 +49,8 @@ public class UltimateAreaController : MonoBehaviour
 
         Vector3 pos = new Vector3(transform.position.x+mouseX, 0 , transform.position.z + mouseY);
         //transform.position = pos;
-        transform.position = Vector3.SmoothDamp(transform.position, pos, ref velocity, MovementSmoothness);
+        if(Vector3.Distance(pos,PlayerRef.transform.position)<35)
+            transform.position = Vector3.SmoothDamp(transform.position, pos, ref velocity, MovementSmoothness);
     }
 
     void ActivationControls()

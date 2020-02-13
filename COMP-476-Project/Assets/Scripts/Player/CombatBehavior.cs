@@ -89,11 +89,12 @@ public class CombatBehavior : MonoBehaviour
             mouseClickTime += Time.deltaTime;
 
             //test
-            Vector3 PlayerMeshLookAt = AttackTarget.position;
-            PlayerMeshLookAt.y = transform.position.y;
-
-            PlayerMesh.LookAt(PlayerMeshLookAt);
-
+            if (AttackTarget != null)
+            {
+                Vector3 PlayerMeshLookAt = AttackTarget.position;
+                PlayerMeshLookAt.y = transform.position.y;
+                PlayerMesh.LookAt(PlayerMeshLookAt);
+            }
             //Debug.DrawRay(PlayerMesh.position,PlayerMesh.forward,Color.yellow);
             Debug.DrawRay(LaunchPoint.position, LaunchPoint.forward, Color.yellow);
         }
@@ -106,6 +107,9 @@ public class CombatBehavior : MonoBehaviour
 
         if (Input.GetMouseButtonUp(0) && Attacking)
         {
+            if (AttackTarget == null)
+                AcquireTarget();
+
             if (mouseClickTime > 0.9f)
             {
                 animator.SetBool("Shot", true);
@@ -185,5 +189,43 @@ public class CombatBehavior : MonoBehaviour
         HeldArrow.SetActive(true);
     }
 
-    
+
+
+
+
+    // Target Acquiring and switching methods
+    public void AcquireTarget()
+    {
+        Collider[] arr = Physics.OverlapSphere(transform.position, 45);
+
+        float closestTarget = 1000f;
+        GameObject potentialTarget = null;
+        foreach (Collider c in arr)
+        {
+            if (c.tag == "Enemy")
+            {
+                if (!c.GetComponent<EnemyAttributes>().isDead)
+                {
+                    if (Vector3.Distance(c.transform.position, transform.position) < closestTarget)
+                    {
+                        closestTarget = Vector3.Distance(c.transform.position, transform.position);
+                        potentialTarget = c.gameObject;
+                    }
+                }
+            }
+        }
+
+        if (potentialTarget != null)
+        {
+            AttackTarget = potentialTarget.transform;
+            if (AttackTarget.transform.GetChild(0).name == "TargetMesh")
+            {
+                AttackTarget.transform.GetChild(0).gameObject.SetActive(true);
+            }
+            else
+            {
+                Debug.Log("Missing Targetmesh on target or wrong index in hierarchy. Object: "+AttackTarget.name);
+            }
+        }
+    }
 }
