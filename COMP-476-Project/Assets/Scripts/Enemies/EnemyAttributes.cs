@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class EnemyAttributes : MonoBehaviour
 {
     public int health;
+    int maxHealth;
     public int damage;
     public float speed;
     public bool isDead;
@@ -18,6 +19,7 @@ public class EnemyAttributes : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        maxHealth = health;
         animator = GetComponent<Animator>();
     }
 
@@ -31,7 +33,8 @@ public class EnemyAttributes : MonoBehaviour
             health = 0;
             KillEnemy();
         }
-        HealthUI.transform.localScale =new Vector3( health / 10f,1,1);
+        float healthPercent = ((health * 1.0f) / maxHealth);
+        HealthUI.transform.localScale =new Vector3( healthPercent,1,1);
     }
 
     public void KillEnemy()
@@ -47,6 +50,12 @@ public class EnemyAttributes : MonoBehaviour
             playerRef.GetComponent<CombatBehavior>().AcquireTarget();
         }
         transform.GetChild(0).gameObject.SetActive(false);
+
+        // remove UI Health display & destroy object in few seconds, remove own collider
+        GetComponent<SphereCollider>().enabled = false;
+        GetComponent<Rigidbody>().isKinematic = true;
+        HealthUI.enabled = false;
+        Destroy(this.gameObject, 60f);
     }
 
 }

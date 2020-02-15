@@ -20,8 +20,11 @@ public class ZombieMovementTest : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(!isDead && Vector3.Distance(Target.position,transform.position)>3)
+        if(!isDead)
             Move();
+
+        if (GetComponent<EnemyAttributes>().isDead)
+            isDead = true;
     }
 
     void Move()
