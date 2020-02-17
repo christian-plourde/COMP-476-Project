@@ -16,6 +16,13 @@ namespace Graph
         private GraphNode<T> start_node;
         private GraphNode<T> end_node;
         private double cost;
+        private bool disconnected = false;
+
+        public bool Disconnected
+        {
+            get { return disconnected; }
+            set { disconnected = value; }
+        }
 
         public GraphNode<T> Start
         {
@@ -31,7 +38,10 @@ namespace Graph
 
         public double Cost
         {
-            get { return cost; }
+            get {
+                if (disconnected)
+                    return double.MaxValue;
+                return cost; }
             set { cost = value; }
         }
 
@@ -127,13 +137,13 @@ namespace Graph
 
     public class Graph<T>
     {
-        protected LinkedList<GraphNode<T>> nodes;
+        protected List<GraphNode<T>> nodes;
         private GraphNode<T> start_node;
         protected LinkedList<GraphNode<T>> open_nodes;
         protected LinkedList<GraphNode<T>> closed_nodes;
         protected GraphNode<T> current_node;
 
-        public LinkedList<GraphNode<T>> Nodes
+        public List<GraphNode<T>> Nodes
         {
             get { return nodes; }
         }
@@ -146,7 +156,7 @@ namespace Graph
 
         public Graph()
         {
-            nodes = new LinkedList<GraphNode<T>>();
+            nodes = new List<GraphNode<T>>();
             open_nodes = new LinkedList<GraphNode<T>>();
             closed_nodes = new LinkedList<GraphNode<T>>();
         }
@@ -171,7 +181,7 @@ namespace Graph
 
         public void Add(GraphNode<T> node)
         {
-            nodes.AddLast(node);
+            nodes.Add(node);
         }
 
         protected void resetCosts()

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//basic npc class
 public class NPC : MonoBehaviour
 {
     float MAX_VELOCITY = 0.6f;
@@ -9,17 +10,7 @@ public class NPC : MonoBehaviour
     float MAX_ANGULAR_VELOCITY = 40.0f;
     float currentAngularVelocity = 0.0f;
     float MAX_ANGULAR_ACCELERATION = 50.0f;
-    AlignedMovement movement;
-    GenerateGrid grid_generator;
-    GridSquare grid_square;
-
-    public GridSquare GridSquare
-    {
-        get { return grid_square; }
-        set { grid_square = value;
-            Position = grid_square.m_Centre;
-        }
-    }
+    AlignedMovement movement; //the current movement type for the character
 
     public float MaxVelocity
     {
@@ -62,17 +53,15 @@ public class NPC : MonoBehaviour
     }
 
     // Start is called before the first frame update
-    void Start()
+    protected virtual void Start()
     {
         Movement = new KinematicArrive(this);
-        grid_generator = FindObjectOfType<GenerateGrid>();
-        GridSquare = grid_generator[5, 5];
-        Movement.Target = grid_generator[0, 0].m_Centre;
     }
 
     // Update is called once per frame
-    void Update()
+    protected virtual void Update()
     {
+        //move is called as long as the destination is not reached
         if (!Movement.HasArrived)
             Movement.Move();
 
