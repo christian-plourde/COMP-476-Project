@@ -36,7 +36,7 @@ public class Character : NPC
         graph = FindObjectOfType<GenerateGrid>().Graph;
         Movement.Target = current_node.Value.transform.position;
 
-        MaxVelocity = 100 * MaxVelocity;
+        MaxVelocity = 10 * MaxVelocity;
     }
 
     // Update is called once per frame

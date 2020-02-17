@@ -58,11 +58,11 @@ public abstract class Movement
 
 public abstract class AlignedMovement : Movement
 {
-    protected const float time_to_target = 1.0f;
+    protected const float time_to_target = 0.5f;
     protected const float radius_of_satisfaction = 0.02f;
     protected const float angular_radius_of_satisfaction = 5.0f;
     protected const float angular_slow_down_radius = 10.0f;
-    protected const float angular_time_to_target = 1.0f;
+    protected const float angular_time_to_target = 0.4f;
     protected const float cone_of_perception_distance = 1.0f;
     protected const float max_cone_radius = 45.0f;
     private bool aligned = false;
@@ -113,13 +113,13 @@ public abstract class AlignedMovement : Movement
     {
         get {
             if (NPC.gameObject.transform.rotation.eulerAngles.y > 180.0f)
-                return NPC.gameObject.transform.rotation.eulerAngles.y - 360.0f;
+                return (NPC.gameObject.transform.rotation.eulerAngles.y - 360.0f)%360;
 
-            return NPC.gameObject.transform.rotation.eulerAngles.y; }
+            return (NPC.gameObject.transform.rotation.eulerAngles.y)%360; }
 
         set {
             Quaternion quat = new Quaternion();
-            Vector3 euler_angs = new Vector3(0.0f, value, 0.0f);
+            Vector3 euler_angs = new Vector3(0.0f, value%360, 0.0f);
             quat.eulerAngles = euler_angs;
             NPC.gameObject.transform.rotation = quat; }
     }
