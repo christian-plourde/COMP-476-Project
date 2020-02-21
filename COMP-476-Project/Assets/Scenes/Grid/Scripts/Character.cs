@@ -52,15 +52,25 @@ public class Character : NPC
             {
                 if(hit.transform.gameObject.GetComponent<LevelNode>())
                 {
-                    current_path_node_index = 0;
-                    path = graph.ShortestPath(current_node, hit.transform.gameObject.GetComponent<LevelNode>().GraphNode).ToArray();
+                    try
+                    {
+                        current_path_node_index = 0;
+                        path = graph.ShortestPath(current_node, hit.transform.gameObject.GetComponent<LevelNode>().GraphNode).ToArray();
 
-                    //check to make sure the node we are going to is in the path. if its not we need to go back to the start to avoid clipping through the graph
-                    if(!path.Contains(currentTarget))
+                        //check to make sure the node we are going to is in the path. if its not we need to go back to the start to avoid clipping through the graph
+                        if (!path.Contains(currentTarget))
+                        {
+                            Movement.Target = current_node.Value.transform.position;
+                            currentTarget = current_node;
+                        }
+                    }
+
+                    catch
                     {
                         Movement.Target = current_node.Value.transform.position;
                         currentTarget = current_node;
                     }
+                    
 
                 }
             }
