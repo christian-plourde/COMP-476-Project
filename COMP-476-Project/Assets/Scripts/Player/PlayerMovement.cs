@@ -20,13 +20,11 @@ public class PlayerMovement : MonoBehaviour
     private Transform PlayerMesh;
 
     [Header("Player States")]
-    bool isRunning;
+    public bool isRunning;
     bool isBuilding;
-    bool controlLock;
-    bool isDead;
+    public bool controlLock;
+    public bool isDead;
 
-    // to hard code orientation
-    public float PlayerRotAngle = 0;
 
 
     void Start()
@@ -34,7 +32,6 @@ public class PlayerMovement : MonoBehaviour
         PlayerMesh = transform.GetChild(0);
         Debug.Log("Playermesh is:"+PlayerMesh.name);
         animator = PlayerMesh.GetComponent<Animator>();
-        //Target = transform.GetChild(2);
     }
 
     void Update()
@@ -42,7 +39,7 @@ public class PlayerMovement : MonoBehaviour
         if(!isDead && !controlLock)
             Movement();
         // Force rotation = 0
-        //transform.rotation = Quaternion.Euler(Vector3.zero);
+        transform.rotation = Quaternion.Euler(Vector3.zero);
     }
 
     void Movement()
@@ -56,7 +53,6 @@ public class PlayerMovement : MonoBehaviour
             //delegate align towards facing direction.
             AlignOrientation(FacingDirection);
 
-            PlayerRotAngle = 0;
         }
         if (Input.GetKey(KeyCode.S))
         {
@@ -65,7 +61,6 @@ public class PlayerMovement : MonoBehaviour
             //delegate align towards facing direction.
             AlignOrientation(FacingDirection);
 
-            PlayerRotAngle = 180;
         }
         if (Input.GetKey(KeyCode.D))
         {
@@ -74,7 +69,6 @@ public class PlayerMovement : MonoBehaviour
             //delegate align towards facing direction.
             AlignOrientation(FacingDirection);
 
-            PlayerRotAngle = 90;
         }
         if (Input.GetKey(KeyCode.A))
         {
@@ -82,8 +76,6 @@ public class PlayerMovement : MonoBehaviour
             FacingDirection += (transform.right * -1);
             //delegate align towards facing direction.
             AlignOrientation(FacingDirection);
-
-            PlayerRotAngle = -90;
         }
 
 
@@ -111,6 +103,9 @@ public class PlayerMovement : MonoBehaviour
             if (animator.GetFloat("Movement") > 0f)
                 animator.SetFloat("Movement", animator.GetFloat("Movement") - 0.04f);
         }
+
+
+
 
         // orientation controls
         Debug.DrawRay(transform.position,FacingDirection,Color.red);
