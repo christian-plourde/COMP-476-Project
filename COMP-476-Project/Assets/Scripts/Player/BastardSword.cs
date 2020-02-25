@@ -26,6 +26,8 @@ public class BastardSword : MonoBehaviour
 
             other.GetComponent<EnemyAttributes>().DealDamage(dmg);
             GameObject gb=Instantiate(popUpDMG_Prefab,transform.position, Quaternion.identity);
+            //GameObject gb = Instantiate(popUpDMG_Prefab, other.transform);
+            
             //gb.transform.position = transform.position;
             //gb.GetComponent<RectTransform>().position = transform.position;
 

@@ -78,6 +78,7 @@ public class AnimationEvents : MonoBehaviour
         animator.SetLayerWeight(2, 0);
         animator.SetBool("FastAttack1", false);
         animator.SetBool("FastAttack2", false);
+        animator.SetBool("FastAttack3", false);
 
 
         movementScriptRef.controlLock = false;
@@ -87,7 +88,29 @@ public class AnimationEvents : MonoBehaviour
         warriorCombatRef.attackTimer = 0;
 
         warriorCombatRef.fastAttack2 = false;
+        warriorCombatRef.fastAttack3 = false;
     }
+
+    public void EndOfFastAttack3()
+    {
+        warriorCombatRef.attackingSword = false;
+        //Debug.Log("Animation Event called");
+        animator.SetLayerWeight(2, 0);
+        animator.SetBool("FastAttack1", false);
+        animator.SetBool("FastAttack2", false);
+        animator.SetBool("FastAttack3", false);
+
+
+        movementScriptRef.controlLock = false;
+
+        SwordColliderOff();
+        warriorCombatRef.attackingSword = false;
+        warriorCombatRef.attackTimer = 0;
+
+        warriorCombatRef.fastAttack2 = false;
+        warriorCombatRef.fastAttack3 = false;
+    }
+
 
     public void SwordColliderOn()
     {
@@ -102,5 +125,10 @@ public class AnimationEvents : MonoBehaviour
     public void ChainFastAttack2()
     {
         warriorCombatRef.fastAttack2 = true;
+    }
+
+    public void ChainFastAttack3()
+    {
+        warriorCombatRef.fastAttack3 = true;
     }
 }

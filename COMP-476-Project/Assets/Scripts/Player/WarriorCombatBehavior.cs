@@ -29,6 +29,7 @@ public class WarriorCombatBehavior : MonoBehaviour
     public bool attackingSword;
     public bool fastAttack1;
     public bool fastAttack2;
+    public bool fastAttack3;
     public float attackTimer = 0f;          // temporary backup to get out of stuck state
 
     [HideInInspector] public bool ultimateCooldown;
@@ -59,11 +60,12 @@ public class WarriorCombatBehavior : MonoBehaviour
         if (attackingSword)
         {
             //attackTimer = 0;
-            transform.Translate(PlayerMesh.transform.forward * 1f * Time.deltaTime);
+            if(fastAttack3 || fastAttack2)
+                transform.Translate(PlayerMesh.transform.forward * 1f * Time.deltaTime);
             AttackOrientation();
 
             attackTimer += Time.deltaTime;
-            if (attackTimer > 1.4f)
+            if (attackTimer > 1.25f)
             {
                 attackTimer = 0;
 
@@ -71,8 +73,10 @@ public class WarriorCombatBehavior : MonoBehaviour
                 animator.SetLayerWeight(2, 0);
                 fastAttack1 = false;
                 fastAttack2 = false;
+                fastAttack3 = false;
                 animator.SetBool("FastAttack1", false);
                 animator.SetBool("FastAttack2", false);
+                animator.SetBool("FastAttack3", false);
 
 
 
@@ -115,6 +119,10 @@ public class WarriorCombatBehavior : MonoBehaviour
             FixedFacingDir = FacingDir;
 
             animator.SetLayerWeight(2, 1);
+
+            if (animator.GetBool("FastAttack2"))
+                animator.SetBool("FastAttack2", false);
+
             animator.SetBool("FastAttack1",true);
             attackingSword = true;
             PlayerMovementRef.controlLock = true;
@@ -129,6 +137,20 @@ public class WarriorCombatBehavior : MonoBehaviour
             attackTimer = 0;
             animator.SetLayerWeight(2, 1);
             animator.SetBool("FastAttack2", true);
+        }
+
+        if (Input.GetMouseButtonDown(0) && Attacking && fastAttack3)
+        {
+            FixedFacingDir = FacingDir;
+
+            //Debug.Log("Chained 3rd Attack");
+            attackTimer = 0;
+
+            animator.SetLayerWeight(2, 1);
+            animator.SetBool("FastAttack3",true);
+            fastAttack3 = false;
+            GetComponent<Rigidbody>().AddForce(Vector3.up * 4f,ForceMode.Impulse);
+
         }
         
 
