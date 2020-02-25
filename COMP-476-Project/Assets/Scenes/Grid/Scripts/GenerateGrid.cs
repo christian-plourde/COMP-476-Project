@@ -69,12 +69,14 @@ public class GridSquare : IHeuristic<GridSquare>
         else if (s.coordinate.Column == this.coordinate.Column && ((this.coordinate.Row - 1) == s.coordinate.Row || (this.coordinate.Row + 1) == s.coordinate.Row))
             return true;
 
+        /*
         else if (((s.coordinate.Column == (this.coordinate.Column - 1)) && s.coordinate.Row == (this.coordinate.Row - 1)) ||
                 ((s.coordinate.Column == (this.coordinate.Column + 1)) && s.coordinate.Row == (this.coordinate.Row - 1)) ||
                 ((s.coordinate.Column == (this.coordinate.Column - 1)) && s.coordinate.Row == (this.coordinate.Row + 1)) ||
                 ((s.coordinate.Column == (this.coordinate.Column + 1)) && s.coordinate.Row == (this.coordinate.Row + 1))
                 )
             return true;
+            */
 
         else
             return false;
