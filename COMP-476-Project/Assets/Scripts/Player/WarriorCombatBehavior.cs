@@ -29,7 +29,7 @@ public class WarriorCombatBehavior : MonoBehaviour
     public bool attackingSword;
     public bool fastAttack1;
     bool fastAttack2;
-
+    public float attackTimer = 0f;          // temporary backup to get out of stuck state
 
     [HideInInspector] public bool ultimateCooldown;
     float ultimateCooldownTimer = 0;
@@ -58,7 +58,26 @@ public class WarriorCombatBehavior : MonoBehaviour
 
         if (attackingSword)
         {
+            //attackTimer = 0;
+            transform.Translate(PlayerMesh.transform.forward * 1f * Time.deltaTime);
             AttackOrientation();
+
+            attackTimer += Time.deltaTime;
+            if (attackTimer > 1.4f)
+            {
+                attackTimer = 0;
+
+                attackingSword = false;
+                animator.SetLayerWeight(2, 0);
+                animator.SetBool("FastAttack1", false);
+
+
+
+                PlayerMovementRef.controlLock = false;
+
+                HandSword.GetComponent<BoxCollider>().enabled = false;
+                attackingSword = false;
+            }
         }
         GetFacingDir();
     }
