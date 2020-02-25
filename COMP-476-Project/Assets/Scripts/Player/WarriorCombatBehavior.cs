@@ -57,8 +57,9 @@ public class WarriorCombatBehavior : MonoBehaviour
             Controls();
 
         if (attackingSword)
+        {
             AttackOrientation();
-
+        }
         GetFacingDir();
     }
 

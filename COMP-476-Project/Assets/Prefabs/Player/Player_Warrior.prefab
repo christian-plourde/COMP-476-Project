@@ -2857,6 +2857,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   criticalChance: 0
   baseDMG: 4
+  popUpDMG_Prefab: {fileID: 7913270170083207263, guid: 559ff97138d14454f9ed5341f43f3c29,
+    type: 3}
 --- !u!1 &6723450574635868095
 GameObject:
   m_ObjectHideFlags: 0
@@ -2956,4 +2958,5 @@ MonoBehaviour:
   BackSword: {fileID: 987015570313525955}
   HandSword: {fileID: 6723450573597335792}
   attackingSword: 0
+  fastAttack1: 0
   ultimateCooldown: 0
