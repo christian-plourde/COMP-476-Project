@@ -28,7 +28,7 @@ public class WarriorCombatBehavior : MonoBehaviour
     [Header("Attack States")]
     public bool attackingSword;
     public bool fastAttack1;
-    bool fastAttack2;
+    public bool fastAttack2;
     public float attackTimer = 0f;          // temporary backup to get out of stuck state
 
     [HideInInspector] public bool ultimateCooldown;
@@ -116,6 +116,13 @@ public class WarriorCombatBehavior : MonoBehaviour
             attackingSword = true;
             PlayerMovementRef.controlLock = true;
         }
+
+        /*
+        if (Input.GetMouseButton(0) && Attacking && fastAttack2)
+        {
+            FixedFacingDir = FacingDir;
+        }
+        */
 
     }
 

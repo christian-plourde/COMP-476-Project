@@ -67,6 +67,8 @@ public class AnimationEvents : MonoBehaviour
         SwordColliderOff();
         warriorCombatRef.attackingSword = false;
         warriorCombatRef.attackTimer = 0;
+
+        warriorCombatRef.fastAttack2 = false;
     }
 
     public void SwordColliderOn()
@@ -79,5 +81,8 @@ public class AnimationEvents : MonoBehaviour
 
     }
 
-
+    public void ChainFastAttack2()
+    {
+        warriorCombatRef.fastAttack2 = true;
+    }
 }
