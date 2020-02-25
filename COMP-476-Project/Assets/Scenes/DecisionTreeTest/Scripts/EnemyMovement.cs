@@ -63,9 +63,9 @@ public class EnemyMovement : MonoBehaviour
     {
         Vector3 enemypos = this.transform.position;
 
-        foreach(GameObject o in towers)
+        foreach(GameObject g in towers)
         {
-            float dot = Vector3.Dot(this.transform.forward, (o.transform.position - enemypos).normalized);
+            float dot = Vector3.Dot(this.transform.forward, (g.transform.position - enemypos).normalized);
             //If our dot product is exactly 1, then the tower is exactly in front of us
             float desired_result = 1.0f;
             bool result = (desired_result - m_VisionErrorMargin <= dot && dot <= desired_result + m_VisionErrorMargin);
@@ -74,7 +74,7 @@ public class EnemyMovement : MonoBehaviour
             //Debug.Log(message + " (" + dot + ")");//More specific logs
             if (result)
             {
-                target_tower = o;
+                target_tower = g;
                 return result;
             }
                 

@@ -108,6 +108,8 @@ public class GenerateGrid : Subject
     PathFinderGraph<LevelNode> graph; //the graph used for pathfinding
 
     public GameObject level_node_prefab;
+    public GameObject m_GraphContainer;
+
     public Camera cam;
     
 
@@ -179,6 +181,7 @@ public class GenerateGrid : Subject
         foreach(GridSquare s in m_GridSquares)
         {
             GameObject node = Instantiate(level_node_prefab, s.Position, Quaternion.identity);
+            node.transform.parent = this.m_GraphContainer.transform;
 
             LevelNode l = node.GetComponent<LevelNode>();
             l.GridSquare = s;
