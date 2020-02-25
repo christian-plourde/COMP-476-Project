@@ -45,6 +45,31 @@ public class WarriorCombatBehavior : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (!PlayerMovementRef.controlLock)
+            Controls();
+    }
+
+    void Controls()
+    {
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            if (Attacking)
+            {
+                // then we switch to sheath // build mode
+                BackSword.SetActive(true);
+                HandSword.SetActive(false);
+                Attacking = false;
+                animator.SetLayerWeight(1, 0);
+
+            }
+            else
+            {
+                //switch to attack mode
+                BackSword.SetActive(false);
+                HandSword.SetActive(true);
+                Attacking = true;
+                animator.SetLayerWeight(1, 1);
+            }
+        }
     }
 }
