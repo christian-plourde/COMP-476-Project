@@ -591,6 +591,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7727452a05019d40aaf6d0031130444, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerClass: 0
 --- !u!1 &987015570313525917
 GameObject:
   m_ObjectHideFlags: 0
@@ -2760,6 +2761,8 @@ GameObject:
   - component: {fileID: 6723450573597335793}
   - component: {fileID: 6723450573597335795}
   - component: {fileID: 6723450573597335794}
+  - component: {fileID: 4114638373937553034}
+  - component: {fileID: 7616355016533059369}
   m_Layer: 0
   m_Name: BastardswordHand
   m_TagString: Untagged
@@ -2827,6 +2830,33 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!65 &4114638373937553034
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6723450573597335792}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 0
+  serializedVersion: 2
+  m_Size: {x: 0.2912899, y: 1.2355274, z: 0.06952198}
+  m_Center: {x: 0.00000013652809, y: 0.73976415, z: -0.0000061422224}
+--- !u!114 &7616355016533059369
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6723450573597335792}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd7b997bf56683a4b9d0c84745af5694, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  criticalChance: 0
+  baseDMG: 4
 --- !u!1 &6723450574635868095
 GameObject:
   m_ObjectHideFlags: 0
@@ -2909,6 +2939,7 @@ MonoBehaviour:
   isRunning: 0
   controlLock: 0
   isDead: 0
+  playerClass: Warrior
 --- !u!114 &7249028136701415361
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2924,4 +2955,5 @@ MonoBehaviour:
   Attacking: 0
   BackSword: {fileID: 987015570313525955}
   HandSword: {fileID: 6723450573597335792}
+  attackingSword: 0
   ultimateCooldown: 0

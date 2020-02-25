@@ -2165,6 +2165,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7727452a05019d40aaf6d0031130444, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerClass: 0
 --- !u!1 &20204785213684868
 GameObject:
   m_ObjectHideFlags: 0
@@ -2478,6 +2479,7 @@ MonoBehaviour:
   isRunning: 0
   controlLock: 0
   isDead: 0
+  playerClass: Archer
 --- !u!114 &7144771478404947810
 MonoBehaviour:
   m_ObjectHideFlags: 0

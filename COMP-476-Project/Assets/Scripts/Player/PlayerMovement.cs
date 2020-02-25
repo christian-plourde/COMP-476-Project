@@ -24,7 +24,7 @@ public class PlayerMovement : MonoBehaviour
     bool isBuilding;
     public bool controlLock;
     public bool isDead;
-
+    public string playerClass;
 
 
     void Start()

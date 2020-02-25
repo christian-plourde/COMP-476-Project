@@ -25,10 +25,18 @@ public class WarriorCombatBehavior : MonoBehaviour
 
     PlayerMovement PlayerMovementRef;
 
+    [Header("Attack States")]
+    public bool attackingSword;
+    public bool fastAttack1;
+    bool fastAttack2;
 
 
     [HideInInspector] public bool ultimateCooldown;
     float ultimateCooldownTimer = 0;
+
+
+    Vector3 FacingDir;
+    Vector3 FixedFacingDir;
 
     // Start is called before the first frame update
     void Start()
@@ -47,6 +55,11 @@ public class WarriorCombatBehavior : MonoBehaviour
     {
         if (!PlayerMovementRef.controlLock)
             Controls();
+
+        if (attackingSword)
+            AttackOrientation();
+
+        GetFacingDir();
     }
 
     void Controls()
@@ -71,5 +84,65 @@ public class WarriorCombatBehavior : MonoBehaviour
                 animator.SetLayerWeight(1, 1);
             }
         }
+
+
+
+        if (Input.GetMouseButton(0) && Attacking && !attackingSword)
+        {
+            // face the direction you clicked.
+            FixedFacingDir = FacingDir;
+
+
+
+            //PlayerMesh.transform.LookAt(FacingDir.normalized);
+
+            //GameObject gb=Instantiate(BackSword,FacingDir,Quaternion.identity);
+            //gb.SetActive(true);
+
+            animator.SetLayerWeight(2, 1);
+            animator.SetBool("FastAttack1",true);
+            attackingSword = true;
+            PlayerMovementRef.controlLock = true;
+        }
+
+    }
+
+
+
+    void GetFacingDir()
+    {
+        FacingDir = Vector3.zero;
+        if (Input.GetKey(KeyCode.W))
+        {
+            FacingDir += transform.forward;
+        }
+        if (Input.GetKey(KeyCode.A))
+        {
+            FacingDir += transform.right*-1;
+        }
+        if (Input.GetKey(KeyCode.S))
+        {
+            FacingDir += transform.forward*-1;
+        }
+        if (Input.GetKey(KeyCode.D))
+        {
+            FacingDir += transform.right;
+        }
+
+        Vector3 drawPoint = transform.position;
+        drawPoint.y += 0.5f;
+        Debug.DrawRay(transform.position, FacingDir, Color.yellow);
+    }
+
+    void AttackOrientation()
+    {
+
+        Quaternion lookDirection;
+
+        //set quaternion to this dir
+        lookDirection = Quaternion.LookRotation(FixedFacingDir, Vector3.up);
+        //transform.rotation = Quaternion.RotateTowards(PlayerMesh.localRotation, lookDirection, 4);
+        PlayerMesh.localRotation = Quaternion.RotateTowards(PlayerMesh.localRotation, lookDirection, 25);
+
     }
 }
