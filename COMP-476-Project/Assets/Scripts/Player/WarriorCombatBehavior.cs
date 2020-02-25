@@ -89,15 +89,7 @@ public class WarriorCombatBehavior : MonoBehaviour
 
         if (Input.GetMouseButton(0) && Attacking && !attackingSword)
         {
-            // face the direction you clicked.
             FixedFacingDir = FacingDir;
-
-
-
-            //PlayerMesh.transform.LookAt(FacingDir.normalized);
-
-            //GameObject gb=Instantiate(BackSword,FacingDir,Quaternion.identity);
-            //gb.SetActive(true);
 
             animator.SetLayerWeight(2, 1);
             animator.SetBool("FastAttack1",true);
@@ -141,7 +133,7 @@ public class WarriorCombatBehavior : MonoBehaviour
 
         //set quaternion to this dir
         lookDirection = Quaternion.LookRotation(FixedFacingDir, Vector3.up);
-        //transform.rotation = Quaternion.RotateTowards(PlayerMesh.localRotation, lookDirection, 4);
+        //lookDirection = Quaternion.LookRotation(FacingDir, Vector3.up);
         PlayerMesh.localRotation = Quaternion.RotateTowards(PlayerMesh.localRotation, lookDirection, 25);
 
     }
