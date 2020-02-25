@@ -16,6 +16,7 @@ public class Character : NPC
     private int current_path_node_index = 0; //the step of the path the character s currently executing
     private GraphNode<LevelNode> currentTarget;
     bool end_of_path = false;
+    public bool is_enemy = false;
 
     public GraphNode<LevelNode>[] Path
     {
@@ -101,7 +102,7 @@ public class Character : NPC
 
             if (Physics.Raycast(ray, out hit))
             {
-                if(hit.transform.gameObject.GetComponent<LevelNode>())
+                if(hit.transform.gameObject.GetComponent<LevelNode>() && is_enemy)
                 {
                     current_path_node_index = 0;
                     try
