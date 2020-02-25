@@ -71,6 +71,24 @@ public class AnimationEvents : MonoBehaviour
         warriorCombatRef.fastAttack2 = false;
     }
 
+    public void EndOfFastAttack2()
+    {
+        warriorCombatRef.attackingSword = false;
+        //Debug.Log("Animation Event called");
+        animator.SetLayerWeight(2, 0);
+        animator.SetBool("FastAttack1", false);
+        animator.SetBool("FastAttack2", false);
+
+
+        movementScriptRef.controlLock = false;
+
+        SwordColliderOff();
+        warriorCombatRef.attackingSword = false;
+        warriorCombatRef.attackTimer = 0;
+
+        warriorCombatRef.fastAttack2 = false;
+    }
+
     public void SwordColliderOn()
     {
         SwordRef.GetComponent<BoxCollider>().enabled = true;

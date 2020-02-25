@@ -53,7 +53,7 @@ public class WarriorCombatBehavior : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!PlayerMovementRef.controlLock)
+        //if (!PlayerMovementRef.controlLock)
             Controls();
 
         if (attackingSword)
@@ -117,12 +117,17 @@ public class WarriorCombatBehavior : MonoBehaviour
             PlayerMovementRef.controlLock = true;
         }
 
-        /*
+        
         if (Input.GetMouseButton(0) && Attacking && fastAttack2)
         {
             FixedFacingDir = FacingDir;
+
+            //Debug.Log("Chained 2nd attack.");
+            attackTimer = 0;
+            animator.SetLayerWeight(2, 1);
+            animator.SetBool("FastAttack2", true);
         }
-        */
+        
 
     }
 
@@ -155,6 +160,10 @@ public class WarriorCombatBehavior : MonoBehaviour
 
     void AttackOrientation()
     {
+        if (FixedFacingDir == Vector3.zero)
+        {
+            FixedFacingDir = transform.forward;
+        }
 
         Quaternion lookDirection;
 
