@@ -124,11 +124,21 @@ public class WarriorCombatBehavior : MonoBehaviour
 
             }
         }
+
+
+        if (attackingSword || usingUltimate)
+        {
+            HandSword.GetComponent<TrailRenderer>().enabled = true;
+        }
+        else
+        {
+            HandSword.GetComponent<TrailRenderer>().enabled = false;
+        }
     }
 
     void Controls()
     {
-        if (Input.GetKeyDown(KeyCode.E))
+        if (Input.GetKeyDown(KeyCode.E) && !usingUltimate && !attackingSword)
         {
             if (Attacking)
             {
@@ -151,7 +161,7 @@ public class WarriorCombatBehavior : MonoBehaviour
 
 
 
-        if (Input.GetMouseButton(0) && Attacking && !attackingSword)
+        if (Input.GetMouseButton(0) && Attacking && !attackingSword && !usingUltimate)
         {
             FixedFacingDir = FacingDir;
 

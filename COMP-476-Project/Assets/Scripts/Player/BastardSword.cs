@@ -10,6 +10,11 @@ public class BastardSword : MonoBehaviour
 
     public GameObject popUpDMG_Prefab;
 
+    private void Start()
+    {
+        GetComponent<TrailRenderer>().enabled = false;
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Enemy")
