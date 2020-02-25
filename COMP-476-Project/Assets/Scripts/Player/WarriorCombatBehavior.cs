@@ -239,7 +239,7 @@ public class WarriorCombatBehavior : MonoBehaviour
     {
         if (FixedFacingDir == Vector3.zero)
         {
-            FixedFacingDir = transform.forward;
+            FixedFacingDir = PlayerMesh.transform.forward;
         }
 
         Quaternion lookDirection;
