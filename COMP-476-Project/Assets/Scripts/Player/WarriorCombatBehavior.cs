@@ -69,6 +69,8 @@ public class WarriorCombatBehavior : MonoBehaviour
 
                 attackingSword = false;
                 animator.SetLayerWeight(2, 0);
+                fastAttack1 = false;
+                fastAttack2 = false;
                 animator.SetBool("FastAttack1", false);
                 animator.SetBool("FastAttack2", false);
 
