@@ -38,6 +38,8 @@ public class EnemyMovement : MonoBehaviour
     public float m_WhatIsNearby;
     //What our error margin should be, for what's considered to be in front of us
     public float m_VisionErrorMargin;
+    //How far we can see
+    public float m_RangeOfVision;
 
     //Our decision tree condition nodes
 
@@ -50,11 +52,24 @@ public class EnemyMovement : MonoBehaviour
         float dot = Vector3.Dot(this.transform.forward, (playerpos - enemypos).normalized);
         //If our dot product is exactly 1, then the player is exactly in front of us
         float desired_result = 1.0f;
-        bool result = (desired_result - m_VisionErrorMargin <= dot && dot <= desired_result + m_VisionErrorMargin);
-        string message = (result) ? "Player spotted!" : "Player NOT spotted!";
-        //Debug.Log(message);
+        bool facing_player = (desired_result - m_VisionErrorMargin <= dot && dot <= desired_result + m_VisionErrorMargin);
+        string message = (facing_player) ? "Player spotted!" : "Player NOT spotted!";
+
+        //if we're facing the target, then we can consider a raycast
+        if (facing_player)
+        {
+            RaycastHit hit;
+            if (Physics.Raycast(this.transform.position, transform.TransformDirection(Vector3.forward), out hit, this.m_RangeOfVision))
+            {
+                if (hit.transform.tag == "Player")
+                {
+                    return true;
+                }
+            }
+        }
+        Debug.Log(message);
         //Debug.Log(message + " (" + dot + ")");//More specific logs
-        return (result);
+        return false;
     }
 
     //For now I'll assume that if the tower is somewhat in front of us, even if it's behind a wall, we can see it.
@@ -68,20 +83,29 @@ public class EnemyMovement : MonoBehaviour
             float dot = Vector3.Dot(this.transform.forward, (g.transform.position - enemypos).normalized);
             //If our dot product is exactly 1, then the tower is exactly in front of us
             float desired_result = 1.0f;
-            bool result = (desired_result - m_VisionErrorMargin <= dot && dot <= desired_result + m_VisionErrorMargin);
-            string message = (result) ? "Tower spotted" : "Tower NOT spotted";
+            bool facing_tower = (desired_result - m_VisionErrorMargin <= dot && dot <= desired_result + m_VisionErrorMargin);
+            string message = (facing_tower) ? "Tower spotted" : "Tower NOT spotted";
             //Debug.Log(message);
             //Debug.Log(message + " (" + dot + ")");//More specific logs
-            if (result)
+
+            //if we're facing the target, then we can consider a raycast
+            if (facing_tower)
             {
-                target_tower = g;
-                return result;
+                RaycastHit hit;
+                if(Physics.Raycast(this.transform.position, transform.TransformDirection(Vector3.forward), out hit, this.m_RangeOfVision))
+                {
+                    if(hit.transform.tag == "Tower")
+                    {
+                        target_tower = g;
+                        return true;
+                    }
+                }
+                return false;
             }
-                
+            //else if we're not facing the target, we need not consider a raycast, as we won't see the target
         }
 
         return false;
-        
     }
 
     //Tells us whether a tower is within some distance of the zombie; to be used in the decision tree
@@ -197,7 +221,7 @@ public class EnemyMovement : MonoBehaviour
                 towers.Add(n.Value.gameObject);
         }
 
-        //Debug.Log("towers: " + towers.Count);
+        Debug.Log("towers: " + towers.Count);
 
         if (this.m_DecisionTree != null)
         {
