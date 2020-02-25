@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UnityEngine;
 
 namespace Graph
 {
@@ -305,18 +306,32 @@ namespace Graph
 
             Evaluate(end_node);
 
-            GraphNode<T> curr = end_node;
-            LinkedList<GraphNode<T>> node_order = new LinkedList<GraphNode<T>>();
-
-            while (curr != start_node)
+            try
             {
+                GraphNode<T> curr = end_node;
+                LinkedList<GraphNode<T>> node_order = new LinkedList<GraphNode<T>>();
+
+                while (curr != null && curr != start_node)
+                {
+                    if (curr.Connection.Disconnected)
+                    {
+                        node_order.Clear();
+                        return node_order;
+                    }
+
+                    node_order.AddFirst(curr);
+                    curr = curr.Connection.Start;
+                }
+
                 node_order.AddFirst(curr);
-                curr = curr.Connection.Start;
+                return node_order;
             }
 
-            node_order.AddFirst(curr);
-
-            return node_order;
+            catch(Exception e)
+            {
+                throw e;
+            }
+            
         }
 
         private void Evaluate(GraphNode<T> end_node)

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 //basic npc class
-public class NPC : MonoBehaviour
+public abstract class NPC : Observer
 {
     float MAX_VELOCITY = 0.6f;
     float currentVelocity = 0.0f;
