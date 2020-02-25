@@ -263,7 +263,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cam: {fileID: 1588798862}
-  is_enemy: 1
+  is_enemy: 0
 --- !u!1 &742421333
 GameObject:
   m_ObjectHideFlags: 0
@@ -621,6 +621,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cam: {fileID: 1588798862}
   is_enemy: 1
+--- !u!114 &1461809431
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1461809429}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e621c67f52a704139ac4ba18634499e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_WhatIsNearby: 0.2
+  m_VisionErrorMargin: 0.2
 --- !u!1 &1588798860
 GameObject:
   m_ObjectHideFlags: 0

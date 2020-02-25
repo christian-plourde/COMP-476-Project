@@ -141,7 +141,6 @@ public class GenerateGrid : Subject
             {
                 if (hit.transform.gameObject.GetComponent<LevelNode>())
                 {
-
                     hit.transform.gameObject.GetComponent<LevelNode>().ToggleOpen();
                     Notify();
                 }
