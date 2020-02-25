@@ -92,7 +92,7 @@ public class GridSquare : IHeuristic<GridSquare>
 
 }
 
-public class GenerateGrid : MonoBehaviour
+public class GenerateGrid : Subject
 {
     public Transform m_TopRight;
     public Transform m_TopLeft;
@@ -120,6 +120,12 @@ public class GenerateGrid : MonoBehaviour
         graph = new PathFinderGraph<LevelNode>();
 
         this.initializeSquares();
+
+        //add each of the characters to the observer list
+        foreach(Character c in FindObjectsOfType<Character>())
+        {
+            AttachObserver(c);
+        }
     }
 
     void Update()
@@ -135,6 +141,7 @@ public class GenerateGrid : MonoBehaviour
                 {
 
                     hit.transform.gameObject.GetComponent<LevelNode>().ToggleOpen();
+                    Notify();
                 }
             }
 

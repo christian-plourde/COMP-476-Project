@@ -17,7 +17,7 @@ public class LevelNode : MonoBehaviour, IHeuristic<LevelNode>
 
     public bool Open
     {
-        get { return this.closed; }
+        get { return !this.closed; }
     }
 
     public void AddLineRenderer()
