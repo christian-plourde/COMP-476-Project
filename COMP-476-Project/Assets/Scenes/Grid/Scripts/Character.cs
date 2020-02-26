@@ -21,7 +21,7 @@ public class Character : NPC
     private GenerateGrid grid;
     private BEHAVIOUR_TYPE behaviour_type;
 
-    public BEHAVIOUR_TYPE BehvaiourType
+    public BEHAVIOUR_TYPE BehaviourType
     {
         set { behaviour_type = value; }
     }

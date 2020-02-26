@@ -114,6 +114,8 @@ public class GenerateGrid : Subject
 
     private List<LevelNode> player_base_nodes;
     private List<LevelNode> enemy_base_nodes;
+
+    public GameObject test_tower;
     
     private void AddPlayerBaseNode(LevelNode n)
     {
@@ -159,7 +161,7 @@ public class GenerateGrid : Subject
 
     void Update()
     {
-        if (Input.GetMouseButtonDown(1))
+        if (Input.GetMouseButtonDown(0))
         {
             Ray ray = cam.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
@@ -169,7 +171,24 @@ public class GenerateGrid : Subject
                 if (hit.transform.gameObject.GetComponent<LevelNode>())
                 {
                     hit.transform.gameObject.GetComponent<LevelNode>().ToggleOpen();
+
+                    //if the node is open, create a tower, otherwise destory it
+                    if(!hit.transform.gameObject.GetComponent<LevelNode>().Open)
+                    {
+                        GameObject tower = Instantiate(test_tower, hit.transform.position, Quaternion.identity);
+                        tower.transform.parent = hit.transform.gameObject.transform;
+                    }
+
+                    else
+                    {
+                        foreach(Transform child in hit.transform)
+                        {
+                            Destroy(child.gameObject);
+                        }
+                    }
+
                     //Debug.Log(hit.transform.gameObject.GetComponent<LevelNode>().GridSquare);
+                    
                     Notify();
                 }
             }

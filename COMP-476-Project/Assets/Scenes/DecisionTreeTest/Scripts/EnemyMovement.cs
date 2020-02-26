@@ -165,7 +165,7 @@ public class EnemyMovement : MonoBehaviour
     {
         //this behaviour will make the enemy move toward the enemy base
         //Debug.Log(this.gameObject.GetComponent<Character>());
-        this.gameObject.GetComponent<Character>().BehvaiourType = BEHAVIOUR_TYPE.BASE_SEEK;
+        this.gameObject.GetComponent<Character>().BehaviourType = BEHAVIOUR_TYPE.BASE_SEEK;
     }
 
     //A pseudoconstructor to allow us to easily spawn and initialize zombie movement types

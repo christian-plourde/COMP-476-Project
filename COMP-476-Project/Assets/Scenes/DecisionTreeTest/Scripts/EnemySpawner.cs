@@ -26,7 +26,6 @@ public class EnemySpawner : MonoBehaviour
     {
         for(int i = 0; i < initial_monster_count; i++)
             this.m_Zombies.Add(GameObject.Instantiate(this.m_ZombiePrefab));
-        //this.m_Zombies[0].transform.position = new Vector3(0.0f, 0.5f, 0.0f);
         InitializeZombies();
     }
 
