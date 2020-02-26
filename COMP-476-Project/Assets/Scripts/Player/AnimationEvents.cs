@@ -111,6 +111,24 @@ public class AnimationEvents : MonoBehaviour
         warriorCombatRef.fastAttack3 = false;
     }
 
+    public void EndOfUltimateSmash()
+    {
+        movementScriptRef.controlLock = false;
+        movementScriptRef.warriorUltimate = false;
+        
+        // reset variables
+        warriorCombatRef.ultimateCooldown = true;
+        warriorCombatRef.usingUltimate = false;
+        warriorCombatRef.ultimateTimer = 0;
+
+        //reset speed
+        movementScriptRef.ResetSpeed();
+        animator.SetLayerWeight(2, 0);
+
+        animator.SetBool("Ultimate", false);
+        animator.SetBool("UltimateSmash", false);
+    }
+
 
     public void SwordColliderOn()
     {

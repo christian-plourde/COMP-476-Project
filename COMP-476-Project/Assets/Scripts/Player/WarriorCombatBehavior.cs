@@ -36,8 +36,8 @@ public class WarriorCombatBehavior : MonoBehaviour
     public float attackTimer = 0f;          // temporary backup to get out of stuck state
 
     [HideInInspector] public bool ultimateCooldown;
-    float ultimateCooldownTimer = 0;
-    float ultimateTimer = 0;
+    [HideInInspector] public float ultimateCooldownTimer = 0;
+    [HideInInspector] public float ultimateTimer = 0;
 
 
     Vector3 FacingDir;
@@ -92,7 +92,7 @@ public class WarriorCombatBehavior : MonoBehaviour
         }
         GetFacingDir();
 
-        if (usingUltimate)
+        if (usingUltimate && ultimateTimer<7f)
         {
             PlayerMesh.transform.Rotate(Vector3.up * rotateSpeed * Time.deltaTime);
             rotateSpeed += 2.5f;
@@ -101,6 +101,7 @@ public class WarriorCombatBehavior : MonoBehaviour
             HandSword.GetComponent<BoxCollider>().enabled = true;
             if (ultimateTimer > 7f)
             {
+                /*
                 usingUltimate = false;
                 ultimateCooldown = true;
                 ultimateTimer = 0;
@@ -110,6 +111,12 @@ public class WarriorCombatBehavior : MonoBehaviour
                 // set speed back to normal
                 PlayerMovementRef.ResetSpeed();
                 PlayerMovementRef.warriorUltimate = false;
+        */
+
+                animator.SetBool("UltimateSmash", true);
+                PlayerMovementRef.controlLock = true;
+                Debug.Log("Switched to Ultimate Smash");
+                GetComponent<Rigidbody>().AddForce(Vector3.up * 5f, ForceMode.Impulse);
             }
         }
 

@@ -18,7 +18,7 @@ public class PlayerMovement : MonoBehaviour
 
     //private Transform Target;
 
-    private Transform PlayerMesh;
+    Transform PlayerMesh;
 
     [Header("Player States")]
     public bool isRunning;
