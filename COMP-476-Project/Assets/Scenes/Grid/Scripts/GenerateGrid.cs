@@ -69,12 +69,14 @@ public class GridSquare : IHeuristic<GridSquare>
         else if (s.coordinate.Column == this.coordinate.Column && ((this.coordinate.Row - 1) == s.coordinate.Row || (this.coordinate.Row + 1) == s.coordinate.Row))
             return true;
 
+        /*
         else if (((s.coordinate.Column == (this.coordinate.Column - 1)) && s.coordinate.Row == (this.coordinate.Row - 1)) ||
                 ((s.coordinate.Column == (this.coordinate.Column + 1)) && s.coordinate.Row == (this.coordinate.Row - 1)) ||
                 ((s.coordinate.Column == (this.coordinate.Column - 1)) && s.coordinate.Row == (this.coordinate.Row + 1)) ||
                 ((s.coordinate.Column == (this.coordinate.Column + 1)) && s.coordinate.Row == (this.coordinate.Row + 1))
                 )
             return true;
+            */
 
         else
             return false;
@@ -92,7 +94,7 @@ public class GridSquare : IHeuristic<GridSquare>
 
 }
 
-public class GenerateGrid : MonoBehaviour
+public class GenerateGrid : Subject
 {
     public Transform m_TopRight;
     public Transform m_TopLeft;
@@ -106,6 +108,8 @@ public class GenerateGrid : MonoBehaviour
     PathFinderGraph<LevelNode> graph; //the graph used for pathfinding
 
     public GameObject level_node_prefab;
+    public GameObject m_GraphContainer;
+
     public Camera cam;
     
 
@@ -120,6 +124,12 @@ public class GenerateGrid : MonoBehaviour
         graph = new PathFinderGraph<LevelNode>();
 
         this.initializeSquares();
+
+        //add each of the characters to the observer list
+        foreach(Character c in FindObjectsOfType<Character>())
+        {
+            AttachObserver(c);
+        }
     }
 
     void Update()
@@ -133,8 +143,8 @@ public class GenerateGrid : MonoBehaviour
             {
                 if (hit.transform.gameObject.GetComponent<LevelNode>())
                 {
-
                     hit.transform.gameObject.GetComponent<LevelNode>().ToggleOpen();
+                    Notify();
                 }
             }
 
@@ -171,6 +181,7 @@ public class GenerateGrid : MonoBehaviour
         foreach(GridSquare s in m_GridSquares)
         {
             GameObject node = Instantiate(level_node_prefab, s.Position, Quaternion.identity);
+            node.transform.parent = this.m_GraphContainer.transform;
 
             LevelNode l = node.GetComponent<LevelNode>();
             l.GridSquare = s;

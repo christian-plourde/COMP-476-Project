@@ -15,14 +15,18 @@ public class LevelNode : MonoBehaviour, IHeuristic<LevelNode>
     List<LineRenderer> lineRenderers; //this is the list of line renderers. we will instantiate one for each connection that the node has to draw the paths in the scene
     private bool closed = false;
 
+    private GameObject m_GraphContainer;
+
     public bool Open
     {
-        get { return this.closed; }
+        get { return !this.closed; }
     }
 
     public void AddLineRenderer()
     {
         GameObject o = Instantiate(lineRendererPrefab);
+        //GameObject container = GameObject.Find("GraphContainer");
+        o.transform.parent = this.m_GraphContainer.transform;
         lineRenderers.Add(o.GetComponent<LineRenderer>());
     }
 
@@ -52,6 +56,7 @@ public class LevelNode : MonoBehaviour, IHeuristic<LevelNode>
 
     private void Awake()
     {
+        m_GraphContainer = GameObject.Find("GraphContainer");
         lineRenderers = new List<LineRenderer>();
         //let's set the graph node that its connected to 
         node = new GraphNode<LevelNode>(this);
