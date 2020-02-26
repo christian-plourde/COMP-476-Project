@@ -27,7 +27,7 @@ public class HomingProjectileMovement : MonoBehaviour
             Destroy(gameObject);
             if (target.GetComponent<EnemyAttributes>().GetHealth() <= damage)
             {
-                parent.GetComponent<TowerAttackDirect>().ClearTarget();
+                parent.GetComponent<TowerAttack>().ClearTarget();
             }
             target.GetComponent<EnemyAttributes>().DealDamage((int)damage);   
         }
