@@ -2919,6 +2919,7 @@ MonoBehaviour:
   damage: 3
   speed: 3
   isDead: 0
+  heightOffset: 1.25
   HealthUI: {fileID: 1322159949329337041}
 --- !u!1 &1322159951128881512
 GameObject:

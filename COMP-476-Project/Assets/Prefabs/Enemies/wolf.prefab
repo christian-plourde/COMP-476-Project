@@ -24800,6 +24800,7 @@ MonoBehaviour:
   damage: 2
   speed: 6
   isDead: 0
+  heightOffset: 0.5
   HealthUI: {fileID: 64341479603795002}
 --- !u!95 &7424372955921300265
 Animator:
