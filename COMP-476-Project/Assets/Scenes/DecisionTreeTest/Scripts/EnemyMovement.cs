@@ -67,7 +67,7 @@ public class EnemyMovement : MonoBehaviour
                 }
             }
         }
-        Debug.Log(message);
+        //Debug.Log(message);
         //Debug.Log(message + " (" + dot + ")");//More specific logs
         return false;
     }
@@ -163,7 +163,9 @@ public class EnemyMovement : MonoBehaviour
 
     protected virtual void Wander()
     {
-        Debug.Log("Wandering!");
+        //this behaviour will make the enemy move toward the enemy base
+        //Debug.Log(this.gameObject.GetComponent<Character>());
+        this.gameObject.GetComponent<Character>().BehvaiourType = BEHAVIOUR_TYPE.BASE_SEEK;
     }
 
     //A pseudoconstructor to allow us to easily spawn and initialize zombie movement types
@@ -221,7 +223,7 @@ public class EnemyMovement : MonoBehaviour
                 towers.Add(n.Value.gameObject);
         }
 
-        Debug.Log("towers: " + towers.Count);
+        //Debug.Log("towers: " + towers.Count);
 
         if (this.m_DecisionTree != null)
         {

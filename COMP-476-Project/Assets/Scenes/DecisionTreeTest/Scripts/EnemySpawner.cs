@@ -10,6 +10,8 @@ public class EnemySpawner : MonoBehaviour
 
     private List<GameObject> m_Zombies = new List<GameObject>();
 
+    public int initial_monster_count = 2;
+
     void InitializeZombies()
     {
         foreach(GameObject g in m_Zombies)
@@ -22,8 +24,9 @@ public class EnemySpawner : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        this.m_Zombies.Add(GameObject.Instantiate(this.m_ZombiePrefab));
-        this.m_Zombies[0].transform.position = new Vector3(0.0f, 0.5f, 0.0f);
+        for(int i = 0; i < initial_monster_count; i++)
+            this.m_Zombies.Add(GameObject.Instantiate(this.m_ZombiePrefab));
+        //this.m_Zombies[0].transform.position = new Vector3(0.0f, 0.5f, 0.0f);
         InitializeZombies();
     }
 

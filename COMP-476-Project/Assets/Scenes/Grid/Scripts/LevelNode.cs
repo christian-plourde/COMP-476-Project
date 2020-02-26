@@ -14,8 +14,15 @@ public class LevelNode : MonoBehaviour, IHeuristic<LevelNode>
     public Material closed_node_mat;
     List<LineRenderer> lineRenderers; //this is the list of line renderers. we will instantiate one for each connection that the node has to draw the paths in the scene
     private bool closed = false;
+    private bool is_base_node = false;
 
     private GameObject m_GraphContainer;
+
+    public bool IsBaseNode
+    {
+        get { return is_base_node; }
+        set { is_base_node = value; }
+    }
 
     public bool Open
     {
@@ -65,6 +72,9 @@ public class LevelNode : MonoBehaviour, IHeuristic<LevelNode>
     //will switch the node to opened if closed and vice versa. this will set all its links to disconnected
     public void ToggleOpen()
     {
+        if (is_base_node)
+            return;
+
         this.closed = !this.closed;
         foreach (GraphEdge<LevelNode> e in this.GraphNode.Links)
         {
