@@ -129,6 +129,8 @@ public class AnimationEvents : MonoBehaviour
         animator.SetBool("UltimateSmash", false);
 
         warriorCombatRef.HandSword.GetComponent<BoxCollider>().enabled = false;
+        warriorCombatRef.transform.GetComponent<Rigidbody>().velocity = Vector3.zero;
+        warriorCombatRef.attackingSword = false;
     }
 
 
@@ -136,6 +138,7 @@ public class AnimationEvents : MonoBehaviour
     {
         GameObject gb= Instantiate(warriorCombatRef.WarriorAOEPefab, movementScriptRef.transform.position, Quaternion.identity);
         gb.GetComponent<WarriorAOE>().SetDeletion(warriorCombatRef.AOETime);
+        gb.transform.Translate(Vector3.down * 1.0f);
         // play sound
     }
 
