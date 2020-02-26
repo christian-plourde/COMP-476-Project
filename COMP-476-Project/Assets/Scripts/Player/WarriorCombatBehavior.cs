@@ -43,6 +43,11 @@ public class WarriorCombatBehavior : MonoBehaviour
     Vector3 FacingDir;
     Vector3 FixedFacingDir;
 
+
+    [Header("Warrior AOE Ultimate Prefab")]
+    public GameObject WarriorAOEPefab;
+    public float AOETime=3f;
+
     // Start is called before the first frame update
     void Start()
     {

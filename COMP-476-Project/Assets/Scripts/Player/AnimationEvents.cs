@@ -127,8 +127,17 @@ public class AnimationEvents : MonoBehaviour
 
         animator.SetBool("Ultimate", false);
         animator.SetBool("UltimateSmash", false);
+
+        warriorCombatRef.HandSword.GetComponent<BoxCollider>().enabled = false;
     }
 
+
+    public void CreateUltimateAOE()
+    {
+        GameObject gb= Instantiate(warriorCombatRef.WarriorAOEPefab, movementScriptRef.transform.position, Quaternion.identity);
+        gb.GetComponent<WarriorAOE>().SetDeletion(warriorCombatRef.AOETime);
+        // play sound
+    }
 
     public void SwordColliderOn()
     {
