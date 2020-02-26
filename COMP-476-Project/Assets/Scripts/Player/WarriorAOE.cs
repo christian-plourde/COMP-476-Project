@@ -54,7 +54,6 @@ public class WarriorAOE : MonoBehaviour
     {
         if (other.tag == "Enemy")
         {
-            
                 other.GetComponent<EnemyAttributes>().DealDamage(3);
         }
     }

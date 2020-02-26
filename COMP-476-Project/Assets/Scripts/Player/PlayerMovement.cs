@@ -44,6 +44,7 @@ public class PlayerMovement : MonoBehaviour
             Movement();
         // Force rotation = 0
         transform.rotation = Quaternion.Euler(Vector3.zero);
+        
     }
 
     void Movement()

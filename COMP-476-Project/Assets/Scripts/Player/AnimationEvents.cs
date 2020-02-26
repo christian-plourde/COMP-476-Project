@@ -128,9 +128,15 @@ public class AnimationEvents : MonoBehaviour
         animator.SetBool("Ultimate", false);
         animator.SetBool("UltimateSmash", false);
 
+
+        animator.SetBool("FastAttack1", false);
+        animator.SetBool("FastAttack2", false);
+        animator.SetBool("FastAttack3", false);
+
         warriorCombatRef.HandSword.GetComponent<BoxCollider>().enabled = false;
         warriorCombatRef.transform.GetComponent<Rigidbody>().velocity = Vector3.zero;
         warriorCombatRef.attackingSword = false;
+        warriorCombatRef.attackTimer = 0;
     }
 
 
@@ -142,6 +148,20 @@ public class AnimationEvents : MonoBehaviour
         // play sound
     }
 
+
+    public void EndOfKickAttack()
+    {
+        //Debug.Log("Called anim event endofkickattack");
+        animator.SetLayerWeight(2, 0);
+        warriorCombatRef.kicking = false;
+        KickColliderOff();
+        movementScriptRef.controlLock = false;
+        warriorCombatRef.transform.GetComponent<Rigidbody>().velocity = Vector3.zero;
+        warriorCombatRef.attackTimer = 0;
+        //animator.SetBool("Kicking", false);
+    }
+
+
     public void SwordColliderOn()
     {
         SwordRef.GetComponent<BoxCollider>().enabled = true;
@@ -149,6 +169,17 @@ public class AnimationEvents : MonoBehaviour
     public void SwordColliderOff()
     {
         SwordRef.GetComponent<BoxCollider>().enabled = false;
+    }
+
+    public void KickColliderOn()
+    {
+        animator.SetBool("Kicking",false);
+        warriorCombatRef.LeftLeg.SetActive(true);
+    }
+    public void KickColliderOff()
+    {
+        animator.SetLayerWeight(2, 0);
+        warriorCombatRef.LeftLeg.SetActive(false);
 
     }
 

@@ -31,6 +31,7 @@ public class WarriorCombatBehavior : MonoBehaviour
     public bool fastAttack2;
     public bool fastAttack3;
     public bool usingUltimate;
+    public bool kicking;
 
     float rotateSpeed=350f;
     public float attackTimer = 0f;          // temporary backup to get out of stuck state
@@ -38,6 +39,10 @@ public class WarriorCombatBehavior : MonoBehaviour
     [HideInInspector] public bool ultimateCooldown;
     [HideInInspector] public float ultimateCooldownTimer = 0;
     [HideInInspector] public float ultimateTimer = 0;
+
+    [HideInInspector] public bool secondaryCooldown=false;
+    [HideInInspector] public float secondaryCooldownTimer;
+    
 
 
     Vector3 FacingDir;
@@ -47,6 +52,9 @@ public class WarriorCombatBehavior : MonoBehaviour
     [Header("Warrior AOE Ultimate Prefab")]
     public GameObject WarriorAOEPefab;
     public float AOETime=3f;
+
+    [Header("Leg Reference For Kickin")]
+    public GameObject LeftLeg;
 
     // Start is called before the first frame update
     void Start()
@@ -58,6 +66,8 @@ public class WarriorCombatBehavior : MonoBehaviour
         BackSword.SetActive(false);
 
         PlayerMovementRef = GetComponent<PlayerMovement>();
+
+        LeftLeg.SetActive(false);
     }
 
     // Update is called once per frame
@@ -66,7 +76,7 @@ public class WarriorCombatBehavior : MonoBehaviour
         //if (!PlayerMovementRef.controlLock)
             Controls();
 
-        if (attackingSword)
+        if (attackingSword || kicking)
         {
             //attackTimer = 0;
             //if(fastAttack3 || fastAttack2)
@@ -97,14 +107,14 @@ public class WarriorCombatBehavior : MonoBehaviour
         }
         GetFacingDir();
 
-        if (usingUltimate && ultimateTimer<7f)
+        if (usingUltimate && ultimateTimer<5f)
         {
             PlayerMesh.transform.Rotate(Vector3.up * rotateSpeed * Time.deltaTime);
             rotateSpeed += 2.5f;
             ultimateTimer += Time.deltaTime;
             animator.SetLayerWeight(2, 1);
             HandSword.GetComponent<BoxCollider>().enabled = true;
-            if (ultimateTimer > 7f)
+            if (ultimateTimer > 5f)
             {
                 /*
                 usingUltimate = false;
@@ -120,7 +130,7 @@ public class WarriorCombatBehavior : MonoBehaviour
 
                 animator.SetBool("UltimateSmash", true);
                 PlayerMovementRef.controlLock = true;
-                Debug.Log("Switched to Ultimate Smash");
+                //Debug.Log("Switched to Ultimate Smash");
                 GetComponent<Rigidbody>().AddForce(Vector3.up * 5f, ForceMode.Impulse);
             }
         }
@@ -137,6 +147,17 @@ public class WarriorCombatBehavior : MonoBehaviour
             }
         }
 
+        if (secondaryCooldown)
+        {
+            
+            secondaryCooldownTimer += Time.deltaTime;
+            if (secondaryCooldownTimer > 15f)
+            {
+                secondaryCooldownTimer = 0;
+                secondaryCooldown = false;
+            }
+        }
+
 
         if (attackingSword || usingUltimate)
         {
@@ -150,7 +171,7 @@ public class WarriorCombatBehavior : MonoBehaviour
 
     void Controls()
     {
-        if (Input.GetKeyDown(KeyCode.E) && !usingUltimate && !attackingSword)
+        if (Input.GetKeyDown(KeyCode.E) && !usingUltimate && !attackingSword && !kicking)
         {
             if (Attacking)
             {
@@ -173,7 +194,7 @@ public class WarriorCombatBehavior : MonoBehaviour
 
 
 
-        if (Input.GetMouseButton(0) && Attacking && !attackingSword && !usingUltimate)
+        if (Input.GetMouseButton(0) && Attacking && !attackingSword && !usingUltimate &&!kicking)
         {
             FixedFacingDir = FacingDir;
 
@@ -213,7 +234,8 @@ public class WarriorCombatBehavior : MonoBehaviour
         }
 
 
-        if (Attacking && Input.GetMouseButtonDown(1) && !ultimateCooldown)
+        //if (Attacking && Input.GetMouseButtonDown(1) && !ultimateCooldown)
+        if (Attacking && Input.GetKeyDown(KeyCode.Q) && !ultimateCooldown)
         {
             animator.SetLayerWeight(2,1);
             animator.SetBool("FastAttack1", false);
@@ -226,7 +248,31 @@ public class WarriorCombatBehavior : MonoBehaviour
             PlayerMovementRef.warriorUltimate = true;
             PlayerMovementRef.mSpeed = PlayerMovementRef.mSpeed * 0.5f;
         }
-        
+
+
+        // secondary kick
+        if (Attacking && Input.GetMouseButtonDown(1) && !usingUltimate && !secondaryCooldown)
+        {
+            attackTimer = 0;
+
+            animator.SetLayerWeight(2, 1);
+            secondaryCooldown = true;
+
+            animator.SetBool("Kicking", true);
+            fastAttack1 = false;
+            fastAttack2 = false;
+            fastAttack3 = false;
+            animator.SetBool("FastAttack1",false);
+            animator.SetBool("FastAttack2",false);
+            animator.SetBool("FastAttack3",false);
+
+            FixedFacingDir = FacingDir;
+            kicking = true;
+
+            PlayerMovementRef.controlLock = true;
+
+            HandSword.GetComponent<BoxCollider>().enabled = false;
+        }
 
     }
 
