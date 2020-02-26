@@ -111,7 +111,29 @@ public class GenerateGrid : Subject
     public GameObject m_GraphContainer;
 
     public Camera cam;
+
+    private List<LevelNode> player_base_nodes;
+    private List<LevelNode> enemy_base_nodes;
     
+    private void AddPlayerBaseNode(LevelNode n)
+    {
+        player_base_nodes.Add(n);
+    }
+
+    private void AddEnemyBaseNode(LevelNode n)
+    {
+        enemy_base_nodes.Add(n);
+    }
+
+    public List<LevelNode> PlayerBaseNodes
+    {
+        get { return player_base_nodes; }
+    }
+
+    public List<LevelNode> EnemyBaseNodes
+    {
+        get { return enemy_base_nodes; }
+    }
 
     public Graph<LevelNode> Graph
     {
@@ -120,6 +142,9 @@ public class GenerateGrid : Subject
 
     void Awake()
     {
+        player_base_nodes = new List<LevelNode>();
+        enemy_base_nodes = new List<LevelNode>();
+
         this.getPlaneDimensions();
         graph = new PathFinderGraph<LevelNode>();
 
@@ -144,6 +169,7 @@ public class GenerateGrid : Subject
                 if (hit.transform.gameObject.GetComponent<LevelNode>())
                 {
                     hit.transform.gameObject.GetComponent<LevelNode>().ToggleOpen();
+                    //Debug.Log(hit.transform.gameObject.GetComponent<LevelNode>().GridSquare);
                     Notify();
                 }
             }
@@ -187,6 +213,44 @@ public class GenerateGrid : Subject
             l.GridSquare = s;
 
             graph.Add(l.GraphNode);
+
+            //we need to check if the node is a base node for the player or the enemy
+            //if we have m_SquaresPerFace even, then there will be two nodes that consist each camp
+            //they are the two nodes in the middle of one side
+            //otherwise its the node in the middle of the side
+            if(s.Coordinate.Column == 0 || s.Coordinate.Column == (m_SquaresPerFace - 1))
+            {
+                if (m_SquaresPerFace % 2 == 0)
+                {
+                    //check if we are in the middle two nodes
+                    if (s.Coordinate.Row == m_SquaresPerFace / 2 || s.Coordinate.Row == m_SquaresPerFace / 2 - 1)
+                    {
+                        l.IsBaseNode = true;
+
+                        if (s.Coordinate.Column == 0)
+                            AddEnemyBaseNode(l);
+
+                        else
+                            AddPlayerBaseNode(l);
+
+                    }
+                }
+
+                else
+                {
+                    if (s.Coordinate.Row == Mathf.Floor(m_SquaresPerFace / 2))
+                    {
+                        l.IsBaseNode = true;
+
+                        if (s.Coordinate.Column == 0)
+                            AddEnemyBaseNode(l);
+
+                        else
+                            AddPlayerBaseNode(l);
+                    }
+                        
+                }
+            }
         }
 
         //now we need to connect neighbors

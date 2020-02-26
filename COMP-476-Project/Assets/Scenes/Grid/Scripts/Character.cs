@@ -5,6 +5,8 @@ using Graph;
 using System.Linq;
 using System;
 
+public enum BEHAVIOUR_TYPE { BASE_SEEK }
+
 //a class used for an npc character
 public class Character : NPC
 {
@@ -16,7 +18,35 @@ public class Character : NPC
     private int current_path_node_index = 0; //the step of the path the character s currently executing
     private GraphNode<LevelNode> currentTarget;
     bool end_of_path = false;
-    public bool is_enemy = false;
+    private GenerateGrid grid;
+    private BEHAVIOUR_TYPE behaviour_type;
+
+    public BEHAVIOUR_TYPE BehvaiourType
+    {
+        set { behaviour_type = value; }
+    }
+
+    //gets the closest base node to the current npc (the closest goal node)
+    public LevelNode ClosestBaseNode
+    {
+        get {
+
+            LevelNode winner = grid.PlayerBaseNodes[0];
+            float smallest_dist = float.MaxValue;
+
+            foreach(LevelNode n in grid.PlayerBaseNodes)
+            {
+                if((current_node.Value.transform.position - n.transform.position).magnitude < smallest_dist)
+                {
+                    smallest_dist = (current_node.Value.transform.position - n.transform.position).magnitude;
+                    winner = n;
+                }
+            }
+
+            return winner;
+
+        }
+    }
 
     public GraphNode<LevelNode>[] Path
     {
@@ -31,7 +61,9 @@ public class Character : NPC
     {
         base.Start();
 
-        startNode = Resources.FindObjectsOfTypeAll<LevelNode>()[0];
+        grid = FindObjectOfType<GenerateGrid>();
+
+        startNode = grid.EnemyBaseNodes[UnityEngine.Random.Range(0, grid.EnemyBaseNodes.Count)];
 
         //initialize the node that the character is at to the graph node of the level node that he was placed at to begin
         current_node = startNode.GetComponent<LevelNode>().GraphNode;
@@ -65,10 +97,8 @@ public class Character : NPC
         }
     }
 
-    // Update is called once per frame
-    protected override void Update()
+    private void BaseSeekUpdate()
     {
-        
         try
         {
             if (!currentTarget.Value.Open)
@@ -81,7 +111,7 @@ public class Character : NPC
                     currentTarget = path[current_path_node_index];
                 }
 
-                catch(Exception)
+                catch (Exception)
                 {
                     current_path_node_index = path.Length;
                     Movement.Target = current_node.Value.transform.position;
@@ -95,6 +125,7 @@ public class Character : NPC
 
         }
 
+        /*
         if (Input.GetMouseButtonDown(0))
         {
             Ray ray = cam.ScreenPointToRay(Input.mousePosition);
@@ -126,6 +157,7 @@ public class Character : NPC
             }
 
         }
+        */
 
         try
         {
@@ -140,9 +172,19 @@ public class Character : NPC
         catch
         {
             end_of_path = true;
+            path = graph.ShortestPath(current_node, ClosestBaseNode.GraphNode).ToArray<GraphNode<LevelNode>>();
         }
-        
+
 
         base.Update();
+    }
+
+    // Update is called once per frame
+    protected override void Update()
+    {
+        switch(behaviour_type)
+        {
+            case BEHAVIOUR_TYPE.BASE_SEEK: BaseSeekUpdate(); break;
+        }
     }
 }
