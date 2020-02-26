@@ -93,9 +93,11 @@ public class WarriorCombatBehavior : MonoBehaviour
                 fastAttack1 = false;
                 fastAttack2 = false;
                 fastAttack3 = false;
+                kicking = false;
                 animator.SetBool("FastAttack1", false);
                 animator.SetBool("FastAttack2", false);
                 animator.SetBool("FastAttack3", false);
+                animator.SetBool("Kicking", false);
 
 
 

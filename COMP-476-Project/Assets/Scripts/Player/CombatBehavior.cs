@@ -10,6 +10,7 @@ public class CombatBehavior : MonoBehaviour
     public bool Attacking; // if true, means you are using your bow, this value is set to true after build phase is over
 
     public GameObject ProjectilePrefab;
+    public GameObject SpecialProjectilePrefab;
     public Transform LaunchPoint;
     public Transform AttackTarget;
 
@@ -29,6 +30,10 @@ public class CombatBehavior : MonoBehaviour
 
     [HideInInspector]public bool ultimateCooldown;
     float ultimateCooldownTimer = 0;
+
+    public bool secondaryArrowCooldown;
+    public float secondaryArrowCooldownTimer=0;
+    bool useSecondaryArrow;
 
     void Start()
     {
@@ -54,6 +59,16 @@ public class CombatBehavior : MonoBehaviour
             {
                 ultimateCooldown = false;
                 ultimateCooldownTimer = 0;
+            }
+        }
+
+        if (secondaryArrowCooldown)
+        {
+            secondaryArrowCooldownTimer += Time.deltaTime;
+            if (secondaryArrowCooldownTimer > 15)
+            {
+                secondaryArrowCooldown = false;
+                secondaryArrowCooldownTimer = 0;
             }
         }
     }
@@ -136,8 +151,48 @@ public class CombatBehavior : MonoBehaviour
         }
 
 
+        if (Input.GetMouseButton(1) && Attacking && !secondaryArrowCooldown)
+        {
+            animator.SetBool("Shot", false);
+            animator.SetBool("Shooting", true);
+            mouseClickTime += Time.deltaTime;
+
+            //test
+            if (AttackTarget != null)
+            {
+                Vector3 PlayerMeshLookAt = AttackTarget.position;
+                PlayerMeshLookAt.y = transform.position.y;
+                PlayerMesh.LookAt(PlayerMeshLookAt);
+            }
+        }
+
+        if (Input.GetMouseButtonUp(1) && Attacking && !secondaryArrowCooldown)
+        {
+            if (AttackTarget == null)
+                AcquireTarget();
+
+            if (mouseClickTime > 0.9f)
+            {
+                animator.SetBool("Shot", true);
+                animator.SetBool("Shooting", false);
+                secondaryArrowCooldown = true;
+                useSecondaryArrow = true;
+            }
+            else
+            {
+                animator.SetBool("Shot", false);
+                animator.SetBool("Shooting", false);
+                Invoke("ArcherArrowSheath", 0.4f);
+            }
+            //Shoot();
+            mouseClickTime = 0;
+        }
+
+
+
         // ultimate
-        if(Attacking && Input.GetMouseButtonDown(1) && !ultimateCooldown)
+        //if (Attacking && Input.GetMouseButtonDown(1) && !ultimateCooldown)
+        if (Attacking && Input.GetKeyDown(KeyCode.T) && !ultimateCooldown)
         {
             animator.SetFloat("Movement", 0);
             animator.SetFloat("SprintMultiplier", 1);
@@ -163,15 +218,25 @@ public class CombatBehavior : MonoBehaviour
 
         if (AttackTarget != null)
         {
+            float specialMult = 1;
             if (Vector3.Angle(LaunchPoint.forward, (AttackTarget.position - transform.position)) < 40)
             {
-                GameObject obj = Instantiate(ProjectilePrefab, LaunchPoint.position, Quaternion.identity);
+                GameObject obj;
+                if (useSecondaryArrow)
+                {
+                    obj = Instantiate(SpecialProjectilePrefab, LaunchPoint.position, Quaternion.identity);
+                    useSecondaryArrow = false;
+                    specialMult = 1.2f;
+                }
+                else
+                    obj = Instantiate(ProjectilePrefab, LaunchPoint.position, Quaternion.identity);
+
                 Vector3 shotDirection = (AttackTarget.position - transform.position).normalized;
                 shotDirection.y += 0.08f;
                 obj.transform.LookAt(AttackTarget.position);
 
                 if(Vector3.Distance(AttackTarget.position,transform.position) > 17.5f)
-                    obj.GetComponent<Rigidbody>().AddForce(shotDirection.normalized * 35f, ForceMode.Impulse);
+                    obj.GetComponent<Rigidbody>().AddForce(shotDirection.normalized * 35f*specialMult, ForceMode.Impulse);
                 else
                     obj.GetComponent<Rigidbody>().AddForce(shotDirection.normalized * 25f, ForceMode.Impulse);
 
