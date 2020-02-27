@@ -8,6 +8,7 @@ public class BuildingStats : MonoBehaviour
     public int price, tier;
     public float health;
     public Dictionary<string, int> multipliers = new Dictionary<string, int>();
+    public string description;
 
     private void Start()
     {
@@ -28,5 +29,10 @@ public class BuildingStats : MonoBehaviour
     public float GetHealth()
     {
         return health*multipliers["price"];
+    }
+
+    public string GetDescription()
+    {
+        return description;
     }
 }

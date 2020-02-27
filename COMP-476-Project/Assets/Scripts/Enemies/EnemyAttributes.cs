@@ -5,9 +5,9 @@ using UnityEngine.UI;
 
 public class EnemyAttributes : MonoBehaviour
 {
-    public int health;
-    int maxHealth;
-    public int damage;
+    public float health;
+    float maxHealth;
+    public float damage;
     public float speed;
     public bool isDead;
     public float heightOffset;
@@ -34,12 +34,12 @@ public class EnemyAttributes : MonoBehaviour
         return isDead;
     }
 
-    public int GetHealth()
+    public float GetHealth()
     {
         return health;
     }
 
-    public void DealDamage(int dmg)
+    public void DealDamage(float dmg)
     {
         health -= dmg;
         if (health <= 0)

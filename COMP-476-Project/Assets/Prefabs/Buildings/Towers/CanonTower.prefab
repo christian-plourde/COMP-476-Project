@@ -258,6 +258,10 @@ MonoBehaviour:
   price: 150
   tier: 1
   health: 150
+  description: 'A long range but innacurate tower that shoots explosive canonballs,
+    damaging all enemies within range.\nDamage : 10 on impact + 10 within 1)\nAttack
+    cooldown : 1.75s\nRange : 7\nHeight limit : 2.3\nMaximum aim time : 3s\nHealth
+    : 150\nPrice : 150'
 --- !u!114 &-5769318891380437015
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -271,20 +275,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackSpeed: 1.75
-  damage: 20
+  damage: 10
   range: 7
-  rotationSpeed: 2.5
+  rotationSpeed: 3
+  heightLimit: 2.3
+  inaccuracy: 0.45
   projectile: {fileID: 3823272756201023609, guid: f2a4533ff0e177142886b300140104ac,
     type: 3}
   projectileSpawnPointOffset: {x: 0, y: 2.3, z: 0.86}
-  possibleTargets: 
-  attackTimer: 0
-  attackCooldown: 0
-  target: {fileID: 0}
-  targetLinedUp: 0
-  targetScanTimer: 20
-  adjustedRotation: {x: 0, y: 0, z: 0}
-  adjustedProjectileSpawnPoint: {x: 0, y: 0, z: 0}
+  possibleTargets: ground
+  projectileType: ballistic
 --- !u!1 &171538
 GameObject:
   m_ObjectHideFlags: 0
