@@ -839,10 +839,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_ZombiePrefab: {fileID: 5261472356962851498, guid: a8da478190a472a439ee536c482b2b17,
     type: 3}
-  m_PlayerObj: {fileID: 0}
-  m_TowerObj: {fileID: 24926566986257866, guid: 0a8478a5445f3744d93380920005b903,
-    type: 3}
   initial_monster_count: 2
+  initial_start_delay_seconds: 2
+  spawner_interval_seconds: 10
 --- !u!4 &1111047321
 Transform:
   m_ObjectHideFlags: 0

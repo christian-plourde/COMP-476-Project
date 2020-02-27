@@ -48,7 +48,17 @@ public class EnemyMovement : MonoBehaviour
     protected virtual bool SeesPlayer()
     {
         Vector3 enemypos = this.transform.position;
-        Vector3 playerpos = this.m_Player.position;
+        Vector3 playerpos;
+        try
+        {
+           playerpos  = this.m_Player.position;
+        }
+
+        catch
+        {
+            return false;
+        }
+        
         float dot = Vector3.Dot(this.transform.forward, (playerpos - enemypos).normalized);
         //If our dot product is exactly 1, then the player is exactly in front of us
         float desired_result = 1.0f;
