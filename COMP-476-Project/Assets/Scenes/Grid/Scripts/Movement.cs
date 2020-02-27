@@ -60,8 +60,8 @@ public abstract class AlignedMovement : Movement
 {
     protected const float time_to_target = 0.5f;
     protected const float radius_of_satisfaction = 0.02f;
-    protected const float angular_radius_of_satisfaction = 5.0f;
-    protected const float angular_slow_down_radius = 10.0f;
+    protected const float angular_radius_of_satisfaction = 20.0f;
+    protected const float angular_slow_down_radius = 30.0f;
     protected const float angular_time_to_target = 0.4f;
     protected const float cone_of_perception_distance = 1.0f;
     protected const float max_cone_radius = 45.0f;
@@ -121,7 +121,8 @@ public abstract class AlignedMovement : Movement
             Quaternion quat = new Quaternion();
             Vector3 euler_angs = new Vector3(0.0f, value%360, 0.0f);
             quat.eulerAngles = euler_angs;
-            NPC.gameObject.transform.rotation = quat; }
+            NPC.gameObject.transform.rotation = quat;
+        }
     }
 
     protected void StopAlignAndMove()
@@ -174,7 +175,7 @@ public abstract class AlignedMovement : Movement
 
         //we need to check if we are within the radius of satifaction, it which case, we should stop rotating the character
         //set its orientation to that of the target, and return
-        if (Mathf.Abs(rotation_diff) < angular_radius_of_satisfaction)
+        if (Mathf.Abs(rotation_diff) < angular_radius_of_satisfaction && Mathf.Sign(target_rotation_euler) == Mathf.Sign(Orientation))
         {
             Orientation = target_rotation_euler;
             Aligned = true;
@@ -209,7 +210,6 @@ public abstract class AlignedMovement : Movement
         //------------------------------------- CAR ORIENTATION ---------------------------------//
 
         //finally we compute the new orientation based on the new velocity
-
         Orientation = Orientation + AngularVelocity * Time.deltaTime;
     }
 
