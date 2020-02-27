@@ -573,7 +573,7 @@ MonoBehaviour:
     type: 3}
   terrain: {fileID: 2050248783}
   terrainRayCaster: {fileID: 1331106687}
-  y_offset_for_connection: 0.13
+  y_offset_for_connection: 0.14
 --- !u!1001 &757193241
 PrefabInstance:
   m_ObjectHideFlags: 0

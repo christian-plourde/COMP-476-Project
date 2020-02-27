@@ -9,6 +9,7 @@ TagManager:
   - Enemy
   - Tower
   - GridObstacle
+  - GraphNode
   layers:
   - Default
   - TransparentFX

@@ -5,8 +5,6 @@ using UnityEngine;
 public class EnemySpawner : MonoBehaviour
 {
     [SerializeField] GameObject m_ZombiePrefab;
-    public GameObject m_PlayerObj;
-    public GameObject m_TowerObj;
 
     private List<GameObject> m_Zombies = new List<GameObject>();
 
@@ -17,7 +15,7 @@ public class EnemySpawner : MonoBehaviour
         foreach(GameObject g in m_Zombies)
         {
             ZombieMovement zm = g.GetComponent<ZombieMovement>();
-            zm.Initialize(this.m_PlayerObj.transform);
+            zm.Initialize();
         }
     }
 

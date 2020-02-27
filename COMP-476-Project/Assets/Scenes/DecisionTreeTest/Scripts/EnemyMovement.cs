@@ -169,11 +169,8 @@ public class EnemyMovement : MonoBehaviour
     }
 
     //A pseudoconstructor to allow us to easily spawn and initialize zombie movement types
-    public void Initialize(Transform player)
+    public void Initialize()
     {
-        //Set our instance variables
-        this.m_Player = player;
-
         grid_generator = FindObjectOfType<GenerateGrid>();
 
         //Set our decision tree
