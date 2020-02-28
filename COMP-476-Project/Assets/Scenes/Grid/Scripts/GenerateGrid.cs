@@ -114,6 +114,11 @@ public class GenerateGrid : Subject
 
     private List<LevelNode> player_base_nodes;
     private List<LevelNode> enemy_base_nodes;
+
+    public GameObject test_tower;
+    public GameObject terrain;
+    public GameObject terrainRayCaster;
+    public float y_offset_for_connection;
     
     private void AddPlayerBaseNode(LevelNode n)
     {
@@ -155,11 +160,12 @@ public class GenerateGrid : Subject
         {
             AttachObserver(c);
         }
+
     }
 
     void Update()
     {
-        if (Input.GetMouseButtonDown(1))
+        if (Input.GetMouseButtonDown(0))
         {
             Ray ray = cam.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
@@ -169,7 +175,24 @@ public class GenerateGrid : Subject
                 if (hit.transform.gameObject.GetComponent<LevelNode>())
                 {
                     hit.transform.gameObject.GetComponent<LevelNode>().ToggleOpen();
+
+                    //if the node is open, create a tower, otherwise destory it
+                    if(!hit.transform.gameObject.GetComponent<LevelNode>().Open)
+                    {
+                        GameObject tower = Instantiate(test_tower, hit.transform.position, Quaternion.identity);
+                        tower.transform.parent = hit.transform.gameObject.transform;
+                    }
+
+                    else
+                    {
+                        foreach(Transform child in hit.transform)
+                        {
+                            Destroy(child.gameObject);
+                        }
+                    }
+
                     //Debug.Log(hit.transform.gameObject.GetComponent<LevelNode>().GridSquare);
+                    
                     Notify();
                 }
             }
@@ -199,7 +222,17 @@ public class GenerateGrid : Subject
             {
                 float x = start.x + (GRIDSQUARE_SIDELENGTH / 2.0f) + (GRIDSQUARE_SIDELENGTH * i);
                 float z = start.z - (GRIDSQUARE_SIDELENGTH / 2.0f) - (GRIDSQUARE_SIDELENGTH * j);
-                this.m_GridSquares.Add(new GridSquare(new Vector3(x, this.transform.position.y, z), new GridCoordinate(i, j)));
+
+                RaycastHit hit;
+                float y = this.transform.position.y;
+
+                //we need to linecast to the terrain to determine the y value at that x z position
+                if(Physics.Linecast(terrainRayCaster.transform.position, new Vector3(x, this.transform.position.y, z), out hit))
+                {
+                    y = hit.point.y;
+                }
+
+                this.m_GridSquares.Add(new GridSquare(new Vector3(x, y, z), new GridCoordinate(i, j)));
             }
         }
 
@@ -258,7 +291,26 @@ public class GenerateGrid : Subject
         {
             foreach(GraphNode<LevelNode> g in getNeighbors(n.Value.GridSquare))
             {
+                //we need to check if its actually possible to get from node to node first. If the angle of the line connection the two nodes is too large in the y direction, then we should not add the neighbor (will have to go up a straight wall)
+                //we will take the difference between this nodes position and the neighbor node
+                //if (Mathf.Abs((g.Value.transform.position - n.Value.transform.position).y) > max_y_offset_for_connection)
+                    //continue;
+
+
+       
+                RaycastHit hit;
+
+                if (Physics.Linecast(new Vector3(n.Value.transform.position.x, n.Value.transform.position.y + y_offset_for_connection, n.Value.transform.position.z), 
+                                     new Vector3(g.Value.transform.position.x, g.Value.transform.position.y + y_offset_for_connection, g.Value.transform.position.z), 
+                                     out hit))
+                {
+                    if (hit.collider.tag == "GridObstacle")
+                        continue;
+                }
+            
+
                 n.AddNeighbor(g, n.Value.ComputeHeuristic(g.Value));
+
                 n.Value.AddLineRenderer();
             }
         }

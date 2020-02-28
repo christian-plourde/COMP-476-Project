@@ -48,7 +48,17 @@ public class EnemyMovement : MonoBehaviour
     protected virtual bool SeesPlayer()
     {
         Vector3 enemypos = this.transform.position;
-        Vector3 playerpos = this.m_Player.position;
+        Vector3 playerpos;
+        try
+        {
+           playerpos  = this.m_Player.position;
+        }
+
+        catch
+        {
+            return false;
+        }
+        
         float dot = Vector3.Dot(this.transform.forward, (playerpos - enemypos).normalized);
         //If our dot product is exactly 1, then the player is exactly in front of us
         float desired_result = 1.0f;
@@ -165,15 +175,12 @@ public class EnemyMovement : MonoBehaviour
     {
         //this behaviour will make the enemy move toward the enemy base
         //Debug.Log(this.gameObject.GetComponent<Character>());
-        this.gameObject.GetComponent<Character>().BehvaiourType = BEHAVIOUR_TYPE.BASE_SEEK;
+        this.gameObject.GetComponent<Character>().BehaviourType = BEHAVIOUR_TYPE.BASE_SEEK;
     }
 
     //A pseudoconstructor to allow us to easily spawn and initialize zombie movement types
-    public void Initialize(Transform player)
+    public void Initialize()
     {
-        //Set our instance variables
-        this.m_Player = player;
-
         grid_generator = FindObjectOfType<GenerateGrid>();
 
         //Set our decision tree

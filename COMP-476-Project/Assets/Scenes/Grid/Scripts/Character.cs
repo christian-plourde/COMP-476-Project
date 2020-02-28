@@ -21,7 +21,7 @@ public class Character : NPC
     private GenerateGrid grid;
     private BEHAVIOUR_TYPE behaviour_type;
 
-    public BEHAVIOUR_TYPE BehvaiourType
+    public BEHAVIOUR_TYPE BehaviourType
     {
         set { behaviour_type = value; }
     }
@@ -182,6 +182,9 @@ public class Character : NPC
     // Update is called once per frame
     protected override void Update()
     {
+        if (grid.PlayerBaseNodes.Contains(current_node.Value))
+            Destroy(this.gameObject);
+
         switch(behaviour_type)
         {
             case BEHAVIOUR_TYPE.BASE_SEEK: BaseSeekUpdate(); break;

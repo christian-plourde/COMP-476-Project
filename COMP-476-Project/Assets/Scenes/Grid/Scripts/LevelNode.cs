@@ -58,7 +58,9 @@ public class LevelNode : MonoBehaviour, IHeuristic<LevelNode>
         if (closed)
             return double.MaxValue;
 
-        return (goal.GraphNode.Value.transform.position - node.Value.transform.position).magnitude;
+        float elevation_difference = (goal.GraphNode.Value.transform.position.y - node.Value.transform.position.y);
+
+        return (goal.GraphNode.Value.transform.position - node.Value.transform.position).magnitude + elevation_difference;
     }
 
     private void Awake()
@@ -94,8 +96,17 @@ public class LevelNode : MonoBehaviour, IHeuristic<LevelNode>
         int i = 0;
         foreach (GraphEdge<LevelNode> o in node.Links)
         {
-            lineRenderers[i].SetPosition(0, this.transform.position); //draw a line from the start to the end of the connection
+            if(o.Disconnected || !o.End.Value.Open)
+            {
+                lineRenderers[i].GetComponent<LineRenderer>().enabled = false;
+            }
+
+            else
+                lineRenderers[i].GetComponent<LineRenderer>().enabled = true;
+
+            lineRenderers[i].SetPosition(0, o.Start.Value.transform.position);
             lineRenderers[i].SetPosition(1, o.End.Value.transform.position);
+
             i++;
         }
     }
