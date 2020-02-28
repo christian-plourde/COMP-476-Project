@@ -569,8 +569,7 @@ MonoBehaviour:
     type: 3}
   m_GraphContainer: {fileID: 252450567}
   cam: {fileID: 1588798862}
-  test_tower: {fileID: 2818103337241428834, guid: c4445db95ec4eea47bd9c0c3ba30c6d3,
-    type: 3}
+  test_tower: {fileID: 165880, guid: 5703e39d0fecce64bb998180eee64354, type: 3}
   terrain: {fileID: 2050248783}
   terrainRayCaster: {fileID: 1331106687}
   y_offset_for_connection: 0.14
@@ -837,7 +836,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f4ee31875ec44498aab87f87058bad3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_ZombiePrefab: {fileID: 5261472356962851498, guid: a8da478190a472a439ee536c482b2b17,
+  m_ZombiePrefab: {fileID: 1322159951115188047, guid: 3373c39bdd74c1e469e49eea9402fea3,
     type: 3}
   initial_monster_count: 2
   initial_start_delay_seconds: 2

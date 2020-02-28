@@ -1,5 +1,37 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!136 &-6765683278931044445
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5261472356962851498}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.012255179
+  m_Height: 0.08541334
+  m_Direction: 1
+  m_Center: {x: -0.00017196499, y: 0.03780098, z: 0.004935329}
+--- !u!114 &-302129436459491032
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5261472356962851498}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aaec248e2e9532549866ab01e51bbb0f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 50
+  damage: 3
+  speed: 3
+  isDead: 0
+  heightOffset: 1.25
+  HealthUI: {fileID: 0}
 --- !u!114 &1461809430
 MonoBehaviour:
   m_ObjectHideFlags: 0

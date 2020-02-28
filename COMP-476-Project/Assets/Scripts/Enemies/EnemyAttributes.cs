@@ -70,7 +70,7 @@ public class EnemyAttributes : MonoBehaviour
         GetComponent<CapsuleCollider>().enabled = false;
         GetComponent<Rigidbody>().isKinematic = true;
         HealthUI.enabled = false;
-        Destroy(this.gameObject, 60f);
+        Destroy(this.gameObject, 1.5f);
     }
 
 }
