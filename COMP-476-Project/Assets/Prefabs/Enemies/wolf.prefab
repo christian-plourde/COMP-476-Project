@@ -24741,6 +24741,8 @@ GameObject:
   - component: {fileID: 7424372955921300310}
   - component: {fileID: 7424372955921300265}
   - component: {fileID: 4555673887844122317}
+  - component: {fileID: -5188962610406153263}
+  - component: {fileID: 8675522791493954225}
   m_Layer: 0
   m_Name: wolf
   m_TagString: Enemy
@@ -24757,7 +24759,7 @@ Transform:
   m_GameObject: {fileID: 7424372955921300309}
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
   m_LocalPosition: {x: 14.277083, y: 0, z: 61.62565}
-  m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
+  m_LocalScale: {x: 0.05, y: 0.05, z: 0.05}
   m_Children:
   - {fileID: 64341480605422289}
   - {fileID: 7424372955921067895}
@@ -24780,7 +24782,7 @@ Rigidbody:
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 1
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
@@ -24835,6 +24837,34 @@ CapsuleCollider:
   m_Height: 17.04
   m_Direction: 2
   m_Center: {x: 0, y: 7.7, z: 1.4}
+--- !u!114 &-5188962610406153263
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7424372955921300309}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e621c67f52a704139ac4ba18634499e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_WhatIsNearby: 0.2
+  m_VisionErrorMargin: 0.2
+  m_RangeOfVision: 10
+--- !u!114 &8675522791493954225
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7424372955921300309}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5b64f7e69995724ba236a9a3907927a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cam: {fileID: 0}
 --- !u!1 &7424372955921300311
 GameObject:
   m_ObjectHideFlags: 0
