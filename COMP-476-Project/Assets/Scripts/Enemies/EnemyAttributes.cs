@@ -56,15 +56,20 @@ public class EnemyAttributes : MonoBehaviour
         animator.SetBool("Dead", true);
         isDead = true;
         GameObject playerRef = GameObject.FindGameObjectWithTag("Player");
-        if (playerRef) {
+        // check if its warrior or archer
+
+        if (playerRef.GetComponent<PlayerMovement>().playerClass == "Archer")
+        {
+
             if (playerRef.GetComponent<CombatBehavior>().AttackTarget != null
-            &&
-            playerRef.GetComponent<CombatBehavior>().AttackTarget.name == transform.name)
+                &&
+                playerRef.GetComponent<CombatBehavior>().AttackTarget.name == transform.name)
             {
                 playerRef.GetComponent<CombatBehavior>().AttackTarget = null;
                 playerRef.GetComponent<CombatBehavior>().AcquireTarget();
-            } }
-        transform.GetChild(0).gameObject.SetActive(false);
+            }
+            transform.GetChild(0).gameObject.SetActive(false);
+        }
 
         // remove UI Health display & destroy object in few seconds, remove own collider
         GetComponent<CapsuleCollider>().enabled = false;

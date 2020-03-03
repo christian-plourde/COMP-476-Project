@@ -18,6 +18,8 @@ public class CameraBehavior : MonoBehaviour
     private float yOldOffset;
     private float zOldOffset;
 
+    bool paused;
+
     Vector3 velocity = Vector3.zero;
 
     void Start()
@@ -31,6 +33,21 @@ public class CameraBehavior : MonoBehaviour
     {
         CamControl();
         ZoomControl();
+
+        // for screenshots
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            if (paused)
+            {
+                Time.timeScale = 1;
+                paused = false;
+            }
+            else
+            {
+                Time.timeScale = 0;
+                paused = true;
+            }
+        }
     }
 
     void CamControl()
