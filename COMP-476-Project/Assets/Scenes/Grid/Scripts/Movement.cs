@@ -113,12 +113,14 @@ public abstract class AlignedMovement : Movement
     {
         get {
 
+            /*
             if (NPC.gameObject.transform.rotation.eulerAngles.y > 180.0f)
             {
                 return (NPC.gameObject.transform.rotation.eulerAngles.y - 360.0f) % 360;
             }
+            */
                 
-            return (NPC.gameObject.transform.rotation.eulerAngles.y)%360; }
+            return (NPC.gameObject.transform.rotation.eulerAngles.y); }
 
         set {
             Quaternion quat = new Quaternion();
@@ -166,8 +168,8 @@ public abstract class AlignedMovement : Movement
         float target_rotation_euler = target_rotation.eulerAngles.y;
 
         //since we want the target rotation to be signed, if it is larger than 180 degrees, we will make it negative from 0
-        if (target_rotation_euler > 180)
-            target_rotation_euler = (target_rotation_euler - 360.0f) % 360;
+        //if (target_rotation_euler > 180)
+            //target_rotation_euler = (target_rotation_euler - 360.0f) % 360;
 
         //we only allow the character to rotate around the y_axis, therefore we only need the angle around y axis that separates
         //the car and the target
@@ -179,7 +181,7 @@ public abstract class AlignedMovement : Movement
         else
             rotation_diff = Orientation - target_rotation_euler;
 
-        Debug.Log(target_rotation_euler + " " + Orientation + " " + rotation_diff);
+        //Debug.Log(target_rotation_euler + " " + Orientation + " " + rotation_diff);
 
         //------------------------------------- RADIUS OF SATISFACTION CHECK ---------------------------------//
 

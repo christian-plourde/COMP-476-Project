@@ -5,12 +5,19 @@ using UnityEngine;
 //basic npc class
 public abstract class NPC : Observer
 {
-    float MAX_VELOCITY = 0.6f;
+    public float MAX_VELOCITY = 0.6f;
     float currentVelocity = 0.0f;
-    float MAX_ANGULAR_VELOCITY = 40.0f;
+    public float MAX_ANGULAR_VELOCITY = 40.0f;
     float currentAngularVelocity = 0.0f;
     float MAX_ANGULAR_ACCELERATION = 20.0f;
     AlignedMovement movement; //the current movement type for the character
+    bool immobilized = false;
+
+    public bool Immobilized
+    {
+        get { return this.immobilized; }
+        set { this.immobilized = value; }
+    }
 
     public float MaxVelocity
     {
@@ -53,6 +60,11 @@ public abstract class NPC : Observer
     }
 
     // Start is called before the first frame update
+    protected virtual void Awake()
+    {
+        Movement = new KinematicArrive(this);
+    }
+
     protected virtual void Start()
     {
         Movement = new KinematicArrive(this);
@@ -62,7 +74,7 @@ public abstract class NPC : Observer
     protected virtual void Update()
     {
         //move is called as long as the destination is not reached
-        if (!Movement.HasArrived)
+        if (!Movement.HasArrived && !Immobilized)
             Movement.Move();
 
     }

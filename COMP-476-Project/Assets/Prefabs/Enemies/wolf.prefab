@@ -24798,7 +24798,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aaec248e2e9532549866ab01e51bbb0f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 8
+  health: 10000
   damage: 2
   speed: 6
   isDead: 0
@@ -24864,7 +24864,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5b64f7e69995724ba236a9a3907927a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cam: {fileID: 0}
+  MAX_VELOCITY: 6
+  MAX_ANGULAR_VELOCITY: 40
 --- !u!1 &7424372955921300311
 GameObject:
   m_ObjectHideFlags: 0

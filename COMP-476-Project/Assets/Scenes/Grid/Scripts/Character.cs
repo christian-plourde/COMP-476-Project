@@ -16,7 +16,6 @@ public class Character : NPC
     private GraphNode<LevelNode>[] path = new GraphNode<LevelNode>[0]; //this is a list containing the nodes in the current chracters path
     private int current_path_node_index = 0; //the step of the path the character s currently executing
     private GraphNode<LevelNode> currentTarget;
-    bool end_of_path = false;
     private GenerateGrid grid;
     private BEHAVIOUR_TYPE behaviour_type;
 
@@ -51,7 +50,6 @@ public class Character : NPC
     {
         get { return path; }
         set { path = value;
-            end_of_path = false;
         }
     }
 
@@ -68,12 +66,11 @@ public class Character : NPC
         current_node = startNode.GetComponent<LevelNode>().GraphNode;
 
         //set the position of the character to the position of the current node
-        transform.position = current_node.Value.transform.position;
+        if(!Immobilized)
+            transform.position = current_node.Value.transform.position;
 
         graph = FindObjectOfType<GenerateGrid>().Graph;
         Movement.Target = current_node.Value.transform.position;
-
-        MaxVelocity = 10 * MaxVelocity;
     }
 
     public override void ObserverUpdate()
@@ -136,7 +133,6 @@ public class Character : NPC
 
         catch
         {
-            end_of_path = true;
             path = graph.ShortestPath(current_node, ClosestBaseNode.GraphNode).ToArray<GraphNode<LevelNode>>();
         }
 
@@ -150,9 +146,12 @@ public class Character : NPC
         if (grid.PlayerBaseNodes.Contains(current_node.Value))
             Destroy(this.gameObject);
 
-        switch(behaviour_type)
+        if(!Immobilized)
         {
-            case BEHAVIOUR_TYPE.BASE_SEEK: BaseSeekUpdate(); break;
+            switch (behaviour_type)
+            {
+                case BEHAVIOUR_TYPE.BASE_SEEK: BaseSeekUpdate(); break;
+            }
         }
     }
 }
