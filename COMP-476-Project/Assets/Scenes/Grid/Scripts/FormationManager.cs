@@ -46,13 +46,16 @@ public class FormationManager : MonoBehaviour
             //be placed at the head of the formation and the two others to either side.
             characters[0].Immobilized = false;
             characters[0].Movement.Target = this.Position + 2.0f / 3.0f * formation_scale * this.transform.forward;
-            characters[0].Movement.Orientation = character.Movement.Orientation;
+            if (characters[0].transform.position == (this.Position + 2.0f / 3.0f * formation_scale * this.transform.forward))
+                characters[0].Movement.Orientation = character.Movement.Orientation;
             characters[1].Immobilized = false;
             characters[1].Movement.Target = this.Position + 1.0f / 3.0f * formation_scale * this.transform.right;
-            characters[1].Movement.Orientation = character.Movement.Orientation;
+            if (characters[1].transform.position == (this.Position + 1.0f / 3.0f * formation_scale * this.transform.right))
+                characters[1].Movement.Orientation = character.Movement.Orientation;
             characters[2].Immobilized = false;
             characters[2].Movement.Target = this.Position + 1.0f / 3.0f * formation_scale * (-1.0f) * this.transform.right;
-            characters[2].Movement.Orientation = character.Movement.Orientation;
+            if(characters[2].transform.position == (this.Position + 1.0f / 3.0f * formation_scale * (-1.0f) * this.transform.right))
+                characters[2].Movement.Orientation = character.Movement.Orientation;
         }
 
         else if(UnitCount == 2)
@@ -66,10 +69,13 @@ public class FormationManager : MonoBehaviour
         {
             characters[0].Immobilized = false;
             characters[0].Movement.Target = this.Position + 1.0f / 3.0f * formation_scale * this.transform.right;
-            characters[0].Movement.Orientation = character.Movement.Orientation;
+            if (characters[0].transform.position == (this.Position + 1.0f / 3.0f * formation_scale * this.transform.right))
+                characters[0].Movement.Orientation = character.Movement.Orientation;
+            
             characters[1].Immobilized = false;
             characters[1].Movement.Target = this.Position + 1.0f / 3.0f * formation_scale * (-1.0f) * this.transform.right;
-            characters[1].Movement.Orientation = character.Movement.Orientation;
+            if (characters[1].transform.position == (this.Position + 1.0f / 3.0f * formation_scale * (-1.0f) * this.transform.right))
+                characters[1].Movement.Orientation = character.Movement.Orientation;
         }
     }
 
