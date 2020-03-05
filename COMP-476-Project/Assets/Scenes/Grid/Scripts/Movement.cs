@@ -58,11 +58,11 @@ public abstract class Movement
 
 public abstract class AlignedMovement : Movement
 {
-    protected const float time_to_target = 0.5f;
+    protected const float time_to_target = 0.2f;
     protected const float radius_of_satisfaction = 0.02f;
     protected const float angular_radius_of_satisfaction = 20.0f;
     protected const float angular_slow_down_radius = 30.0f;
-    protected const float angular_time_to_target = 0.4f;
+    protected const float angular_time_to_target = 0.02f;
     protected const float cone_of_perception_distance = 1.0f;
     protected const float max_cone_radius = 45.0f;
     private bool aligned = false;
@@ -112,9 +112,12 @@ public abstract class AlignedMovement : Movement
     public float Orientation
     {
         get {
-            if (NPC.gameObject.transform.rotation.eulerAngles.y > 180.0f)
-                return (NPC.gameObject.transform.rotation.eulerAngles.y - 360.0f)%360;
 
+            if (NPC.gameObject.transform.rotation.eulerAngles.y > 180.0f)
+            {
+                return (NPC.gameObject.transform.rotation.eulerAngles.y - 360.0f) % 360;
+            }
+                
             return (NPC.gameObject.transform.rotation.eulerAngles.y)%360; }
 
         set {
@@ -164,18 +167,25 @@ public abstract class AlignedMovement : Movement
 
         //since we want the target rotation to be signed, if it is larger than 180 degrees, we will make it negative from 0
         if (target_rotation_euler > 180)
-            target_rotation_euler = target_rotation_euler - 360.0f;
+            target_rotation_euler = (target_rotation_euler - 360.0f) % 360;
 
         //we only allow the character to rotate around the y_axis, therefore we only need the angle around y axis that separates
         //the car and the target
 
-        float rotation_diff = target_rotation_euler - Orientation;
+        float rotation_diff;
+        if (Mathf.Sign(target_rotation_euler) == Mathf.Sign(Orientation))
+            rotation_diff = target_rotation_euler - Orientation;
+
+        else
+            rotation_diff = Orientation - target_rotation_euler;
+
+        Debug.Log(target_rotation_euler + " " + Orientation + " " + rotation_diff);
 
         //------------------------------------- RADIUS OF SATISFACTION CHECK ---------------------------------//
 
         //we need to check if we are within the radius of satifaction, it which case, we should stop rotating the character
         //set its orientation to that of the target, and return
-        if (Mathf.Abs(rotation_diff) < angular_radius_of_satisfaction && Mathf.Sign(target_rotation_euler) == Mathf.Sign(Orientation))
+        if (Mathf.Abs(rotation_diff) < angular_radius_of_satisfaction )
         {
             Orientation = target_rotation_euler;
             Aligned = true;
@@ -295,7 +305,19 @@ public class KinematicArrive : ReachMovement
 
         //the next step is to determine the magnitude of the velocity to use. This will either be the maximum velocity, or 
         //the velocity based on the time to target. Whichever is smallest will be the one we choose.
-        float char_to_target_speed = (Target - Position).magnitude / time_to_target;
+        float char_to_target_speed;
+
+        try
+        {
+            char_to_target_speed = (Target - Position).magnitude / time_to_target;
+        }
+
+        catch
+        {
+            char_to_target_speed = MaxVelocity;
+        }
+        
+        
         float velocity = 0.0f;
 
         if (MaxVelocity < char_to_target_speed)
