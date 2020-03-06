@@ -58,10 +58,10 @@ public abstract class Movement
 
 public abstract class AlignedMovement : Movement
 {
-    protected const float time_to_target = 0.2f;
+    protected const float time_to_target = 0.005f;
     protected const float radius_of_satisfaction = 0.02f;
-    protected const float angular_radius_of_satisfaction = 20.0f;
-    protected const float angular_slow_down_radius = 30.0f;
+    protected const float angular_radius_of_satisfaction = 5.0f;
+    protected const float angular_slow_down_radius = 10.0f;
     protected const float angular_time_to_target = 0.02f;
     protected const float cone_of_perception_distance = 1.0f;
     protected const float max_cone_radius = 45.0f;

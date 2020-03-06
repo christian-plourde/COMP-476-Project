@@ -18,6 +18,7 @@ public class Character : NPC
     private GraphNode<LevelNode> currentTarget;
     private GenerateGrid grid;
     private BEHAVIOUR_TYPE behaviour_type;
+    private float t = 0.0f; //the parameter for following the spline 
 
     public BEHAVIOUR_TYPE BehaviourType
     {
@@ -50,6 +51,7 @@ public class Character : NPC
     {
         get { return path; }
         set { path = value;
+            t = 0.0f;
         }
     }
 
@@ -77,9 +79,9 @@ public class Character : NPC
     {
         try
         {
-            path = graph.ShortestPath(path[current_path_node_index--], path[path.Length - 1]).ToArray();
+            Path = graph.ShortestPath(Path[current_path_node_index--], Path[path.Length - 1]).ToArray();
 
-            if (!path.Contains(currentTarget))
+            if (!Path.Contains(currentTarget))
             {
                 Movement.Target = current_node.Value.transform.position;
                 currentTarget = current_node;
@@ -88,8 +90,8 @@ public class Character : NPC
 
         catch
         {
-            Movement.Target = path[current_path_node_index].Value.transform.position;
-            currentTarget = path[current_path_node_index];
+            Movement.Target = Path[current_path_node_index].Value.transform.position;
+            currentTarget = Path[current_path_node_index];
         }
     }
 
@@ -101,15 +103,16 @@ public class Character : NPC
             {
                 try
                 {
-                    path = graph.ShortestPath(path[current_path_node_index - 1], path[path.Length - 1]).ToArray();
+                    Path = graph.ShortestPath(Path[current_path_node_index - 1], Path[path.Length - 1]).ToArray();
                     current_path_node_index = 0;
-                    Movement.Target = path[current_path_node_index].Value.transform.position;
-                    currentTarget = path[current_path_node_index];
+
+                    Movement.Target = Path[current_path_node_index].Value.transform.position;
+                    currentTarget = Path[current_path_node_index];
                 }
 
                 catch (Exception)
                 {
-                    current_path_node_index = path.Length;
+                    current_path_node_index = Path.Length;
                     Movement.Target = current_node.Value.transform.position;
                     currentTarget = current_node;
                 }
@@ -125,15 +128,18 @@ public class Character : NPC
         {
             if (Movement.HasArrived)
             {
-                current_node = path[current_path_node_index];
-                Movement.Target = path[++current_path_node_index].Value.transform.position;
-                currentTarget = path[current_path_node_index];
+                current_node = Path[current_path_node_index];
+                //Movement.Target = Path[++current_path_node_index].Value.transform.position;
+                currentTarget = Path[++current_path_node_index];
             }
+
+            t += Time.deltaTime * MaxVelocity / 10;
+            Movement.Target = Vector3.Slerp(current_node.Value.transform.position, Path[current_path_node_index + 1].Value.transform.position, t);
         }
 
         catch
         {
-            path = graph.ShortestPath(current_node, ClosestBaseNode.GraphNode).ToArray<GraphNode<LevelNode>>();
+            Path = graph.ShortestPath(current_node, ClosestBaseNode.GraphNode).ToArray<GraphNode<LevelNode>>();
         }
 
 
@@ -143,7 +149,7 @@ public class Character : NPC
     // Update is called once per frame
     protected override void Update()
     {
-        if (grid.PlayerBaseNodes.Contains(current_node.Value))
+        if (grid.PlayerBaseNodes.Contains(current_node.Value) || (currentTarget != null && grid.PlayerBaseNodes.Contains(currentTarget.Value)))
             Destroy(this.gameObject);
 
         if(!Immobilized)
