@@ -24759,7 +24759,7 @@ Transform:
   m_GameObject: {fileID: 7424372955921300309}
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
   m_LocalPosition: {x: 14.277083, y: 0, z: 61.62565}
-  m_LocalScale: {x: 0.05, y: 0.05, z: 0.05}
+  m_LocalScale: {x: 0.03, y: 0.03, z: 0.03}
   m_Children:
   - {fileID: 64341480605422289}
   - {fileID: 7424372955921067895}
@@ -24798,7 +24798,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aaec248e2e9532549866ab01e51bbb0f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 8
+  health: 10000
   damage: 2
   speed: 6
   isDead: 0
@@ -24864,7 +24864,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5b64f7e69995724ba236a9a3907927a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cam: {fileID: 0}
+  MAX_VELOCITY: 1
+  MAX_ANGULAR_VELOCITY: 300
+  MAX_ANGULAR_ACCELERATION: 2000
 --- !u!1 &7424372955921300311
 GameObject:
   m_ObjectHideFlags: 0

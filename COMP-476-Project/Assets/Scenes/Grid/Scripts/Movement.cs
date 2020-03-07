@@ -58,11 +58,11 @@ public abstract class Movement
 
 public abstract class AlignedMovement : Movement
 {
-    protected const float time_to_target = 0.5f;
+    protected const float time_to_target = 0.005f;
     protected const float radius_of_satisfaction = 0.02f;
-    protected const float angular_radius_of_satisfaction = 20.0f;
-    protected const float angular_slow_down_radius = 30.0f;
-    protected const float angular_time_to_target = 0.4f;
+    protected const float angular_radius_of_satisfaction = 5.0f;
+    protected const float angular_slow_down_radius = 10.0f;
+    protected const float angular_time_to_target = 0.5f;
     protected const float cone_of_perception_distance = 1.0f;
     protected const float max_cone_radius = 45.0f;
     private bool aligned = false;
@@ -112,9 +112,8 @@ public abstract class AlignedMovement : Movement
     public float Orientation
     {
         get {
-            if (NPC.gameObject.transform.rotation.eulerAngles.y > 180.0f)
-                return (NPC.gameObject.transform.rotation.eulerAngles.y - 360.0f)%360;
-
+            
+                
             return (NPC.gameObject.transform.rotation.eulerAngles.y)%360; }
 
         set {
@@ -159,25 +158,36 @@ public abstract class AlignedMovement : Movement
         Vector3 dir = Target - Position;
 
         //next lets create the target rotation, which is the orientation to the target position
+
         Quaternion target_rotation = Quaternion.LookRotation(dir, Vector3.up);
         float target_rotation_euler = target_rotation.eulerAngles.y;
-
-        //since we want the target rotation to be signed, if it is larger than 180 degrees, we will make it negative from 0
-        if (target_rotation_euler > 180)
-            target_rotation_euler = target_rotation_euler - 360.0f;
 
         //we only allow the character to rotate around the y_axis, therefore we only need the angle around y axis that separates
         //the car and the target
 
         float rotation_diff = target_rotation_euler - Orientation;
 
+        if (rotation_diff >= 180)
+            rotation_diff = (-(360.0f - rotation_diff));
+
+        /*
+        if (Mathf.Sign(target_rotation_euler) == Mathf.Sign(Orientation))
+            rotation_diff = target_rotation_euler - Orientation;
+
+        else
+            rotation_diff = Orientation - target_rotation_euler;
+            */
+
+        //Debug.Log(target_rotation_euler + " " + Orientation + " " + rotation_diff);
+
         //------------------------------------- RADIUS OF SATISFACTION CHECK ---------------------------------//
 
         //we need to check if we are within the radius of satifaction, it which case, we should stop rotating the character
         //set its orientation to that of the target, and return
-        if (Mathf.Abs(rotation_diff) < angular_radius_of_satisfaction && Mathf.Sign(target_rotation_euler) == Mathf.Sign(Orientation))
+        if (Mathf.Abs(rotation_diff) < angular_radius_of_satisfaction )
         {
             Orientation = target_rotation_euler;
+            AngularVelocity = 0;
             Aligned = true;
             return;
         }
@@ -189,23 +199,26 @@ public abstract class AlignedMovement : Movement
         //first step is to compute the goal angular velocity, which is the speed to the target based on time to target and angle from target
         float goal_angular_velocity = MaxAngularVelocity * rotation_diff / angular_slow_down_radius;
 
-        //with the goal angular acceleration the character should have based on time to target
-        float ang_acc = MaxAngularAcceleration;
-
         //we only change the angular acceleration if if its less than the max acceleration, otherwise acceleration is capped at its max
         float char_acc = (goal_angular_velocity - AngularVelocity) / angular_time_to_target;
 
-        if (char_acc < ang_acc)
-            ang_acc = char_acc;
+        if (Mathf.Abs(char_acc) > Mathf.Abs(MaxAngularAcceleration))
+            if (char_acc < 0)
+                char_acc = -MaxAngularAcceleration;
+            else
+                char_acc = MaxAngularAcceleration;
 
         //------------------------------------ CAR VELOCITY ----------------------------------------//
 
         //Now that we have the car's accelertion, we can recompute its angular velocity
 
-        AngularVelocity = AngularVelocity + ang_acc * Time.deltaTime;
+        AngularVelocity = AngularVelocity + char_acc * Time.deltaTime;
 
-        if (AngularVelocity > MaxAngularVelocity)
-            AngularVelocity = MaxAngularVelocity;
+        if (Mathf.Abs(AngularVelocity) > Mathf.Abs(MaxAngularVelocity))
+            if (AngularVelocity < 0)
+                AngularVelocity = -MaxAngularVelocity;
+            else
+                AngularVelocity = MaxVelocity;
 
         //------------------------------------- CAR ORIENTATION ---------------------------------//
 
@@ -223,6 +236,12 @@ public abstract class ReachMovement : AlignedMovement
 
     public override void Move()
     {
+        //StopAlignAndMove();
+        if (DistanceToTarget < radius_of_satisfaction)
+            move();
+        else
+            AlignAndMove();
+        /*
         if (Velocity < 0.1 * MaxVelocity)
         {
             if (DistanceToTarget < cone_of_perception_distance)
@@ -240,6 +259,7 @@ public abstract class ReachMovement : AlignedMovement
             else
                 StopAlignAndMove();
         }
+        */
     }
 }
 
@@ -295,7 +315,19 @@ public class KinematicArrive : ReachMovement
 
         //the next step is to determine the magnitude of the velocity to use. This will either be the maximum velocity, or 
         //the velocity based on the time to target. Whichever is smallest will be the one we choose.
-        float char_to_target_speed = (Target - Position).magnitude / time_to_target;
+        float char_to_target_speed;
+
+        try
+        {
+            char_to_target_speed = (Target - Position).magnitude / time_to_target;
+        }
+
+        catch
+        {
+            char_to_target_speed = MaxVelocity;
+        }
+        
+        
         float velocity = 0.0f;
 
         if (MaxVelocity < char_to_target_speed)
