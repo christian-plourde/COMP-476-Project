@@ -112,15 +112,9 @@ public abstract class AlignedMovement : Movement
     public float Orientation
     {
         get {
-
-            /*
-            if (NPC.gameObject.transform.rotation.eulerAngles.y > 180.0f)
-            {
-                return (NPC.gameObject.transform.rotation.eulerAngles.y - 360.0f) % 360;
-            }
-            */
+            
                 
-            return (NPC.gameObject.transform.rotation.eulerAngles.y); }
+            return (NPC.gameObject.transform.rotation.eulerAngles.y)%360; }
 
         set {
             Quaternion quat = new Quaternion();
@@ -164,22 +158,25 @@ public abstract class AlignedMovement : Movement
         Vector3 dir = Target - Position;
 
         //next lets create the target rotation, which is the orientation to the target position
+
         Quaternion target_rotation = Quaternion.LookRotation(dir, Vector3.up);
         float target_rotation_euler = target_rotation.eulerAngles.y;
-
-        //since we want the target rotation to be signed, if it is larger than 180 degrees, we will make it negative from 0
-        //if (target_rotation_euler > 180)
-            //target_rotation_euler = (target_rotation_euler - 360.0f) % 360;
 
         //we only allow the character to rotate around the y_axis, therefore we only need the angle around y axis that separates
         //the car and the target
 
-        float rotation_diff;
+        float rotation_diff = target_rotation_euler - Orientation;
+
+        if (rotation_diff >= 180)
+            rotation_diff = (-(360.0f - rotation_diff))%360;
+
+        /*
         if (Mathf.Sign(target_rotation_euler) == Mathf.Sign(Orientation))
             rotation_diff = target_rotation_euler - Orientation;
 
         else
             rotation_diff = Orientation - target_rotation_euler;
+            */
 
         //Debug.Log(target_rotation_euler + " " + Orientation + " " + rotation_diff);
 
@@ -235,6 +232,12 @@ public abstract class ReachMovement : AlignedMovement
 
     public override void Move()
     {
+        //StopAlignAndMove();
+        if (DistanceToTarget < radius_of_satisfaction)
+            move();
+        else
+            AlignAndMove();
+        /*
         if (Velocity < 0.1 * MaxVelocity)
         {
             if (DistanceToTarget < cone_of_perception_distance)
@@ -252,6 +255,7 @@ public abstract class ReachMovement : AlignedMovement
             else
                 StopAlignAndMove();
         }
+        */
     }
 }
 

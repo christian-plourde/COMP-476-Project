@@ -99,7 +99,7 @@ public class Character : NPC
     {
         try
         {
-            if (!currentTarget.Value.Open)
+            if (currentTarget == null || !currentTarget.Value.Open)
             {
                 try
                 {
@@ -128,13 +128,19 @@ public class Character : NPC
         {
             if (Movement.HasArrived)
             {
-                current_node = Path[current_path_node_index];
-                //Movement.Target = Path[++current_path_node_index].Value.transform.position;
-                currentTarget = Path[++current_path_node_index];
+                t += 0.1f;
+                //Debug.Log(t);
+                if (t >= 1)
+                {
+                    current_node = Path[current_path_node_index];
+                    //Movement.Target = Path[++current_path_node_index].Value.transform.position;
+                    currentTarget = Path[++current_path_node_index];
+                    t = 0;
+                }
+
+                Movement.Target = Vector3.Lerp(current_node.Value.transform.position, currentTarget.Value.transform.position, t);
             }
 
-            t += Time.deltaTime * MaxVelocity / 10;
-            Movement.Target = Vector3.Slerp(current_node.Value.transform.position, Path[current_path_node_index + 1].Value.transform.position, t);
         }
 
         catch
@@ -149,7 +155,7 @@ public class Character : NPC
     // Update is called once per frame
     protected override void Update()
     {
-        if (grid.PlayerBaseNodes.Contains(current_node.Value) || (currentTarget != null && grid.PlayerBaseNodes.Contains(currentTarget.Value)))
+        if (grid.PlayerBaseNodes.Contains(current_node.Value))
             Destroy(this.gameObject);
 
         if(!Immobilized)
