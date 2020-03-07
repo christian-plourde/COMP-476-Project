@@ -24865,7 +24865,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MAX_VELOCITY: 1
-  MAX_ANGULAR_VELOCITY: 10
+  MAX_ANGULAR_VELOCITY: 300
+  MAX_ANGULAR_ACCELERATION: 2000
 --- !u!1 &7424372955921300311
 GameObject:
   m_ObjectHideFlags: 0

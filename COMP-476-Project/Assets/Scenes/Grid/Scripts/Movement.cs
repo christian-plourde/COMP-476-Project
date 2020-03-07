@@ -62,7 +62,7 @@ public abstract class AlignedMovement : Movement
     protected const float radius_of_satisfaction = 0.02f;
     protected const float angular_radius_of_satisfaction = 5.0f;
     protected const float angular_slow_down_radius = 10.0f;
-    protected const float angular_time_to_target = 0.02f;
+    protected const float angular_time_to_target = 0.5f;
     protected const float cone_of_perception_distance = 1.0f;
     protected const float max_cone_radius = 45.0f;
     private bool aligned = false;
@@ -168,7 +168,7 @@ public abstract class AlignedMovement : Movement
         float rotation_diff = target_rotation_euler - Orientation;
 
         if (rotation_diff >= 180)
-            rotation_diff = (-(360.0f - rotation_diff))%360;
+            rotation_diff = (-(360.0f - rotation_diff));
 
         /*
         if (Mathf.Sign(target_rotation_euler) == Mathf.Sign(Orientation))
@@ -187,6 +187,7 @@ public abstract class AlignedMovement : Movement
         if (Mathf.Abs(rotation_diff) < angular_radius_of_satisfaction )
         {
             Orientation = target_rotation_euler;
+            AngularVelocity = 0;
             Aligned = true;
             return;
         }
@@ -198,23 +199,26 @@ public abstract class AlignedMovement : Movement
         //first step is to compute the goal angular velocity, which is the speed to the target based on time to target and angle from target
         float goal_angular_velocity = MaxAngularVelocity * rotation_diff / angular_slow_down_radius;
 
-        //with the goal angular acceleration the character should have based on time to target
-        float ang_acc = MaxAngularAcceleration;
-
         //we only change the angular acceleration if if its less than the max acceleration, otherwise acceleration is capped at its max
         float char_acc = (goal_angular_velocity - AngularVelocity) / angular_time_to_target;
 
-        if (char_acc < ang_acc)
-            ang_acc = char_acc;
+        if (Mathf.Abs(char_acc) > Mathf.Abs(MaxAngularAcceleration))
+            if (char_acc < 0)
+                char_acc = -MaxAngularAcceleration;
+            else
+                char_acc = MaxAngularAcceleration;
 
         //------------------------------------ CAR VELOCITY ----------------------------------------//
 
         //Now that we have the car's accelertion, we can recompute its angular velocity
 
-        AngularVelocity = AngularVelocity + ang_acc * Time.deltaTime;
+        AngularVelocity = AngularVelocity + char_acc * Time.deltaTime;
 
-        if (AngularVelocity > MaxAngularVelocity)
-            AngularVelocity = MaxAngularVelocity;
+        if (Mathf.Abs(AngularVelocity) > Mathf.Abs(MaxAngularVelocity))
+            if (AngularVelocity < 0)
+                AngularVelocity = -MaxAngularVelocity;
+            else
+                AngularVelocity = MaxVelocity;
 
         //------------------------------------- CAR ORIENTATION ---------------------------------//
 

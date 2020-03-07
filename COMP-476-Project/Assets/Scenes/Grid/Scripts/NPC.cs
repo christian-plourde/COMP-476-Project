@@ -9,7 +9,7 @@ public abstract class NPC : Observer
     float currentVelocity = 0.0f;
     public float MAX_ANGULAR_VELOCITY = 40.0f;
     float currentAngularVelocity = 0.0f;
-    float MAX_ANGULAR_ACCELERATION = 20.0f;
+    public float MAX_ANGULAR_ACCELERATION = 20.0f;
     AlignedMovement movement; //the current movement type for the character
     bool immobilized = false;
 
