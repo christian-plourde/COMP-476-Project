@@ -180,6 +180,7 @@ public class GenerateGrid : Subject
                     if(!hit.transform.gameObject.GetComponent<LevelNode>().Open)
                     {
                         GameObject tower = Instantiate(test_tower, hit.transform.position, Quaternion.identity);
+                        hit.transform.gameObject.GetComponent<LevelNode>().Tower = tower;
                         tower.transform.parent = hit.transform.gameObject.transform;
                     }
 
@@ -188,6 +189,7 @@ public class GenerateGrid : Subject
                         foreach(Transform child in hit.transform)
                         {
                             Destroy(child.gameObject);
+                            hit.transform.gameObject.GetComponent<LevelNode>().Tower = null;
                         }
                     }
 

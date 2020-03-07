@@ -1700,9 +1700,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5b64f7e69995724ba236a9a3907927a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MAX_VELOCITY: 0.6
-  MAX_ANGULAR_VELOCITY: 40
-  MAX_ANGULAR_ACCELERATION: 20
+  MAX_VELOCITY: 1
+  MAX_ANGULAR_VELOCITY: 300
+  MAX_ANGULAR_ACCELERATION: 2000
 --- !u!4 &1692402975
 Transform:
   m_ObjectHideFlags: 0

@@ -15,8 +15,15 @@ public class LevelNode : MonoBehaviour, IHeuristic<LevelNode>
     List<LineRenderer> lineRenderers; //this is the list of line renderers. we will instantiate one for each connection that the node has to draw the paths in the scene
     private bool closed = false;
     private bool is_base_node = false;
+    private GameObject tower;
 
     private GameObject m_GraphContainer;
+
+    public GameObject Tower
+    {
+        get { return tower; }
+        set { tower = value; }
+    }
 
     public bool IsBaseNode
     {
