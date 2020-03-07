@@ -1702,6 +1702,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MAX_VELOCITY: 0.6
   MAX_ANGULAR_VELOCITY: 40
+  MAX_ANGULAR_ACCELERATION: 20
 --- !u!4 &1692402975
 Transform:
   m_ObjectHideFlags: 0
