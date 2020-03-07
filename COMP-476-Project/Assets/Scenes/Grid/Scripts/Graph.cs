@@ -101,7 +101,29 @@ namespace Graph
         {
             this.edges.AddLast(new GraphEdge<T>(this, n, cost));
         }
-        
+
+        public List<GraphNode<T>> Neighbors
+        {
+            get
+            {
+
+                List<GraphNode<T>> neighbors = new List<GraphNode<T>>();
+                foreach (GraphEdge<T> e in edges)
+                {
+                    neighbors.Add(e.End);
+                }
+
+                return neighbors;
+
+            }
+        }
+
+        public GraphNode<T> RandomNeighbor()
+        {
+            int idx = UnityEngine.Random.Range(0, edges.Count);
+            return Neighbors[idx];
+        }
+
         public T Value
         {
             get { return value; }
@@ -153,6 +175,13 @@ namespace Graph
         {
             get { return start_node; }
             set { start_node = value; }
+        }
+
+        public GraphNode<T> RandomNode()
+        {
+            int idx = UnityEngine.Random.Range(0, nodes.Count);
+
+            return nodes.ToArray<GraphNode<T>>()[idx];
         }
 
         public Graph()

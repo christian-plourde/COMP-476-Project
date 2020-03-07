@@ -227,7 +227,7 @@ public class EnemyMovement : MonoBehaviour
         foreach(Graph.GraphNode<LevelNode> n in grid_generator.Graph.Nodes)
         {
             if (!n.Value.Open)
-                towers.Add(n.Value.gameObject);
+                towers.Add(n.Value.Tower);
         }
 
         //Debug.Log("towers: " + towers.Count);
