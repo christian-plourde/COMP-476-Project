@@ -24849,7 +24849,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e621c67f52a704139ac4ba18634499e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_WhatIsNearby: 0.2
+  m_WhatIsNearby: 1
   m_VisionErrorMargin: 0.2
   m_RangeOfVision: 10
 --- !u!114 &8675522791493954225

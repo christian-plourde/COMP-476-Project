@@ -5,32 +5,16 @@ using System;
 
 public class EnemyMovement : MonoBehaviour
 {
-
-
-    //Our zombie decision tree
-    public class EnemyDT
-    {
-        public Func<bool> seesTower;
-        public Func<bool> seesPlayer;
-        public Func<bool> towerNearby;
-        public Func<bool> playerNearby;
-
-        public Action attackTower;
-        public Action attackPlayer;
-        public Action moveToTower;
-        public Action moveToPlayer;
-        public Action wander;
-    }
-
     //Our decision tree; manages whichever movement we should be doing
     protected DecisionTree m_DecisionTree = null;
 
     //A reference to the player variable, to be set on instantiation of the ZombieMovement
     private Transform m_Player;
 
-    private List<GameObject> towers;
+    private List<GameObject> tower_nodes;
 
-    private GameObject target_tower;
+    private GameObject target_tower_node;
+    public GameObject m_TargetTowerNode { get { return target_tower_node; } }
 
     private GenerateGrid grid_generator;
 
@@ -68,16 +52,19 @@ public class EnemyMovement : MonoBehaviour
         //if we're facing the target, then we can consider a raycast
         if (facing_player)
         {
-            RaycastHit hit;
-            if (Physics.Raycast(this.transform.position, transform.TransformDirection(Vector3.forward), out hit, this.m_RangeOfVision))
-            {
-                if (hit.transform.tag == "Player")
-                {
-                    return true;
-                }
-            }
+            //TEMPORARY
+            return true;
+
+            //RaycastHit hit;
+            //if (Physics.Raycast(this.transform.position, transform.TransformDirection(Vector3.forward), out hit, this.m_RangeOfVision))
+            //{
+            //    if (hit.transform.tag == "Player")
+            //    {
+            //        return true;
+            //    }
+            //}
         }
-        //Debug.Log(message);
+        Debug.Log(message);
         //Debug.Log(message + " (" + dot + ")");//More specific logs
         return false;
     }
@@ -88,30 +75,42 @@ public class EnemyMovement : MonoBehaviour
     {
         Vector3 enemypos = this.transform.position;
 
-        foreach(GameObject g in towers)
+        foreach(GameObject g in tower_nodes)
         {
             float dot = Vector3.Dot(this.transform.forward, (g.transform.position - enemypos).normalized);
             //If our dot product is exactly 1, then the tower is exactly in front of us
             float desired_result = 1.0f;
             bool facing_tower = (desired_result - m_VisionErrorMargin <= dot && dot <= desired_result + m_VisionErrorMargin);
-            string message = (facing_tower) ? "Tower spotted" : "Tower NOT spotted";
-            //Debug.Log(message);
-            //Debug.Log(message + " (" + dot + ")");//More specific logs
 
+            //Debug.Log(message + " (" + dot + ")");//More specific logs
+            string message = (facing_tower) ? "Tower spotted" : "Tower NOT spotted";
             //if we're facing the target, then we can consider a raycast
             if (facing_tower)
             {
-                RaycastHit hit;
-                if(Physics.Raycast(this.transform.position, transform.TransformDirection(Vector3.forward), out hit, this.m_RangeOfVision))
-                {
-                    if(hit.transform.tag == "Tower")
-                    {
-                        target_tower = g;
-                        return true;
-                    }
-                }
-                return false;
+                
+                //TEMPORARY
+                target_tower_node = g;
+                Debug.Log(message);
+                return true;
+
+                //RaycastHit hit;
+                //if(Physics.Raycast(this.transform.position, transform.TransformDirection(Vector3.forward), out hit, this.m_RangeOfVision))
+                //{
+                //    if you hit a graph node and it's closed, it has a tower, and that means you saw a tower
+                //if (hit.transform.tag == "GraphNode")
+                //{
+                //    if (!hit.transform.gameObject.getComponent<LevelNode>().Open)
+                //    {
+                //        target_tower = g;
+                //        return true;
+                //    }
+                //    return false
+                //}
+                //}
+                //return false;
             }
+
+            
             //else if we're not facing the target, we need not consider a raycast, as we won't see the target
         }
 
@@ -122,15 +121,15 @@ public class EnemyMovement : MonoBehaviour
     protected virtual bool TowerNearby()
     {
         Vector3 enemypos = this.transform.position;
-        foreach(GameObject o in towers)
+        foreach(GameObject o in tower_nodes)
         {
             bool result = (enemypos - o.transform.position).magnitude <= m_WhatIsNearby;
             string message = (result) ? "Tower nearby!" : "Tower NOT nearby!";
-            //Debug.Log(message);
+            Debug.Log(message);
             //Debug.Log(message + "(" + (enemypos - towerpos).magnitude + ")");//More specific logs
-            if(result)
+            if (result)
             {
-                target_tower = o;
+                target_tower_node = o;
                 return result;
             }
         }
@@ -145,7 +144,7 @@ public class EnemyMovement : MonoBehaviour
         Vector3 playerpos = this.m_Player.position;
         bool result = (enemypos - playerpos).magnitude <= m_WhatIsNearby;
         string message = (result) ? "Tower nearby!" : "Tower NOT nearby!";
-        //Debug.Log(message);
+        Debug.Log(message);
         return (result);
     }
 
@@ -164,15 +163,18 @@ public class EnemyMovement : MonoBehaviour
     protected virtual void MoveToTower()
     {
         Debug.Log("Moving to tower!");
+        this.gameObject.GetComponent<Character>().BehaviourType = BEHAVIOUR_TYPE.MOVE_TO_TOWER;
     }
 
     protected virtual void MoveToPlayer()
     {
-        Debug.Log("Moving to player!");
+        Debug.Log("Moving to tower!");
+        this.gameObject.GetComponent<Character>().BehaviourType = BEHAVIOUR_TYPE.MOVE_TO_PLAYER;
     }
 
-    protected virtual void Wander()
+    protected virtual void Default()
     {
+        Debug.Log("Default!");
         //this behaviour will make the enemy move toward the enemy base
         //Debug.Log(this.gameObject.GetComponent<Character>());
         this.gameObject.GetComponent<Character>().BehaviourType = BEHAVIOUR_TYPE.BASE_SEEK;
@@ -193,7 +195,7 @@ public class EnemyMovement : MonoBehaviour
         //Actions
         DTNode.ActionNode r3n1 = new DTNode.ActionNode(AttackTower);
         DTNode.ActionNode r3n2 = new DTNode.ActionNode(MoveToTower);
-        DTNode.ActionNode r3n4 = new DTNode.ActionNode(Wander);
+        DTNode.ActionNode r3n4 = new DTNode.ActionNode(Default);
         DTNode.ActionNode r4n1 = new DTNode.ActionNode(AttackPlayer);
         DTNode.ActionNode r4n2 = new DTNode.ActionNode(MoveToPlayer);
 
@@ -217,7 +219,7 @@ public class EnemyMovement : MonoBehaviour
     // Update is called once per frame
     protected void Update()
     {
-        towers = new List<GameObject>();
+        tower_nodes = new List<GameObject>();
         if(grid_generator == null || grid_generator.Graph.Nodes == null)
         {
             grid_generator = FindObjectOfType<GenerateGrid>();
@@ -226,8 +228,10 @@ public class EnemyMovement : MonoBehaviour
 
         foreach(Graph.GraphNode<LevelNode> n in grid_generator.Graph.Nodes)
         {
+            //if (!n.Value.Open)
+            //    towers.Add(n.Value.Tower);
             if (!n.Value.Open)
-                towers.Add(n.Value.Tower);
+                tower_nodes.Add(n.Value.gameObject);
         }
 
         //Debug.Log("towers: " + towers.Count);
