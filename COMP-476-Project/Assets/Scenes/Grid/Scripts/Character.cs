@@ -11,7 +11,6 @@ public enum BEHAVIOUR_TYPE { BASE_SEEK, MOVE_TO_TOWER, MOVE_TO_PLAYER }
 //a class used for an npc character
 public class Character : NPC
 {
-    private BEHAVIOUR_TYPE m_PreviousBehaviour = BEHAVIOUR_TYPE.BASE_SEEK;
 
     /// <summary>
     /// The node the character starts at.
@@ -43,6 +42,8 @@ public class Character : NPC
     /// A float to manage interpolation with our spline movement.
     /// </summary>
     private float t = 0.0f;
+
+    private PlayerMovement player;
 
     public BEHAVIOUR_TYPE BehaviourType
     {
@@ -78,6 +79,7 @@ public class Character : NPC
         get { return path; }
         set { path = value;
             t = 0.0f;
+            current_path_node_index = 0;
         }
     }
 
@@ -99,6 +101,9 @@ public class Character : NPC
 
         graph = FindObjectOfType<GenerateGrid>().Graph;
         Movement.Target = current_node.Value.transform.position;
+
+        //set reference to the player
+        player = FindObjectOfType<PlayerMovement>();
     }
 
     public override void ObserverUpdate()
@@ -187,7 +192,9 @@ public class Character : NPC
         }
 
         //Call NPC.Update, which ensures we keep moving until we arrive at our destination
-        base.Update();
+        //as long as we are not at player keep moving
+        if(CurrentNode.Value.GridSquare != player.GridSquare)
+            base.Update();
     }
 
     //Our update function when we want to be moving to the tower
@@ -255,7 +262,9 @@ public class Character : NPC
         }
 
         //Call NPC.Update, which ensures we keep moving until we arrive at our destination
-        base.Update();
+        //as long as we are not at tower keep moving
+        if (this.gameObject.GetComponent<ZombieMovement>().m_TargetTowerNode.gameObject.GetComponent<LevelNode>().GridSquare != CurrentNode.Value.GridSquare)
+            base.Update();
     }
 
     /// <summary>
@@ -320,29 +329,13 @@ public class Character : NPC
         //if something goes wrong with the next node I want to visit, just return the base node closest to the player
         catch
         {
-            //A reference to player position
-            Vector3 player_pos = this.gameObject.GetComponent<EnemyMovement>().m_Player.position;
-
-            //Find me the closest level node to the player's position
-            int closest_index = 0;
-            for(int i = 0; i < grid.Graph.Nodes.Count; i++)
-            {
-                Vector3 current_node_pos = grid.Graph.Nodes[i].Value.GridSquare.Position;
-                Vector3 closest_node_pos = grid.Graph.Nodes[closest_index].Value.GridSquare.Position;
-                float closest_distance = (player_pos - closest_node_pos).magnitude;
-                float new_distance = (player_pos - current_node_pos).magnitude;
-                if (new_distance < closest_distance)
-                {
-                    closest_index = i;
-                }
-            }
-            //By now we have the closest levelnode's index, which is as good as the node itself
-
-            Path = graph.ShortestPath(current_node, grid.Graph.Nodes[closest_index]).ToArray<GraphNode<LevelNode>>();
+            Path = graph.ShortestPath(current_node, player.GridSquare.Node).ToArray<GraphNode<LevelNode>>();
         }
 
         //Call NPC.Update, which ensures we keep moving until we arrive at our destination
-        base.Update();
+        //as long as not at player keep moving
+        if (CurrentNode.Value.GridSquare != player.GridSquare)
+            base.Update();
     }//end f'n
 
     public GraphNode<LevelNode> CurrentNode
@@ -357,7 +350,7 @@ public class Character : NPC
         if (grid.PlayerBaseNodes.Contains(current_node.Value))
             Destroy(this.gameObject);
 
-        if(!Immobilized && m_PreviousBehaviour == behaviour_type)
+        if(!Immobilized)
         {
             
             switch (behaviour_type)
@@ -366,10 +359,6 @@ public class Character : NPC
                 case BEHAVIOUR_TYPE.MOVE_TO_PLAYER: MoveToPlayerUpdate(); break;
                 case BEHAVIOUR_TYPE.MOVE_TO_TOWER: MoveToTowerUpdate(); break;
             }
-        }
-        else
-        {
-            m_PreviousBehaviour = behaviour_type;
         }
     }
 }
