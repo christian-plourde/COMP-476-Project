@@ -9,6 +9,15 @@ public class PlayerMovement : MonoBehaviour
      * Will Align with movement direction before running (Align Behavior in this class)
      */
 
+
+    [Header("Player Variables")]
+    public float health = 100f;
+    float maxHealth;
+    public int gold = 200;
+    public bool invincible;
+    Vector3 respawnPos;
+
+
     [Header("Movement Parameters")]
     float ogSpeed;
     public float mSpeed=5f;
@@ -36,6 +45,10 @@ public class PlayerMovement : MonoBehaviour
         PlayerMesh = transform.GetChild(0);
         Debug.Log("Playermesh is:"+PlayerMesh.name);
         animator = PlayerMesh.GetComponent<Animator>();
+
+        maxHealth = health;
+
+        respawnPos = transform.position;
     }
 
     void Update()
@@ -44,6 +57,14 @@ public class PlayerMovement : MonoBehaviour
             Movement();
         // Force rotation = 0
         transform.rotation = Quaternion.Euler(Vector3.zero);
+
+
+        // respawn test:
+        if (isDead && Input.GetKeyDown(KeyCode.R))
+            RespawnPlayer();
+
+        if (!isDead && Input.GetKeyDown(KeyCode.K))
+            DealDamage(25f);
         
     }
 
@@ -142,4 +163,59 @@ public class PlayerMovement : MonoBehaviour
     {
         mSpeed = ogSpeed;
     }
+
+
+
+    // for death & respawn methods
+
+    void DealDamage(float dmg)
+    {
+        if (!invincible)
+        {
+            health -= dmg;
+            if (health <= 0)
+            {
+                health = 0;
+                KillPlayer();
+            }
+        }
+    }
+
+    void KillPlayer()
+    {
+        controlLock = true;
+        isDead = true;
+
+        animator.SetBool("Dead", true);
+        animator.SetLayerWeight(1, 0);
+        animator.SetLayerWeight(2, 0);
+    }
+
+
+    void RespawnPlayer()
+    {
+        controlLock = false;
+        isDead = false;
+        animator.SetBool("Dead", false);
+        health = maxHealth;
+        invincible = false;
+
+        //Reset weapons and stuff.
+        if (playerClass == "Warrior")
+        {
+            WarriorCombatBehavior scriptRef = GetComponent<WarriorCombatBehavior>();
+            scriptRef.ResetAllCombat();
+        }
+        else
+        {
+            CombatBehavior scriptRef = GetComponent<CombatBehavior>();
+        }
+        
+    }
+
+    // gold exchange functions
+    
+    public void AddGold(int amount) { }
+
+    public void RemoveGold(int amount) { }
 }
