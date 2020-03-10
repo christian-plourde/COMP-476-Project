@@ -37,7 +37,8 @@ public class PlayerMovement : MonoBehaviour
     public string playerClass;
 
     [HideInInspector]public bool warriorUltimate;
-
+    [Header("References")]
+    public GameObject respawnUIPrefab;
 
     void Start()
     {
@@ -61,7 +62,7 @@ public class PlayerMovement : MonoBehaviour
 
         // respawn test:
         if (isDead && Input.GetKeyDown(KeyCode.R))
-            RespawnPlayer();
+            RespawnPlayer(false);
 
         if (!isDead && Input.GetKeyDown(KeyCode.K))
             DealDamage(25f);
@@ -170,7 +171,7 @@ public class PlayerMovement : MonoBehaviour
 
     public void DealDamage(float dmg)
     {
-        if (!invincible)
+        if (!invincible && !isDead)
         {
             health -= dmg;
             if (health <= 0)
@@ -189,17 +190,20 @@ public class PlayerMovement : MonoBehaviour
         animator.SetBool("Dead", true);
         animator.SetLayerWeight(1, 0);
         animator.SetLayerWeight(2, 0);
+
+        Instantiate(respawnUIPrefab);
     }
 
 
-    void RespawnPlayer()
+    public void RespawnPlayer(bool buyback)
     {
         controlLock = false;
         isDead = false;
         animator.SetBool("Dead", false);
         health = maxHealth;
         invincible = false;
-        transform.position = respawnPos;
+        if(!buyback)
+            transform.position = respawnPos;
 
         //Reset weapons and stuff.
         if (playerClass == "Warrior")
@@ -217,7 +221,17 @@ public class PlayerMovement : MonoBehaviour
 
     // gold exchange functions
     
-    public void AddGold(int amount) { }
+    public void AddGold(int amount)
+    {
+        gold += amount;
+    }
 
-    public void RemoveGold(int amount) { }
+    public void RemoveGold(int amount)
+    {
+        gold -= amount;
+        if (gold < 0)
+        {
+            gold = 0;
+        }
+    }
 }
