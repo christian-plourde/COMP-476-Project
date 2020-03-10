@@ -13,22 +13,45 @@ public class Character : NPC
 {
     private BEHAVIOUR_TYPE m_PreviousBehaviour = BEHAVIOUR_TYPE.BASE_SEEK;
 
-    private LevelNode startNode; //the node that the chracter should start at
-    private GraphNode<LevelNode> current_node; //the node that the chracter is currently at in the graph
-    private Graph<LevelNode> graph; //a reference to the graph that is used for setting the movement path for the chracter
-    private GraphNode<LevelNode>[] path = new GraphNode<LevelNode>[0]; //this is a list containing the nodes in the current chracters path
-    private int current_path_node_index = 0; //the step of the path the character s currently executing
+    /// <summary>
+    /// The node the character starts at.
+    /// </summary>
+    private LevelNode startNode;
+    /// <summary>
+    /// The node that the chracter is currently at in the graph
+    /// </summary>
+    private GraphNode<LevelNode> current_node;
+    /// <summary>
+    /// A reference to the graph used for setting the character's movement path
+    /// </summary>
+    private Graph<LevelNode> graph;
+    /// <summary>
+    /// A list containing the nodes in the character's path.
+    /// </summary>
+    private GraphNode<LevelNode>[] path = new GraphNode<LevelNode>[0];
+    /// <summary>
+    /// The index of the current node in the character path.
+    /// </summary>
+    private int current_path_node_index = 0;
     private GraphNode<LevelNode> currentTarget;
+    /// <summary>
+    /// A reference to the scene grid
+    /// </summary>
     private GenerateGrid grid;
     private BEHAVIOUR_TYPE behaviour_type;
-    private float t = 0.0f; //the parameter for following the spline 
+    /// <summary>
+    /// A float to manage interpolation with our spline movement.
+    /// </summary>
+    private float t = 0.0f;
 
     public BEHAVIOUR_TYPE BehaviourType
     {
         set { behaviour_type = value; }
     }
 
-    //gets the closest base node to the current npc (the closest goal node)
+    /// <summary>
+    /// Returns the closest node considered to be a member of the player's base (relative to this calling Character).
+    /// </summary>
     public LevelNode ClosestBaseNode
     {
         get {
@@ -58,7 +81,7 @@ public class Character : NPC
         }
     }
 
-    // Start is called before the first frame update
+    
     protected override void Start()
     {
         base.Start();
@@ -98,6 +121,9 @@ public class Character : NPC
         }
     }
 
+    /// <summary>
+    /// An update function to manage our pseudo-wander, Base Seek. Manages movement such that the enemy seek the player's base.
+    /// </summary>
     private void BaseSeekUpdate()
     {
         Debug.Log("Character : Seeking base");
@@ -232,7 +258,9 @@ public class Character : NPC
         base.Update();
     }
 
-    //Our update function when we want to be moving to the tower
+    /// <summary>
+    /// Our update function when we want to be moving to the player
+    /// </summary>
     private void MoveToPlayerUpdate()
     {
         Debug.Log("Character : Seeking player");
@@ -313,8 +341,8 @@ public class Character : NPC
             switch (behaviour_type)
             {
                 case BEHAVIOUR_TYPE.BASE_SEEK: BaseSeekUpdate(); break;
-                //case BEHAVIOUR_TYPE.MOVE_TO_PLAYER: MoveToPlayerUpdate(); break;
-                //case BEHAVIOUR_TYPE.MOVE_TO_TOWER: MoveToTowerUpdate(); break;
+                case BEHAVIOUR_TYPE.MOVE_TO_PLAYER: MoveToPlayerUpdate(); break;
+                case BEHAVIOUR_TYPE.MOVE_TO_TOWER: MoveToTowerUpdate(); break;
             }
         }
         else

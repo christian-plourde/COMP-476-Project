@@ -70,14 +70,18 @@ public class EnemyMovement : MonoBehaviour
     }
 
     //For now I'll assume that if the tower is somewhat in front of us, even if it's behind a wall, we can see it.
-    //Tells us whether a tower is within sight of the zombie; to be used in the decision tree
+    /// <summary>
+    /// Tells us whether a tower is within sight of the enemy; condition function to be used in the decision tree.
+    /// Note: also implements a failsafe distance check and arbitrarily returns true if the tower is close enough to the enemy. This is to compensate for the tower being progressively harder to see as you get closer to it.
+    /// </summary>
+    /// <returns></returns>
     protected virtual bool SeesTower()
     {
         Vector3 enemypos = this.transform.position;
 
-        foreach(GameObject g in tower_nodes)
+        foreach(GameObject tower_node in tower_nodes)
         {
-            float dot = Vector3.Dot(this.transform.forward, (g.transform.position - enemypos).normalized);
+            float dot = Vector3.Dot(this.transform.forward, (tower_node.transform.position - enemypos).normalized);
             //If our dot product is exactly 1, then the tower is exactly in front of us
             float desired_result = 1.0f;
             bool facing_tower = (desired_result - m_VisionErrorMargin <= dot && dot <= desired_result + m_VisionErrorMargin);
@@ -89,7 +93,7 @@ public class EnemyMovement : MonoBehaviour
             {
                 
                 //TEMPORARY
-                target_tower_node = g;
+                target_tower_node = tower_node;
                 Debug.Log(message);
                 return true;
 
@@ -108,10 +112,16 @@ public class EnemyMovement : MonoBehaviour
                 //}
                 //}
                 //return false;
-            }
+            }//end if
 
-            
-            //else if we're not facing the target, we need not consider a raycast, as we won't see the target
+            //The closer you are, the harder it gets to see a tower.
+            //As a failsafe, if you come within some minimum distance of a tower, just attack it, you're blind and it's next to you.
+            float distance = (tower_node.transform.position - this.transform.position).magnitude;
+            if (distance <= m_WhatIsNearby)
+            {
+                Debug.Log("Enemy doesn't see tower but is passing next to one; attacking!");
+                return true;
+            }
         }
 
         return false;
