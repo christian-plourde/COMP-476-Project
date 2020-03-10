@@ -5,20 +5,31 @@ using System;
 
 public class EnemyMovement : MonoBehaviour
 {
-    //Our decision tree; manages whichever movement we should be doing
+    /// <summary>
+    /// Our decision tree; manages whichever movement we should be doing, and manages transitions between decisions and behaviours internally.
+    /// </summary>
     protected DecisionTree m_DecisionTree = null;
 
-    //A reference to the player variable, to be set on instantiation of the ZombieMovement
-    private Transform m_Player;
+    /// <summary>
+    /// A reference to the player transform, so we know what the player's position is.
+    /// </summary>
+    [HideInInspector]
+    public Transform m_Player;
 
     private List<GameObject> tower_nodes;
 
     private GameObject target_tower_node;
     public GameObject m_TargetTowerNode { get { return target_tower_node; } }
 
-    private GenerateGrid grid_generator;
+    /// <summary>
+    /// A reference to the global game grid generator (who contains the actual grid)
+    /// </summary>
+    [HideInInspector]
+    public GenerateGrid grid_generator;
 
-    //What we consider to be nearby
+    /// <summary>
+    /// What we consider to be nearby.
+    /// </summary>
     public float m_WhatIsNearby;
     //What our error margin should be, for what's considered to be in front of us
     public float m_VisionErrorMargin;
@@ -27,8 +38,10 @@ public class EnemyMovement : MonoBehaviour
 
     //Our decision tree condition nodes
 
-    //For now I'll assume that if the player is somewhat in front of us, even if it's behind a wall, we can see it.
-    //Tells us whether the player is within sight of the zombie; to be used in the decision tree
+    /// <summary>
+    /// Tells us whether the player is within sight of the zombie; to be used in the decision tree.
+    /// </summary>
+    /// <returns></returns>
     protected virtual bool SeesPlayer()
     {
         Vector3 enemypos = this.transform.position;
@@ -48,6 +61,7 @@ public class EnemyMovement : MonoBehaviour
         float desired_result = 1.0f;
         bool facing_player = (desired_result - m_VisionErrorMargin <= dot && dot <= desired_result + m_VisionErrorMargin);
         string message = (facing_player) ? "Player spotted!" : "Player NOT spotted!";
+        Debug.Log(message);
 
         //if we're facing the target, then we can consider a raycast
         if (facing_player)
@@ -64,7 +78,6 @@ public class EnemyMovement : MonoBehaviour
             //    }
             //}
         }
-        Debug.Log(message);
         //Debug.Log(message + " (" + dot + ")");//More specific logs
         return false;
     }
@@ -127,7 +140,10 @@ public class EnemyMovement : MonoBehaviour
         return false;
     }
 
-    //Tells us whether a tower is within some distance of the zombie; to be used in the decision tree
+    /// <summary>
+    /// Tells us whether a tower is within some distance of the enemy AI; to be used in the decision tree
+    /// </summary>
+    /// <returns></returns>
     protected virtual bool TowerNearby()
     {
         Vector3 enemypos = this.transform.position;
@@ -147,41 +163,61 @@ public class EnemyMovement : MonoBehaviour
         return false;
     }
 
-    //Tells us whether the player is within sight of the zombie; to be used in the decision tree
+    /// <summary>
+    /// Tells us whether the player is within sight of the enemy AI; to be used in the decision tree
+    /// </summary>
+    /// <returns></returns>
     protected virtual bool PlayerNearby()
     {
         Vector3 enemypos = this.transform.position;
         Vector3 playerpos = this.m_Player.position;
         bool result = (enemypos - playerpos).magnitude <= m_WhatIsNearby;
-        string message = (result) ? "Tower nearby!" : "Tower NOT nearby!";
+        string message = (result) ? "Player nearby!" : "Player NOT nearby!";
         Debug.Log(message);
         return (result);
     }
 
     //Our decision tree action nodes
 
+    /// <summary>
+    /// The function to be executed on SeesTower & TowerNearby; for use in the decision tree
+    /// </summary>
     protected virtual void AttackTower()
     {
         Debug.Log("Attacking tower!");
     }
 
+    /// <summary>
+    /// The function to be executed on SeesPlayer & PlayerNearby; for use in the decision tree
+    /// </summary>
     protected virtual void AttackPlayer()
     {
         Debug.Log("Attacking player!");
     }
 
+    /// <summary>
+    /// The function to be executed on SeesTower & !TowerNearby; for use in the decision tree.
+    /// We set the Character behaviour type from this function, which manages movement in response to the behaviour.
+    /// </summary>
     protected virtual void MoveToTower()
     {
         Debug.Log("Moving to tower!");
         this.gameObject.GetComponent<Character>().BehaviourType = BEHAVIOUR_TYPE.MOVE_TO_TOWER;
     }
 
+    /// <summary>
+    /// The function to be executed on SeesPlayer & !PlayerNearby; for use in the decision tree.
+    /// We set the Character behaviour type from this function, which manages movement in response to the behaviour.
+    /// </summary>
     protected virtual void MoveToPlayer()
     {
-        Debug.Log("Moving to tower!");
+        Debug.Log("Moving to player!");
         this.gameObject.GetComponent<Character>().BehaviourType = BEHAVIOUR_TYPE.MOVE_TO_PLAYER;
     }
 
+    /// <summary>
+    /// Our default behaviour
+    /// </summary>
     protected virtual void Default()
     {
         Debug.Log("Default!");
@@ -190,10 +226,13 @@ public class EnemyMovement : MonoBehaviour
         this.gameObject.GetComponent<Character>().BehaviourType = BEHAVIOUR_TYPE.BASE_SEEK;
     }
 
-    //A pseudoconstructor to allow us to easily spawn and initialize zombie movement types
+    /// <summary>
+    /// A pseudoconstructor to allow us to easily spawn and initialize enemy AI movement types
+    /// </summary>
     public void Initialize()
     {
         grid_generator = FindObjectOfType<GenerateGrid>();
+        this.m_Player = FindObjectOfType<PlayerMovement>().gameObject.transform;
 
         //Set our decision tree
         //Conditions

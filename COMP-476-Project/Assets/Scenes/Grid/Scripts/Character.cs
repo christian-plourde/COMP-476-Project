@@ -259,7 +259,7 @@ public class Character : NPC
     }
 
     /// <summary>
-    /// Our update function when we want to be moving to the player
+    /// Our update function when we want to be moving to the player's position
     /// </summary>
     private void MoveToPlayerUpdate()
     {
@@ -320,12 +320,34 @@ public class Character : NPC
         //if something goes wrong with the next node I want to visit, just return the base node closest to the player
         catch
         {
-            LevelNode ln = this.gameObject.GetComponent<ZombieMovement>().m_TargetTowerNode.gameObject.GetComponent<LevelNode>();
-            Path = graph.ShortestPath(current_node, ln.GraphNode).ToArray<GraphNode<LevelNode>>();
+            //A reference to player position
+            Vector3 player_pos = this.gameObject.GetComponent<EnemyMovement>().m_Player.position;
+
+            //Find me the closest level node to the player's position
+            int closest_index = 0;
+            for(int i = 0; i < grid.Graph.Nodes.Count; i++)
+            {
+                Vector3 current_node_pos = grid.Graph.Nodes[i].Value.GridSquare.Position;
+                Vector3 closest_node_pos = grid.Graph.Nodes[closest_index].Value.GridSquare.Position;
+                float closest_distance = (player_pos - closest_node_pos).magnitude;
+                float new_distance = (player_pos - current_node_pos).magnitude;
+                if (new_distance < closest_distance)
+                {
+                    closest_index = i;
+                }
+            }
+            //By now we have the closest levelnode's index, which is as good as the node itself
+
+            Path = graph.ShortestPath(current_node, grid.Graph.Nodes[closest_index]).ToArray<GraphNode<LevelNode>>();
         }
 
         //Call NPC.Update, which ensures we keep moving until we arrive at our destination
         base.Update();
+    }//end f'n
+
+    public GraphNode<LevelNode> CurrentNode
+    {
+        get { return current_node; }
     }
 
 
