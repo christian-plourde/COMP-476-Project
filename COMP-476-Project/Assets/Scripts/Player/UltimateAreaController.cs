@@ -40,6 +40,11 @@ public class UltimateAreaController : MonoBehaviour
         {
             RainFireArrows();
         }
+
+        if (PlayerRef.GetComponent<PlayerMovement>().isDead && !targetSet)
+        {
+            Destroy(this.gameObject);
+        }
     }
 
     void UltimateAreaControls()
@@ -109,6 +114,15 @@ public class UltimateAreaController : MonoBehaviour
             {
                 // hurt
                 other.GetComponent<EnemyAttributes>().DealDamage(2);
+            }
+        }
+        if (other.tag == "Player" && targetSet && takeDamageTimer > 1.9f)
+        {
+            int r = Random.Range(0, 101);
+            if (r < 4)
+            {
+                // hurt
+                other.GetComponent<PlayerMovement>().DealDamage(5);
             }
         }
     }

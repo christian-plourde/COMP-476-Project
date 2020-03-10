@@ -354,12 +354,19 @@ public class CombatBehavior : MonoBehaviour
         // turn off all attack parameters.
         BackBow.SetActive(true);
         HandBow.SetActive(false);
+        HeldArrow.SetActive(false);
 
-        
+
         animator.SetBool("Shot", false);
         animator.SetBool("Shooting", false);
 
         animator.SetLayerWeight(1, 0);
         Attacking = false;
+
+        if (AttackTarget != null)
+        {
+            AttackTarget.transform.GetChild(0).gameObject.SetActive(false);
+            AttackTarget = null;
+        }
     }
 }

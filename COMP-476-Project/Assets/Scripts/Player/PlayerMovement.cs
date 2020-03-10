@@ -168,7 +168,7 @@ public class PlayerMovement : MonoBehaviour
 
     // for death & respawn methods
 
-    void DealDamage(float dmg)
+    public void DealDamage(float dmg)
     {
         if (!invincible)
         {
@@ -199,6 +199,7 @@ public class PlayerMovement : MonoBehaviour
         animator.SetBool("Dead", false);
         health = maxHealth;
         invincible = false;
+        transform.position = respawnPos;
 
         //Reset weapons and stuff.
         if (playerClass == "Warrior")
@@ -209,6 +210,7 @@ public class PlayerMovement : MonoBehaviour
         else
         {
             CombatBehavior scriptRef = GetComponent<CombatBehavior>();
+            scriptRef.ResetAllCombat();
         }
         
     }
