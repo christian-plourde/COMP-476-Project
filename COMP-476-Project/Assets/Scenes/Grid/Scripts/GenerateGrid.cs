@@ -37,6 +37,13 @@ public class GridSquare : IHeuristic<GridSquare>
 {
     private Vector3 m_Centre;
     private GridCoordinate coordinate;
+    private GraphNode<LevelNode> node;
+
+    public GraphNode<LevelNode> Node
+    {
+        get { return node; }
+        set { node = value; }
+    }
 
     public Vector3 Position
     {
@@ -145,6 +152,11 @@ public class GenerateGrid : Subject
         get { return graph; }
     }
 
+    public List<GridSquare> GridSquares
+    {
+        get { return m_GridSquares; }
+    }
+
     void Awake()
     {
         player_base_nodes = new List<LevelNode>();
@@ -246,6 +258,8 @@ public class GenerateGrid : Subject
 
             LevelNode l = node.GetComponent<LevelNode>();
             l.GridSquare = s;
+
+            s.Node = l.GraphNode;
 
             graph.Add(l.GraphNode);
 

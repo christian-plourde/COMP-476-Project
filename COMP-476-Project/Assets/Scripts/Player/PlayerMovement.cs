@@ -29,6 +29,30 @@ public class PlayerMovement : MonoBehaviour
 
     [HideInInspector]public bool warriorUltimate;
 
+    public GridSquare currentGridSquare;
+    public GenerateGrid grid;
+
+
+    public GridSquare GridSquare
+    {
+        get { return currentGridSquare; }
+    }
+
+    //called each update to update the current grid square that the player is on
+    public void UpdateGridSquare()
+    {
+        double smallest_dist = double.MaxValue;
+        //foreach of the squares, compare the position of the square to the player's position
+        foreach(GridSquare s in grid.GridSquares)
+        {
+            double curr_dist = (s.Position - this.transform.position).magnitude;
+            if (curr_dist < smallest_dist)
+            {
+                smallest_dist = curr_dist;
+                this.currentGridSquare = s;
+            }
+        }
+    }
 
     void Start()
     {
@@ -36,6 +60,7 @@ public class PlayerMovement : MonoBehaviour
         PlayerMesh = transform.GetChild(0);
         Debug.Log("Playermesh is:"+PlayerMesh.name);
         animator = PlayerMesh.GetComponent<Animator>();
+        this.grid = FindObjectOfType<GenerateGrid>();
     }
 
     void Update()
@@ -44,6 +69,9 @@ public class PlayerMovement : MonoBehaviour
             Movement();
         // Force rotation = 0
         transform.rotation = Quaternion.Euler(Vector3.zero);
+
+        //set the current grid square
+        UpdateGridSquare();
         
     }
 

@@ -5,36 +5,31 @@ using System;
 
 public class EnemyMovement : MonoBehaviour
 {
-
-
-    //Our zombie decision tree
-    public class EnemyDT
-    {
-        public Func<bool> seesTower;
-        public Func<bool> seesPlayer;
-        public Func<bool> towerNearby;
-        public Func<bool> playerNearby;
-
-        public Action attackTower;
-        public Action attackPlayer;
-        public Action moveToTower;
-        public Action moveToPlayer;
-        public Action wander;
-    }
-
-    //Our decision tree; manages whichever movement we should be doing
+    /// <summary>
+    /// Our decision tree; manages whichever movement we should be doing, and manages transitions between decisions and behaviours internally.
+    /// </summary>
     protected DecisionTree m_DecisionTree = null;
 
-    //A reference to the player variable, to be set on instantiation of the ZombieMovement
-    private Transform m_Player;
+    /// <summary>
+    /// A reference to the player transform, so we know what the player's position is.
+    /// </summary>
+    [HideInInspector]
+    public Transform m_Player;
 
-    private List<GameObject> towers;
+    private List<GameObject> tower_nodes;
 
-    private GameObject target_tower;
+    private GameObject target_tower_node;
+    public GameObject m_TargetTowerNode { get { return target_tower_node; } }
 
-    private GenerateGrid grid_generator;
+    /// <summary>
+    /// A reference to the global game grid generator (who contains the actual grid)
+    /// </summary>
+    [HideInInspector]
+    public GenerateGrid grid_generator;
 
-    //What we consider to be nearby
+    /// <summary>
+    /// What we consider to be nearby.
+    /// </summary>
     public float m_WhatIsNearby;
     //What our error margin should be, for what's considered to be in front of us
     public float m_VisionErrorMargin;
@@ -43,8 +38,10 @@ public class EnemyMovement : MonoBehaviour
 
     //Our decision tree condition nodes
 
-    //For now I'll assume that if the player is somewhat in front of us, even if it's behind a wall, we can see it.
-    //Tells us whether the player is within sight of the zombie; to be used in the decision tree
+    /// <summary>
+    /// Tells us whether the player is within sight of the zombie; to be used in the decision tree.
+    /// </summary>
+    /// <returns></returns>
     protected virtual bool SeesPlayer()
     {
         Vector3 enemypos = this.transform.position;
@@ -64,73 +61,101 @@ public class EnemyMovement : MonoBehaviour
         float desired_result = 1.0f;
         bool facing_player = (desired_result - m_VisionErrorMargin <= dot && dot <= desired_result + m_VisionErrorMargin);
         string message = (facing_player) ? "Player spotted!" : "Player NOT spotted!";
+        Debug.Log(message);
 
         //if we're facing the target, then we can consider a raycast
         if (facing_player)
         {
-            RaycastHit hit;
-            if (Physics.Raycast(this.transform.position, transform.TransformDirection(Vector3.forward), out hit, this.m_RangeOfVision))
-            {
-                if (hit.transform.tag == "Player")
-                {
-                    return true;
-                }
-            }
+            //TEMPORARY
+            return true;
+
+            //RaycastHit hit;
+            //if (Physics.Raycast(this.transform.position, transform.TransformDirection(Vector3.forward), out hit, this.m_RangeOfVision))
+            //{
+            //    if (hit.transform.tag == "Player")
+            //    {
+            //        return true;
+            //    }
+            //}
         }
-        //Debug.Log(message);
         //Debug.Log(message + " (" + dot + ")");//More specific logs
         return false;
     }
 
     //For now I'll assume that if the tower is somewhat in front of us, even if it's behind a wall, we can see it.
-    //Tells us whether a tower is within sight of the zombie; to be used in the decision tree
+    /// <summary>
+    /// Tells us whether a tower is within sight of the enemy; condition function to be used in the decision tree.
+    /// Note: also implements a failsafe distance check and arbitrarily returns true if the tower is close enough to the enemy. This is to compensate for the tower being progressively harder to see as you get closer to it.
+    /// </summary>
+    /// <returns></returns>
     protected virtual bool SeesTower()
     {
         Vector3 enemypos = this.transform.position;
 
-        foreach(GameObject g in towers)
+        foreach(GameObject tower_node in tower_nodes)
         {
-            float dot = Vector3.Dot(this.transform.forward, (g.transform.position - enemypos).normalized);
+            float dot = Vector3.Dot(this.transform.forward, (tower_node.transform.position - enemypos).normalized);
             //If our dot product is exactly 1, then the tower is exactly in front of us
             float desired_result = 1.0f;
             bool facing_tower = (desired_result - m_VisionErrorMargin <= dot && dot <= desired_result + m_VisionErrorMargin);
-            string message = (facing_tower) ? "Tower spotted" : "Tower NOT spotted";
-            //Debug.Log(message);
-            //Debug.Log(message + " (" + dot + ")");//More specific logs
 
+            //Debug.Log(message + " (" + dot + ")");//More specific logs
+            string message = (facing_tower) ? "Tower spotted" : "Tower NOT spotted";
             //if we're facing the target, then we can consider a raycast
             if (facing_tower)
             {
-                RaycastHit hit;
-                if(Physics.Raycast(this.transform.position, transform.TransformDirection(Vector3.forward), out hit, this.m_RangeOfVision))
-                {
-                    if(hit.transform.tag == "Tower")
-                    {
-                        target_tower = g;
-                        return true;
-                    }
-                }
-                return false;
+                
+                //TEMPORARY
+                target_tower_node = tower_node;
+                Debug.Log(message);
+                return true;
+
+                //RaycastHit hit;
+                //if(Physics.Raycast(this.transform.position, transform.TransformDirection(Vector3.forward), out hit, this.m_RangeOfVision))
+                //{
+                //    if you hit a graph node and it's closed, it has a tower, and that means you saw a tower
+                //if (hit.transform.tag == "GraphNode")
+                //{
+                //    if (!hit.transform.gameObject.getComponent<LevelNode>().Open)
+                //    {
+                //        target_tower = g;
+                //        return true;
+                //    }
+                //    return false
+                //}
+                //}
+                //return false;
+            }//end if
+
+            //The closer you are, the harder it gets to see a tower.
+            //As a failsafe, if you come within some minimum distance of a tower, just attack it, you're blind and it's next to you.
+            float distance = (tower_node.transform.position - this.transform.position).magnitude;
+            if (distance <= m_WhatIsNearby)
+            {
+                Debug.Log("Enemy doesn't see tower but is passing next to one; attacking!");
+                return true;
             }
-            //else if we're not facing the target, we need not consider a raycast, as we won't see the target
         }
 
         return false;
     }
 
-    //Tells us whether a tower is within some distance of the zombie; to be used in the decision tree
+    /// <summary>
+    /// Tells us whether a tower is within some distance of the enemy AI; to be used in the decision tree
+    /// </summary>
+    /// <returns></returns>
     protected virtual bool TowerNearby()
     {
         Vector3 enemypos = this.transform.position;
-        foreach(GameObject o in towers)
+        foreach(GameObject o in tower_nodes)
         {
             bool result = (enemypos - o.transform.position).magnitude <= m_WhatIsNearby;
             string message = (result) ? "Tower nearby!" : "Tower NOT nearby!";
-            //Debug.Log(message);
+            Debug.Log(message);
             //Debug.Log(message + "(" + (enemypos - towerpos).magnitude + ")");//More specific logs
-            if(result)
+            if (result)
             {
-                target_tower = o;
+                target_tower_node = o;
                 return result;
             }
         }
@@ -138,50 +163,76 @@ public class EnemyMovement : MonoBehaviour
         return false;
     }
 
-    //Tells us whether the player is within sight of the zombie; to be used in the decision tree
+    /// <summary>
+    /// Tells us whether the player is within sight of the enemy AI; to be used in the decision tree
+    /// </summary>
+    /// <returns></returns>
     protected virtual bool PlayerNearby()
     {
         Vector3 enemypos = this.transform.position;
         Vector3 playerpos = this.m_Player.position;
         bool result = (enemypos - playerpos).magnitude <= m_WhatIsNearby;
-        string message = (result) ? "Tower nearby!" : "Tower NOT nearby!";
-        //Debug.Log(message);
+        string message = (result) ? "Player nearby!" : "Player NOT nearby!";
+        Debug.Log(message);
         return (result);
     }
 
     //Our decision tree action nodes
 
+    /// <summary>
+    /// The function to be executed on SeesTower & TowerNearby; for use in the decision tree
+    /// </summary>
     protected virtual void AttackTower()
     {
         Debug.Log("Attacking tower!");
     }
 
+    /// <summary>
+    /// The function to be executed on SeesPlayer & PlayerNearby; for use in the decision tree
+    /// </summary>
     protected virtual void AttackPlayer()
     {
         Debug.Log("Attacking player!");
     }
 
+    /// <summary>
+    /// The function to be executed on SeesTower & !TowerNearby; for use in the decision tree.
+    /// We set the Character behaviour type from this function, which manages movement in response to the behaviour.
+    /// </summary>
     protected virtual void MoveToTower()
     {
         Debug.Log("Moving to tower!");
+        this.gameObject.GetComponent<Character>().BehaviourType = BEHAVIOUR_TYPE.MOVE_TO_TOWER;
     }
 
+    /// <summary>
+    /// The function to be executed on SeesPlayer & !PlayerNearby; for use in the decision tree.
+    /// We set the Character behaviour type from this function, which manages movement in response to the behaviour.
+    /// </summary>
     protected virtual void MoveToPlayer()
     {
         Debug.Log("Moving to player!");
+        this.gameObject.GetComponent<Character>().BehaviourType = BEHAVIOUR_TYPE.MOVE_TO_PLAYER;
     }
 
-    protected virtual void Wander()
+    /// <summary>
+    /// Our default behaviour
+    /// </summary>
+    protected virtual void Default()
     {
+        Debug.Log("Default!");
         //this behaviour will make the enemy move toward the enemy base
         //Debug.Log(this.gameObject.GetComponent<Character>());
         this.gameObject.GetComponent<Character>().BehaviourType = BEHAVIOUR_TYPE.BASE_SEEK;
     }
 
-    //A pseudoconstructor to allow us to easily spawn and initialize zombie movement types
+    /// <summary>
+    /// A pseudoconstructor to allow us to easily spawn and initialize enemy AI movement types
+    /// </summary>
     public void Initialize()
     {
         grid_generator = FindObjectOfType<GenerateGrid>();
+        this.m_Player = FindObjectOfType<PlayerMovement>().gameObject.transform;
 
         //Set our decision tree
         //Conditions
@@ -193,7 +244,7 @@ public class EnemyMovement : MonoBehaviour
         //Actions
         DTNode.ActionNode r3n1 = new DTNode.ActionNode(AttackTower);
         DTNode.ActionNode r3n2 = new DTNode.ActionNode(MoveToTower);
-        DTNode.ActionNode r3n4 = new DTNode.ActionNode(Wander);
+        DTNode.ActionNode r3n4 = new DTNode.ActionNode(Default);
         DTNode.ActionNode r4n1 = new DTNode.ActionNode(AttackPlayer);
         DTNode.ActionNode r4n2 = new DTNode.ActionNode(MoveToPlayer);
 
@@ -217,7 +268,7 @@ public class EnemyMovement : MonoBehaviour
     // Update is called once per frame
     protected void Update()
     {
-        towers = new List<GameObject>();
+        tower_nodes = new List<GameObject>();
         if(grid_generator == null || grid_generator.Graph.Nodes == null)
         {
             grid_generator = FindObjectOfType<GenerateGrid>();
@@ -226,8 +277,10 @@ public class EnemyMovement : MonoBehaviour
 
         foreach(Graph.GraphNode<LevelNode> n in grid_generator.Graph.Nodes)
         {
+            //if (!n.Value.Open)
+            //    towers.Add(n.Value.Tower);
             if (!n.Value.Open)
-                towers.Add(n.Value.Tower);
+                tower_nodes.Add(n.Value.gameObject);
         }
 
         //Debug.Log("towers: " + towers.Count);

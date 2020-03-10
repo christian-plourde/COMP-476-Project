@@ -25,12 +25,18 @@ namespace Graph
             set { disconnected = value; }
         }
 
+        /// <summary>
+        /// Return the GraphNode which this GraphEdge is moving from
+        /// </summary>
         public GraphNode<T> Start
         {
             get { return start_node; }
             set { start_node = value; }
         }
 
+        /// <summary>
+        /// Return the GraphNode which this GraphEdge is moving to
+        /// </summary>
         public GraphNode<T> End
         {
             get { return end_node; }
@@ -100,6 +106,22 @@ namespace Graph
         public void AddNeighbor(GraphNode<T> n, double cost)
         {
             this.edges.AddLast(new GraphEdge<T>(this, n, cost));
+        }
+
+        public GraphNode<T> ClosestNeighbor()
+        {
+            double smallest_cost = double.MaxValue;
+            GraphNode<T> closest_neighbor = this;
+            foreach (GraphEdge<T> e in Links)
+            {
+                if (e.Cost < smallest_cost)
+                {
+                    smallest_cost = e.Cost;
+                    closest_neighbor = e.End;
+                }
+            }
+
+            return closest_neighbor;
         }
 
         public List<GraphNode<T>> Neighbors
