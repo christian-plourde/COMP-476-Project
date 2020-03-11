@@ -236,9 +236,9 @@ public class CombatBehavior : MonoBehaviour
                 obj.transform.LookAt(AttackTarget.position);
 
                 if(Vector3.Distance(AttackTarget.position,transform.position) > 17.5f)
-                    obj.GetComponent<Rigidbody>().AddForce(shotDirection.normalized * 35f*specialMult, ForceMode.Impulse);
+                    obj.GetComponent<Rigidbody>().AddForce(shotDirection.normalized * 35f*(transform.localScale.x)*specialMult, ForceMode.Impulse);
                 else
-                    obj.GetComponent<Rigidbody>().AddForce(shotDirection.normalized * 25f, ForceMode.Impulse);
+                    obj.GetComponent<Rigidbody>().AddForce(shotDirection.normalized * 25f * (transform.localScale.x), ForceMode.Impulse);
 
             }
             else

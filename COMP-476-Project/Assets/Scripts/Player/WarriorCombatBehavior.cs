@@ -80,7 +80,7 @@ public class WarriorCombatBehavior : MonoBehaviour
         {
             //attackTimer = 0;
             //if(fastAttack3 || fastAttack2)
-                transform.Translate(PlayerMesh.transform.forward * 1f * Time.deltaTime);
+                transform.Translate(PlayerMesh.transform.forward * 1f *(transform.localScale.x)* Time.deltaTime);
             AttackOrientation();
 
             attackTimer += Time.deltaTime;
@@ -122,7 +122,7 @@ public class WarriorCombatBehavior : MonoBehaviour
                 animator.SetBool("UltimateSmash", true);
                 PlayerMovementRef.controlLock = true;
                 //Debug.Log("Switched to Ultimate Smash");
-                GetComponent<Rigidbody>().AddForce(Vector3.up * 5f, ForceMode.Impulse);
+                GetComponent<Rigidbody>().AddForce(Vector3.up *5f, ForceMode.Impulse);
             }
         }
 

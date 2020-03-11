@@ -9,9 +9,13 @@ public class ChainBolt : MonoBehaviour
     public GameObject secondaryArrowPrefab;
     public int baseDamage;
 
+    // automatic scale adjustment
+    float scaleFactor;
+
     void Start()
     {
-        
+        scaleFactor = GameObject.FindGameObjectWithTag("Player").transform.localScale.x;
+        transform.localScale = new Vector3(scaleFactor, scaleFactor, scaleFactor);
     }
 
     // Update is called once per frame
@@ -33,6 +37,9 @@ public class ChainBolt : MonoBehaviour
 
             gb.transform.Translate(gb.transform.forward * 0.8f);
             Destroy(gb.gameObject, 10f);            // destroy spawned arrow after 10 secs
+
+            // for scale adjustment on static arrows
+            gb.transform.localScale = new Vector3(scaleFactor, scaleFactor, scaleFactor);
 
             // damage if its an enemy
             if (collision.collider.tag == "Enemy")
