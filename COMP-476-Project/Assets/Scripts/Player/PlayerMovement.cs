@@ -40,6 +40,31 @@ public class PlayerMovement : MonoBehaviour
     [Header("References")]
     public GameObject respawnUIPrefab;
 
+    public GridSquare currentGridSquare;
+    public GenerateGrid grid;
+
+
+    public GridSquare GridSquare
+    {
+        get { return currentGridSquare; }
+    }
+
+    //called each update to update the current grid square that the player is on
+    public void UpdateGridSquare()
+    {
+        double smallest_dist = double.MaxValue;
+        //foreach of the squares, compare the position of the square to the player's position
+        foreach(GridSquare s in grid.GridSquares)
+        {
+            double curr_dist = (s.Position - this.transform.position).magnitude;
+            if (curr_dist < smallest_dist)
+            {
+                smallest_dist = curr_dist;
+                this.currentGridSquare = s;
+            }
+        }
+    }
+
     void Start()
     {
         ogSpeed = mSpeed;
@@ -50,6 +75,7 @@ public class PlayerMovement : MonoBehaviour
         maxHealth = health;
 
         respawnPos = transform.position;
+        this.grid = FindObjectOfType<GenerateGrid>();
     }
 
     void Update()
@@ -66,6 +92,8 @@ public class PlayerMovement : MonoBehaviour
 
         if (!isDead && Input.GetKeyDown(KeyCode.K))
             DealDamage(25f);
+        //set the current grid square
+        UpdateGridSquare();
         
     }
 

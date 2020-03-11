@@ -62,10 +62,10 @@ public class ZombieMovement : EnemyMovement
         base.MoveToPlayer();
     }
 
-    protected override void Wander()
+    protected override void Default()
     {
         //Debug.Log("ZombieMovement : Wandering!");
-        base.Wander();
+        base.Default();
     }
 
 }
