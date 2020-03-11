@@ -67,6 +67,9 @@ public class PlayerMovement : MonoBehaviour
 
     void Start()
     {
+        // scale speed according to current scale (because player is smaller in the grid scene)
+        mSpeed = mSpeed * transform.localScale.x;
+
         ogSpeed = mSpeed;
         PlayerMesh = transform.GetChild(0);
         Debug.Log("Playermesh is:"+PlayerMesh.name);
@@ -76,6 +79,8 @@ public class PlayerMovement : MonoBehaviour
 
         respawnPos = transform.position;
         this.grid = FindObjectOfType<GenerateGrid>();
+
+        
     }
 
     void Update()
