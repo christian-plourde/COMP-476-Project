@@ -175,6 +175,7 @@ MonoBehaviour:
   description: 'A simple, balanced tower with decent stats accross the board.\nDamage
     : 10\nAttack cooldown : 1\nRange : 5\nMaximum aim time : Instant\nHealth : 100\nPrice
     : 100'
+  upgrade: {fileID: 2818103337241428834, guid: 24042aff9816d214095c1dfd630a9280, type: 3}
 --- !u!136 &5822081443085063723
 CapsuleCollider:
   m_ObjectHideFlags: 0

@@ -263,6 +263,7 @@ MonoBehaviour:
     damaging all enemies within range.\nDamage : 10 on impact + 10 within 1)\nAttack
     cooldown : 1.75s\nRange : 7\nHeight limit : 2.3\nMaximum aim time : 3s\nHealth
     : 150\nPrice : 150'
+  upgrade: {fileID: 165880, guid: e91e1a7e972c3b845b31560369c3e1db, type: 3}
 --- !u!114 &-5769318891380437015
 MonoBehaviour:
   m_ObjectHideFlags: 0

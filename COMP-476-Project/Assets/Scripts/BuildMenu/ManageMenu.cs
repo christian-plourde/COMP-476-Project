@@ -20,26 +20,55 @@ public class ManageMenu : MonoBehaviour
 
     void Start()
     {
-        playerScriptRef = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>();
-        playerScriptRef.controlLock = true;
+        //playerScriptRef = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>();
+        //playerScriptRef.controlLock = true;
     }
 
     public void InitializeMenu()
     {
-        refund= (currentTower.GetComponent<BuildingStats>().price / 2);
-        destroyRefundText.text = "Refund: " + refund; 
+        playerScriptRef = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>();
+        playerScriptRef.controlLock = true;
+
+        refund = (currentTower.GetComponent<BuildingStats>().price / 2);
+        destroyRefundText.text = "Refund: " + refund;
+
+        // see if theres an upgrade or if player can afford it.
+        GameObject upgradedTower = currentTower.GetComponent<BuildingStats>().upgrade;
+        if (upgradedTower != null)
+        {
+            upgradeCostText.text = "Cost: " + upgradedTower.GetComponent<BuildingStats>().price;
+            if (playerScriptRef.gold >= upgradedTower.GetComponent<BuildingStats>().price)
+            {
+                UpgradeButton.interactable = true;
+                
+            }
+        }
+        else
+        {
+            upgradeCostText.text = "No Upgrades";
+        }
     }
     
 
     public void Cancel()
     {
-        playerScriptRef.controlLock = false;
-        playerScriptRef.managingTower = false;
-        Destroy(this.gameObject);
+        CloseMenu();
     }
 
     public void Upgrade()
-    { }
+    {
+        playerScriptRef.RemoveGold(currentTower.GetComponent<BuildingStats>().upgrade.GetComponent<BuildingStats>().price);
+
+        //replace towers on that node.
+        Transform TowerNode = currentTower.transform.parent;
+
+        GameObject newTower=Instantiate(currentTower.GetComponent<BuildingStats>().upgrade.gameObject, currentTower.transform.position, Quaternion.identity);
+        newTower.transform.SetParent(TowerNode);
+
+        Destroy(currentTower.gameObject);
+
+        CloseMenu();
+    }
 
     public void DestroyTower()
     {
@@ -59,6 +88,11 @@ public class ManageMenu : MonoBehaviour
 
 
 
+        CloseMenu();
+    }
+
+    void CloseMenu()
+    {
 
         playerScriptRef.controlLock = false;
         playerScriptRef.managingTower = false;
