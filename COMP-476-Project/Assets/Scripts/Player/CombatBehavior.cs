@@ -123,13 +123,14 @@ public class CombatBehavior : MonoBehaviour
             //Debug.DrawRay(PlayerMesh.position,PlayerMesh.forward,Color.yellow);
             Debug.DrawRay(LaunchPoint.position, LaunchPoint.forward, Color.yellow);
         }
+        /*
         else if(Input.GetMouseButton(0) && !Attacking)
         {
             Attacking = true;
             EquipWeapon();
             animator.SetLayerWeight(1, 1);
         }
-
+        */
         if (Input.GetMouseButtonUp(0) && Attacking)
         {
             if (AttackTarget == null)
