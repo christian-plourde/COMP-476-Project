@@ -210,8 +210,10 @@ public class PlayerMovement : MonoBehaviour
 
 
 
-    // for death & respawn methods
-
+    /// <summary>
+    /// A function to deal damage to the player.
+    /// </summary>
+    /// <param name="dmg"></param>
     public void DealDamage(float dmg)
     {
         if (!invincible && !isDead)

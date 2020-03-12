@@ -23,7 +23,7 @@ public class EnemySpawner : MonoBehaviour
 
         foreach (GameObject g in m_Zombies)
         {
-            ZombieMovement zm = g.GetComponent<ZombieMovement>();
+            ZombieBehaviour zm = g.GetComponent<ZombieBehaviour>();
             zm.Initialize();
         }
     }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public class EnemyMovement : MonoBehaviour
+public class EnemyBehaviour : MonoBehaviour
 {
     /// <summary>
     /// Our decision tree; manages whichever movement we should be doing, and manages transitions between decisions and behaviours internally.
@@ -16,11 +16,29 @@ public class EnemyMovement : MonoBehaviour
     [HideInInspector]
     public Transform m_Player;
 
-    private List<GameObject> tower_nodes; //list of all target_tower_node objects in the game
-    private List<LevelNode> tower_level_nodes; //list of all level node scripts in the game
+    /// <summary>
+    /// list of all target_tower_node objects in the game
+    /// </summary>
+    private List<GameObject> tower_nodes;
 
-    private GameObject target_tower_node; //the game object representation of the node (the green disc)
-    private LevelNode target_tower_level_node; //the level node script on the target_tower_node
+    /// <summary>
+    /// List of all level node scripts in the game
+    /// </summary>
+    private List<LevelNode> tower_level_nodes;
+
+    /// <summary>
+    /// The game object representation of the node (the green disc).
+    /// </summary>
+    private GameObject target_tower_node;
+
+    /// <summary>
+    /// The level node script on the target_tower_node.
+    /// </summary>
+    private LevelNode target_tower_level_node;
+
+    /// <summary>
+    /// The public accessible property corresponding to our target tower level node
+    /// </summary>
     public GameObject m_TargetTowerNode 
     { 
         get { return target_tower_node; }
@@ -47,10 +65,29 @@ public class EnemyMovement : MonoBehaviour
     /// What we consider to be nearby.
     /// </summary>
     public float m_WhatIsNearby;
-    //What our error margin should be, for what's considered to be in front of us
+    /// <summary>
+    /// What our error margin should be, for what's considered to be in front of us.
+    /// </summary>
     public float m_VisionErrorMargin;
-    //How far we can see
+    /// <summary>
+    /// How far we can see
+    /// </summary>
     public float m_RangeOfVision;
+    /// <summary>
+    /// The frequency at which the enemy should be able to attack.
+    /// </summary>
+    public float m_AttackFrequency = 1.5f;
+    private float m_AttackTimer = 0.0f;
+    /// <summary>
+    /// The rate at which we increase our timer variable
+    /// </summary>
+    private const float DELTA_T = 0.025f;
+
+    /// <summary>
+    /// A reference to the character component associated to this gameobject. Initialized in Start()
+    /// </summary>
+    protected Character m_Character;
+
 
     //Our decision tree condition nodes
 
@@ -163,11 +200,13 @@ public class EnemyMovement : MonoBehaviour
     /// <returns></returns>
     protected virtual bool TowerNearby()
     {
-        
+        //For each level node containing a tower...
         foreach(LevelNode n in tower_level_nodes)
         {
-            if(this.gameObject.GetComponent<Character>().CurrentNode.Neighbors.Contains(n.GraphNode))
+            //...if the node we're at is a neighbor to this node where there is a tower...
+            if(this.m_Character.CurrentNode.Neighbors.Contains(n.GraphNode))
             {
+                //...then we consider this tower to be nearby
                 m_TargetTowerNode = n.gameObject;
                 return true;
             }
@@ -177,7 +216,7 @@ public class EnemyMovement : MonoBehaviour
     }
 
     /// <summary>
-    /// Tells us whether the player is within sight of the enemy AI; to be used in the decision tree
+    /// Tells us whether the player is within some distance [m_WhatIsNearby] of the enemy AI; to be used in the decision tree
     /// </summary>
     /// <returns></returns>
     protected virtual bool PlayerNearby()
@@ -190,8 +229,6 @@ public class EnemyMovement : MonoBehaviour
         return (result);
     }
 
-    //Our decision tree action nodes
-
     /// <summary>
     /// The function to be executed on SeesTower & TowerNearby; for use in the decision tree
     /// </summary>
@@ -199,7 +236,24 @@ public class EnemyMovement : MonoBehaviour
     {
         Debug.Log("Attacking tower!");
         //Make enemy face player in order to force continuous attack
-        this.gameObject.GetComponent<Character>().BehaviourType = BEHAVIOUR_TYPE.ATTACK_TOWER;
+        this.m_Character.BehaviourType = BEHAVIOUR_TYPE.ATTACK_TOWER;
+        //if our attack timer is negative, we haven't started attacking yet
+        if (m_AttackTimer == 0.0f)
+        {
+            Debug.Log("Dealing damage to tower");
+            //Attack Tower
+            float attack_damage = this.GetComponent<EnemyAttributes>().damage;
+            this.m_TargetTowerNode.GetComponent<LevelNode>().Tower.GetComponent<BuildingStats>().Damage(attack_damage);
+            this.m_AttackTimer += DELTA_T;
+        }
+        else if (m_AttackTimer >= this.m_AttackFrequency)
+        {
+            this.m_AttackTimer = 0;
+        }
+        else if (this.m_AttackTimer < this.m_AttackFrequency)
+        {
+            this.m_AttackTimer += DELTA_T;
+        }
     }
 
     /// <summary>
@@ -209,7 +263,24 @@ public class EnemyMovement : MonoBehaviour
     {
         Debug.Log("Attacking player!");
         //Make enemy face player in order to force continuous attack
-        this.gameObject.GetComponent<Character>().BehaviourType = BEHAVIOUR_TYPE.ATTACK_PLAYER;
+        this.m_Character.BehaviourType = BEHAVIOUR_TYPE.ATTACK_PLAYER;
+
+        if (m_AttackTimer == 0.0f)
+        {
+            Debug.Log("Dealing damage to player");
+            //Attack player
+            float attack_damage = this.GetComponent<EnemyAttributes>().damage;
+            this.m_Player.GetComponent<PlayerMovement>().DealDamage(attack_damage);
+            this.m_AttackTimer += DELTA_T;
+        }
+        else if (m_AttackTimer >= this.m_AttackFrequency)
+        {
+            this.m_AttackTimer = 0;
+        }
+        else if (this.m_AttackTimer < this.m_AttackFrequency)
+        {
+            this.m_AttackTimer += DELTA_T;
+        }
     }
 
     /// <summary>
@@ -219,7 +290,7 @@ public class EnemyMovement : MonoBehaviour
     protected virtual void MoveToTower()
     {
         //Debug.Log("Moving to tower!");
-        this.gameObject.GetComponent<Character>().BehaviourType = BEHAVIOUR_TYPE.MOVE_TO_TOWER;
+        this.m_Character.BehaviourType = BEHAVIOUR_TYPE.MOVE_TO_TOWER;
     }
 
     /// <summary>
@@ -229,18 +300,15 @@ public class EnemyMovement : MonoBehaviour
     protected virtual void MoveToPlayer()
     {
         //Debug.Log("Moving to player!");
-        this.gameObject.GetComponent<Character>().BehaviourType = BEHAVIOUR_TYPE.MOVE_TO_PLAYER;
+        this.m_Character.BehaviourType = BEHAVIOUR_TYPE.MOVE_TO_PLAYER;
     }
 
     /// <summary>
-    /// Our default behaviour
+    /// Our default behaviour; have the enemy move towards the player's base
     /// </summary>
     protected virtual void Default()
     {
-        //Debug.Log("Default!");
-        //this behaviour will make the enemy move toward the enemy base
-        //Debug.Log(this.gameObject.GetComponent<Character>());
-        this.gameObject.GetComponent<Character>().BehaviourType = BEHAVIOUR_TYPE.BASE_SEEK;
+        this.m_Character.BehaviourType = BEHAVIOUR_TYPE.BASE_SEEK;
     }
 
     /// <summary>
@@ -279,7 +347,6 @@ public class EnemyMovement : MonoBehaviour
         r3n3.negative = r4n2;
 
         this.m_DecisionTree = new DecisionTree(r1n1);
-        //Debug.Log("Decision tree built!");
     }
 
     // Update is called once per frame
@@ -305,12 +372,15 @@ public class EnemyMovement : MonoBehaviour
                 
         }
 
-        //Debug.Log("towers: " + towers.Count);
-
+        //If the decision tree is initialized, then manage its execution
         if (this.m_DecisionTree != null)
-        {
-            //Debug.Log("Executing decision tree!");
+        {            
             this.m_DecisionTree.Execute();
         }
+    }
+
+    private void Start()
+    {
+        this.m_Character = this.GetComponent<Character>();
     }
 }

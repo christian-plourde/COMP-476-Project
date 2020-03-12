@@ -24854,6 +24854,7 @@ MonoBehaviour:
   m_WhatIsNearby: 1
   m_VisionErrorMargin: 0.2
   m_RangeOfVision: 10
+  m_AttackFrequency: 1
 --- !u!114 &8675522791493954225
 MonoBehaviour:
   m_ObjectHideFlags: 0

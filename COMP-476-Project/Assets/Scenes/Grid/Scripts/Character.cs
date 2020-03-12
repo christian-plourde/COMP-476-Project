@@ -278,13 +278,13 @@ public class Character : NPC
         //if something goes wrong with the next node I want to visit, just return the base node closest to the player
         catch
         {
-            LevelNode ln = this.gameObject.GetComponent<ZombieMovement>().m_TargetTowerNode.gameObject.GetComponent<LevelNode>();
+            LevelNode ln = this.gameObject.GetComponent<ZombieBehaviour>().m_TargetTowerNode.gameObject.GetComponent<LevelNode>();
             Path = graph.ShortestPath(current_node, ln.GraphNode).ToArray<GraphNode<LevelNode>>();
         }
 
         //Call NPC.Update, which ensures we keep moving until we arrive at our destination
         //as long as we are not at tower keep moving
-        if (this.gameObject.GetComponent<ZombieMovement>().m_TargetTowerNode.gameObject.GetComponent<LevelNode>().GridSquare != CurrentNode.Value.GridSquare)
+        if (this.gameObject.GetComponent<ZombieBehaviour>().m_TargetTowerNode.gameObject.GetComponent<LevelNode>().GridSquare != CurrentNode.Value.GridSquare)
             base.Update();
     }
 

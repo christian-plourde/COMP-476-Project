@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public class ZombieMovement : EnemyMovement
+public class ZombieBehaviour : EnemyBehaviour
 {
 
     //For now I'll assume that if the player is somewhat in front of us, even if it's behind a wall, we can see it.
