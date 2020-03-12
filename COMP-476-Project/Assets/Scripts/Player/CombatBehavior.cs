@@ -87,12 +87,17 @@ public class CombatBehavior : MonoBehaviour
                 animator.SetBool("Shooting", false);
                 UnEquipWeapon();
                 ArcherArrowSheath();
+
+                PlayerMovementRef.inBuildMode = true;
             }
             else
             {
                 Attacking = true;
                 EquipWeapon();
                 animator.SetLayerWeight(1, 1);
+
+                PlayerMovementRef.inBuildMode = false;
+
             }
         }
 
@@ -123,13 +128,14 @@ public class CombatBehavior : MonoBehaviour
             //Debug.DrawRay(PlayerMesh.position,PlayerMesh.forward,Color.yellow);
             Debug.DrawRay(LaunchPoint.position, LaunchPoint.forward, Color.yellow);
         }
+        /*
         else if(Input.GetMouseButton(0) && !Attacking)
         {
             Attacking = true;
             EquipWeapon();
             animator.SetLayerWeight(1, 1);
         }
-
+        */
         if (Input.GetMouseButtonUp(0) && Attacking)
         {
             if (AttackTarget == null)
@@ -232,13 +238,18 @@ public class CombatBehavior : MonoBehaviour
                     obj = Instantiate(ProjectilePrefab, LaunchPoint.position, Quaternion.identity);
 
                 Vector3 shotDirection = (AttackTarget.position - transform.position).normalized;
-                shotDirection.y += 0.08f;
+                shotDirection.y += AttackTarget.GetComponent<EnemyAttributes>().GetHeightOffset();
                 obj.transform.LookAt(AttackTarget.position);
 
-                if(Vector3.Distance(AttackTarget.position,transform.position) > 17.5f)
-                    obj.GetComponent<Rigidbody>().AddForce(shotDirection.normalized * 35f*specialMult, ForceMode.Impulse);
+                //Debug.Log("Distance to Target: "+ Vector3.Distance(AttackTarget.position, transform.position));
+                if(Vector3.Distance(AttackTarget.position,transform.position) > 3f)
+                    obj.GetComponent<Rigidbody>().AddForce(shotDirection.normalized * 20f*specialMult, ForceMode.Impulse);
+                //obj.GetComponent<Rigidbody>().AddForce(shotDirection.normalized * 35f*(transform.localScale.x)*specialMult, ForceMode.Impulse);  // old
+                else if(Vector3.Distance(AttackTarget.position, transform.position) > 4.5f)
+                    obj.GetComponent<Rigidbody>().AddForce(shotDirection.normalized * 30f * specialMult, ForceMode.Impulse);
                 else
-                    obj.GetComponent<Rigidbody>().AddForce(shotDirection.normalized * 25f, ForceMode.Impulse);
+                    obj.GetComponent<Rigidbody>().AddForce(shotDirection.normalized * 12.5f , ForceMode.Impulse);
+                    //obj.GetComponent<Rigidbody>().AddForce(shotDirection.normalized * 25f * (transform.localScale.x), ForceMode.Impulse);            // old
 
             }
             else
@@ -345,6 +356,28 @@ public class CombatBehavior : MonoBehaviour
             {
                 Debug.Log("Missing Targetmesh on target or wrong index in hierarchy. Object: " + AttackTarget.name);
             }
+        }
+    }
+
+
+    public void ResetAllCombat()
+    {
+        // turn off all attack parameters.
+        BackBow.SetActive(true);
+        HandBow.SetActive(false);
+        HeldArrow.SetActive(false);
+
+
+        animator.SetBool("Shot", false);
+        animator.SetBool("Shooting", false);
+
+        animator.SetLayerWeight(1, 0);
+        Attacking = false;
+
+        if (AttackTarget != null)
+        {
+            AttackTarget.transform.GetChild(0).gameObject.SetActive(false);
+            AttackTarget = null;
         }
     }
 }

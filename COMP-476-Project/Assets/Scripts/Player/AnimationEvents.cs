@@ -123,6 +123,7 @@ public class AnimationEvents : MonoBehaviour
 
         //reset speed
         movementScriptRef.ResetSpeed();
+        movementScriptRef.invincible = false;
         animator.SetLayerWeight(2, 0);
 
         animator.SetBool("Ultimate", false);
@@ -154,10 +155,19 @@ public class AnimationEvents : MonoBehaviour
         //Debug.Log("Called anim event endofkickattack");
         animator.SetLayerWeight(2, 0);
         warriorCombatRef.kicking = false;
+        warriorCombatRef.fastAttack1 = false;
+        warriorCombatRef.fastAttack2 = false;
+        warriorCombatRef.fastAttack3 = false;
+
+        animator.SetBool("FastAttack1",false);
+        animator.SetBool("FastAttack2",false);
+        animator.SetBool("FastAttack3",false);
+
         KickColliderOff();
         movementScriptRef.controlLock = false;
         warriorCombatRef.transform.GetComponent<Rigidbody>().velocity = Vector3.zero;
         warriorCombatRef.attackTimer = 0;
+        warriorCombatRef.attackingSword = false;
         //animator.SetBool("Kicking", false);
     }
 

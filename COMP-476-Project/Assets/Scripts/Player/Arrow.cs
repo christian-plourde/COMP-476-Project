@@ -12,6 +12,15 @@ public class Arrow : MonoBehaviour
     public int baseDamage=5;
     float Timer;
 
+    // for automatic scale adjustment
+    float scaleFactor;
+
+    private void Start()
+    {
+        scaleFactor=GameObject.FindGameObjectWithTag("Player").transform.localScale.x;
+        transform.localScale = new Vector3(scaleFactor,scaleFactor,scaleFactor);
+    }
+
     private void Update()
     {
         Timer += Time.deltaTime;
@@ -36,6 +45,9 @@ public class Arrow : MonoBehaviour
 
             gb.transform.Translate(gb.transform.forward * 0.8f);
             Destroy(gb.gameObject, 10f);            // destroy spawned arrow after 60 secs
+
+            // for scale adjustment on static arrows
+            gb.transform.localScale = new Vector3(scaleFactor,scaleFactor,scaleFactor);
 
             // damage if its an enemy
             if (collision.collider.tag == "Enemy")

@@ -9,6 +9,15 @@ public class PlayerMovement : MonoBehaviour
      * Will Align with movement direction before running (Align Behavior in this class)
      */
 
+
+    [Header("Player Variables")]
+    public float health = 100f;
+    float maxHealth;
+    public int gold = 200;
+    public bool invincible;
+    Vector3 respawnPos;
+
+
     [Header("Movement Parameters")]
     float ogSpeed;
     public float mSpeed=5f;
@@ -26,8 +35,12 @@ public class PlayerMovement : MonoBehaviour
     public bool controlLock;
     public bool isDead;
     public string playerClass;
+    public bool inBuildMode;
+    public bool building;
 
     [HideInInspector]public bool warriorUltimate;
+    [Header("References")]
+    public GameObject respawnUIPrefab;
 
     public GridSquare currentGridSquare;
     public GenerateGrid grid;
@@ -56,11 +69,20 @@ public class PlayerMovement : MonoBehaviour
 
     void Start()
     {
+        // scale speed according to current scale (because player is smaller in the grid scene)
+        mSpeed = mSpeed * transform.localScale.x;
+
         ogSpeed = mSpeed;
         PlayerMesh = transform.GetChild(0);
         Debug.Log("Playermesh is:"+PlayerMesh.name);
         animator = PlayerMesh.GetComponent<Animator>();
+
+        maxHealth = health;
+
+        respawnPos = transform.position;
         this.grid = FindObjectOfType<GenerateGrid>();
+
+        inBuildMode = true;
     }
 
     void Update()
@@ -70,8 +92,18 @@ public class PlayerMovement : MonoBehaviour
         // Force rotation = 0
         transform.rotation = Quaternion.Euler(Vector3.zero);
 
+
+        // respawn test:
+        if (isDead && Input.GetKeyDown(KeyCode.R))
+            RespawnPlayer(false);
+
+        if (!isDead && Input.GetKeyDown(KeyCode.K))
+            DealDamage(25f);
         //set the current grid square
         UpdateGridSquare();
+
+
+
         
     }
 
@@ -146,6 +178,11 @@ public class PlayerMovement : MonoBehaviour
         
     }
 
+    public void StopWalkingAnim()
+    {
+        animator.SetFloat("Movement", 0);
+    }
+
     
 
     void AlignOrientation(Vector3 FaceDir)
@@ -169,5 +206,83 @@ public class PlayerMovement : MonoBehaviour
     public void ResetSpeed()
     {
         mSpeed = ogSpeed;
+    }
+
+
+
+    // for death & respawn methods
+
+    public void DealDamage(float dmg)
+    {
+        if (!invincible && !isDead)
+        {
+            health -= dmg;
+            if (health <= 0)
+            {
+                health = 0;
+                KillPlayer();
+            }
+        }
+    }
+
+    void KillPlayer()
+    {
+        controlLock = true;
+        isDead = true;
+
+        animator.SetBool("Dead", true);
+        animator.SetLayerWeight(1, 0);
+        animator.SetLayerWeight(2, 0);
+
+        GameObject gb=GameObject.FindGameObjectWithTag("BuildMenu");
+        if (gb != null)
+            Destroy(gb.gameObject);
+        Instantiate(respawnUIPrefab);
+
+
+    }
+
+
+    public void RespawnPlayer(bool buyback)
+    {
+        controlLock = false;
+        isDead = false;
+        inBuildMode = true;
+        building = false;
+
+        animator.SetBool("Dead", false);
+        health = maxHealth;
+        invincible = false;
+        if(!buyback)
+            transform.position = respawnPos;
+
+        //Reset weapons and stuff.
+        if (playerClass == "Warrior")
+        {
+            WarriorCombatBehavior scriptRef = GetComponent<WarriorCombatBehavior>();
+            scriptRef.ResetAllCombat();
+        }
+        else
+        {
+            CombatBehavior scriptRef = GetComponent<CombatBehavior>();
+            scriptRef.ResetAllCombat();
+        }
+        
+    }
+
+    // gold exchange functions
+    
+    public void AddGold(int amount)
+    {
+        gold += amount;
+    }
+
+    public void RemoveGold(int amount)
+    {
+        gold -= amount;
+        if (gold < 0)
+        {
+            gold = 0;
+        }
     }
 }

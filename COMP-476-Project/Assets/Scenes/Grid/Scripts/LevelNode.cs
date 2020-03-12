@@ -76,6 +76,10 @@ public class LevelNode : MonoBehaviour, IHeuristic<LevelNode>
         lineRenderers = new List<LineRenderer>();
         //let's set the graph node that its connected to 
         node = new GraphNode<LevelNode>(this);
+
+        // trigger collider
+        GetComponent<CapsuleCollider>().isTrigger = true;
+        GetComponent<CapsuleCollider>().radius = 0.77f;
     }
 
     //will switch the node to opened if closed and vice versa. this will set all its links to disconnected

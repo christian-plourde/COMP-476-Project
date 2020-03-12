@@ -24802,7 +24802,7 @@ MonoBehaviour:
   damage: 2
   speed: 6
   isDead: 0
-  heightOffset: 0.5
+  heightOffset: 0
   HealthUI: {fileID: 64341479603795002}
 --- !u!95 &7424372955921300265
 Animator:
@@ -24849,6 +24849,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e621c67f52a704139ac4ba18634499e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Player: {fileID: 0}
+  grid_generator: {fileID: 0}
   m_WhatIsNearby: 1
   m_VisionErrorMargin: 0.2
   m_RangeOfVision: 10

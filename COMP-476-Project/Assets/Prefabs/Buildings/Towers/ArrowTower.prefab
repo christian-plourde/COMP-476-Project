@@ -90,6 +90,7 @@ GameObject:
   - component: {fileID: 2818103337232052386}
   - component: {fileID: 7233254558434768604}
   - component: {fileID: 1231994795544744464}
+  - component: {fileID: 5822081443085063723}
   m_Layer: 0
   m_Name: ArrowTower
   m_TagString: Untagged
@@ -174,6 +175,20 @@ MonoBehaviour:
   description: 'A simple, balanced tower with decent stats accross the board.\nDamage
     : 10\nAttack cooldown : 1\nRange : 5\nMaximum aim time : Instant\nHealth : 100\nPrice
     : 100'
+--- !u!136 &5822081443085063723
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2818103337241428834}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 5.55
+  m_Height: 16.4
+  m_Direction: 1
+  m_Center: {x: 0, y: 3.4, z: 0}
 --- !u!1 &2818103337241428836
 GameObject:
   m_ObjectHideFlags: 0

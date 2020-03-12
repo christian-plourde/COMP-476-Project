@@ -73,14 +73,14 @@ public class WarriorCombatBehavior : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //if (!PlayerMovementRef.controlLock)
+        if (!PlayerMovementRef.isDead)
             Controls();
 
         if (attackingSword || kicking)
         {
             //attackTimer = 0;
             //if(fastAttack3 || fastAttack2)
-                transform.Translate(PlayerMesh.transform.forward * 1f * Time.deltaTime);
+                transform.Translate(PlayerMesh.transform.forward * 1f *(transform.localScale.x)* Time.deltaTime);
             AttackOrientation();
 
             attackTimer += Time.deltaTime;
@@ -118,22 +118,11 @@ public class WarriorCombatBehavior : MonoBehaviour
             HandSword.GetComponent<BoxCollider>().enabled = true;
             if (ultimateTimer > 5f)
             {
-                /*
-                usingUltimate = false;
-                ultimateCooldown = true;
-                ultimateTimer = 0;
-                animator.SetBool("Ultimate", false);
-                animator.SetLayerWeight(2, 0);
-
-                // set speed back to normal
-                PlayerMovementRef.ResetSpeed();
-                PlayerMovementRef.warriorUltimate = false;
-        */
-
+               
                 animator.SetBool("UltimateSmash", true);
                 PlayerMovementRef.controlLock = true;
                 //Debug.Log("Switched to Ultimate Smash");
-                GetComponent<Rigidbody>().AddForce(Vector3.up * 5f, ForceMode.Impulse);
+                GetComponent<Rigidbody>().AddForce(Vector3.up *5f, ForceMode.Impulse);
             }
         }
 
@@ -183,6 +172,9 @@ public class WarriorCombatBehavior : MonoBehaviour
                 Attacking = false;
                 animator.SetLayerWeight(1, 0);
 
+                PlayerMovementRef.inBuildMode = true;
+
+
             }
             else
             {
@@ -191,6 +183,8 @@ public class WarriorCombatBehavior : MonoBehaviour
                 HandSword.SetActive(true);
                 Attacking = true;
                 animator.SetLayerWeight(1, 1);
+
+                PlayerMovementRef.inBuildMode = false;
             }
         }
 
@@ -249,6 +243,7 @@ public class WarriorCombatBehavior : MonoBehaviour
 
             PlayerMovementRef.warriorUltimate = true;
             PlayerMovementRef.mSpeed = PlayerMovementRef.mSpeed * 0.5f;
+            PlayerMovementRef.invincible = true;
         }
 
 
@@ -319,5 +314,29 @@ public class WarriorCombatBehavior : MonoBehaviour
         //lookDirection = Quaternion.LookRotation(FacingDir, Vector3.up);
         PlayerMesh.localRotation = Quaternion.RotateTowards(PlayerMesh.localRotation, lookDirection, 25);
 
+    }
+
+    // for resetting everything while dying / respawning.
+    public void ResetAllCombat()
+    {
+        // turn off all attack parameters.
+        HandSword.SetActive(false);
+        BackSword.SetActive(true);
+        LeftLeg.SetActive(false);
+
+        fastAttack1 = false;
+        fastAttack2 = false;
+        fastAttack3 = false;
+        usingUltimate = false;
+
+        animator.SetBool("FastAttack1",false);
+        animator.SetBool("FastAttack1",false);
+        animator.SetBool("FastAttack1",false);
+        animator.SetBool("Ultimate",false);
+        animator.SetBool("UltimateSmash",false);
+        animator.SetBool("Kick",false);
+
+        animator.SetLayerWeight(2, 0);
+        Attacking = false;
     }
 }

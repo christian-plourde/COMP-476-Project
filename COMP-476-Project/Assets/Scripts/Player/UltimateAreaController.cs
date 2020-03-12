@@ -20,12 +20,16 @@ public class UltimateAreaController : MonoBehaviour
     float timer=0f;
     float howOftenArrows=0.1f;
 
+    float scaleFactor;
 
     void Start()
     {
         // on instantiate, enable control lock
         PlayerRef = GameObject.FindGameObjectWithTag("Player");
         PlayerRef.GetComponent<PlayerMovement>().controlLock = true;
+
+        scaleFactor = PlayerRef.transform.localScale.x;
+        //transform.localScale = new Vector3(scaleFactor,scaleFactor,scaleFactor);
     }
 
     // Update is called once per frame
@@ -39,6 +43,11 @@ public class UltimateAreaController : MonoBehaviour
         else
         {
             RainFireArrows();
+        }
+
+        if (PlayerRef.GetComponent<PlayerMovement>().isDead && !targetSet)
+        {
+            Destroy(this.gameObject);
         }
     }
 
@@ -109,6 +118,15 @@ public class UltimateAreaController : MonoBehaviour
             {
                 // hurt
                 other.GetComponent<EnemyAttributes>().DealDamage(2);
+            }
+        }
+        if (other.tag == "Player" && targetSet && takeDamageTimer > 1.9f)
+        {
+            int r = Random.Range(0, 101);
+            if (r < 4)
+            {
+                // hurt
+                other.GetComponent<PlayerMovement>().DealDamage(5);
             }
         }
     }
