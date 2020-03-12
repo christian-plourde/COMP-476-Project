@@ -238,13 +238,18 @@ public class CombatBehavior : MonoBehaviour
                     obj = Instantiate(ProjectilePrefab, LaunchPoint.position, Quaternion.identity);
 
                 Vector3 shotDirection = (AttackTarget.position - transform.position).normalized;
-                shotDirection.y += 0.08f;
+                shotDirection.y += AttackTarget.GetComponent<EnemyAttributes>().GetHeightOffset();
                 obj.transform.LookAt(AttackTarget.position);
 
-                if(Vector3.Distance(AttackTarget.position,transform.position) > 17.5f)
-                    obj.GetComponent<Rigidbody>().AddForce(shotDirection.normalized * 35f*(transform.localScale.x)*specialMult, ForceMode.Impulse);
+                //Debug.Log("Distance to Target: "+ Vector3.Distance(AttackTarget.position, transform.position));
+                if(Vector3.Distance(AttackTarget.position,transform.position) > 3f)
+                    obj.GetComponent<Rigidbody>().AddForce(shotDirection.normalized * 20f*specialMult, ForceMode.Impulse);
+                //obj.GetComponent<Rigidbody>().AddForce(shotDirection.normalized * 35f*(transform.localScale.x)*specialMult, ForceMode.Impulse);  // old
+                else if(Vector3.Distance(AttackTarget.position, transform.position) > 4.5f)
+                    obj.GetComponent<Rigidbody>().AddForce(shotDirection.normalized * 30f * specialMult, ForceMode.Impulse);
                 else
-                    obj.GetComponent<Rigidbody>().AddForce(shotDirection.normalized * 25f * (transform.localScale.x), ForceMode.Impulse);
+                    obj.GetComponent<Rigidbody>().AddForce(shotDirection.normalized * 12.5f , ForceMode.Impulse);
+                    //obj.GetComponent<Rigidbody>().AddForce(shotDirection.normalized * 25f * (transform.localScale.x), ForceMode.Impulse);            // old
 
             }
             else

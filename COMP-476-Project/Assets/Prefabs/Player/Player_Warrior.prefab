@@ -3093,7 +3093,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 100
-  gold: 200
+  gold: 300
   invincible: 0
   mSpeed: 3.5
   sprintMultiplier: 1
@@ -3101,6 +3101,8 @@ MonoBehaviour:
   controlLock: 0
   isDead: 0
   playerClass: Warrior
+  inBuildMode: 0
+  building: 0
   warriorUltimate: 0
   respawnUIPrefab: {fileID: 2027443529192807965, guid: 1a9f9f1ed06de9f499b232c889715452,
     type: 3}
