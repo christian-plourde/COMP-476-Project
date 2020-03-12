@@ -60,8 +60,8 @@ public class EnemyMovement : MonoBehaviour
         //If our dot product is exactly 1, then the player is exactly in front of us
         float desired_result = 1.0f;
         bool facing_player = (desired_result - m_VisionErrorMargin <= dot && dot <= desired_result + m_VisionErrorMargin);
-        string message = (facing_player) ? "Player spotted!" : "Player NOT spotted!";
-        Debug.Log(message);
+        //string message = (facing_player) ? "Player spotted!" : "Player NOT spotted!";
+        //Debug.Log(message);
 
         //if we're facing the target, then we can consider a raycast
         if (facing_player)
@@ -100,14 +100,14 @@ public class EnemyMovement : MonoBehaviour
             bool facing_tower = (desired_result - m_VisionErrorMargin <= dot && dot <= desired_result + m_VisionErrorMargin);
 
             //Debug.Log(message + " (" + dot + ")");//More specific logs
-            string message = (facing_tower) ? "Tower spotted" : "Tower NOT spotted";
+            //string message = (facing_tower) ? "Tower spotted" : "Tower NOT spotted";
             //if we're facing the target, then we can consider a raycast
             if (facing_tower)
             {
                 
                 //TEMPORARY
                 target_tower_node = tower_node;
-                Debug.Log(message);
+                //Debug.Log(message);
                 return true;
 
                 //RaycastHit hit;
@@ -132,7 +132,7 @@ public class EnemyMovement : MonoBehaviour
             float distance = (tower_node.transform.position - this.transform.position).magnitude;
             if (distance <= m_WhatIsNearby)
             {
-                Debug.Log("Enemy doesn't see tower but is passing next to one; attacking!");
+                //Debug.Log("Enemy doesn't see tower but is passing next to one; attacking!");
                 return true;
             }
         }
@@ -150,8 +150,8 @@ public class EnemyMovement : MonoBehaviour
         foreach(GameObject o in tower_nodes)
         {
             bool result = (enemypos - o.transform.position).magnitude <= m_WhatIsNearby;
-            string message = (result) ? "Tower nearby!" : "Tower NOT nearby!";
-            Debug.Log(message);
+            //string message = (result) ? "Tower nearby!" : "Tower NOT nearby!";
+            //Debug.Log(message);
             //Debug.Log(message + "(" + (enemypos - towerpos).magnitude + ")");//More specific logs
             if (result)
             {
@@ -172,8 +172,8 @@ public class EnemyMovement : MonoBehaviour
         Vector3 enemypos = this.transform.position;
         Vector3 playerpos = this.m_Player.position;
         bool result = (enemypos - playerpos).magnitude <= m_WhatIsNearby;
-        string message = (result) ? "Player nearby!" : "Player NOT nearby!";
-        Debug.Log(message);
+        //string message = (result) ? "Player nearby!" : "Player NOT nearby!";
+       // Debug.Log(message);
         return (result);
     }
 
@@ -184,7 +184,7 @@ public class EnemyMovement : MonoBehaviour
     /// </summary>
     protected virtual void AttackTower()
     {
-        Debug.Log("Attacking tower!");
+        //Debug.Log("Attacking tower!");
     }
 
     /// <summary>
@@ -192,7 +192,7 @@ public class EnemyMovement : MonoBehaviour
     /// </summary>
     protected virtual void AttackPlayer()
     {
-        Debug.Log("Attacking player!");
+        //Debug.Log("Attacking player!");
     }
 
     /// <summary>
@@ -201,7 +201,7 @@ public class EnemyMovement : MonoBehaviour
     /// </summary>
     protected virtual void MoveToTower()
     {
-        Debug.Log("Moving to tower!");
+        //Debug.Log("Moving to tower!");
         this.gameObject.GetComponent<Character>().BehaviourType = BEHAVIOUR_TYPE.MOVE_TO_TOWER;
     }
 
@@ -211,7 +211,7 @@ public class EnemyMovement : MonoBehaviour
     /// </summary>
     protected virtual void MoveToPlayer()
     {
-        Debug.Log("Moving to player!");
+        //Debug.Log("Moving to player!");
         this.gameObject.GetComponent<Character>().BehaviourType = BEHAVIOUR_TYPE.MOVE_TO_PLAYER;
     }
 
@@ -220,7 +220,7 @@ public class EnemyMovement : MonoBehaviour
     /// </summary>
     protected virtual void Default()
     {
-        Debug.Log("Default!");
+        //Debug.Log("Default!");
         //this behaviour will make the enemy move toward the enemy base
         //Debug.Log(this.gameObject.GetComponent<Character>());
         this.gameObject.GetComponent<Character>().BehaviourType = BEHAVIOUR_TYPE.BASE_SEEK;

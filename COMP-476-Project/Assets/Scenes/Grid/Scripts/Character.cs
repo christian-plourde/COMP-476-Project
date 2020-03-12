@@ -121,8 +121,17 @@ public class Character : NPC
 
         catch
         {
-            Movement.Target = Path[current_path_node_index].Value.transform.position;
-            currentTarget = Path[current_path_node_index];
+            try
+            {
+                Movement.Target = Path[current_path_node_index].Value.transform.position;
+                currentTarget = Path[current_path_node_index];
+            }
+
+            catch
+            {
+
+            }
+            
         }
     }
 
@@ -200,7 +209,7 @@ public class Character : NPC
     //Our update function when we want to be moving to the tower
     private void MoveToTowerUpdate()
     {
-        Debug.Log("Character : Seeking tower");
+        //Debug.Log("Character : Seeking tower");
         try
         {
             //if we haven't set a target yet, or if the target has been closed,... 
@@ -272,7 +281,7 @@ public class Character : NPC
     /// </summary>
     private void MoveToPlayerUpdate()
     {
-        Debug.Log("Character : Seeking player");
+        //Debug.Log("Character : Seeking player");
         try
         {
             //if we haven't set a target yet, or if the target has been closed,... 
