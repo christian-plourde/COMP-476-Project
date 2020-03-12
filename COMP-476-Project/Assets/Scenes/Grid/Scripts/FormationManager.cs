@@ -77,6 +77,14 @@ public class FormationManager : MonoBehaviour
             if (characters[1].transform.position == (this.Position + 1.0f / 3.0f * formation_scale * (-1.0f) * this.transform.right))
                 characters[1].Movement.Orientation = character.Movement.Orientation;
         }
+
+        else if (UnitCount == 1)
+        {
+            characters[0].Immobilized = false;
+            characters[0].Movement.Target = this.Position;
+            if (characters[0].transform.position == this.Position)
+                characters[0].Movement.Orientation = character.Movement.Orientation;
+        }
     }
 
     private void InitializeTriangle()
