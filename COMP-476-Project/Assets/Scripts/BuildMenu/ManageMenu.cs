@@ -17,6 +17,7 @@ public class ManageMenu : MonoBehaviour
     public Button DestroyButton;
     public Text upgradeCostText;
     public Text destroyRefundText;
+    public Text TowerName;
 
     int refund;
 
@@ -30,9 +31,13 @@ public class ManageMenu : MonoBehaviour
     {
         playerScriptRef = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>();
         playerScriptRef.controlLock = true;
+        playerScriptRef.StopWalkingAnim();
 
         refund = (currentTower.GetComponent<BuildingStats>().price / 2);
         destroyRefundText.text = "Refund: " + refund;
+        string str= "" + currentTower.GetComponent<BuildingStats>().name;
+        //TowerName.text = "" + currentTower.GetComponent<BuildingStats>().name;
+        TowerName.text = str.Remove(str.Length-7,7);      // get rid of clone in the name
 
         // see if theres an upgrade or if player can afford it.
         GameObject upgradedTower = currentTower.GetComponent<BuildingStats>().upgrade;
