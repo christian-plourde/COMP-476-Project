@@ -16,10 +16,26 @@ public class EnemyMovement : MonoBehaviour
     [HideInInspector]
     public Transform m_Player;
 
-    private List<GameObject> tower_nodes;
+    private List<GameObject> tower_nodes; //list of all target_tower_node objects in the game
+    private List<LevelNode> tower_level_nodes; //list of all level node scripts in the game
 
-    private GameObject target_tower_node;
-    public GameObject m_TargetTowerNode { get { return target_tower_node; } }
+    private GameObject target_tower_node; //the game object representation of the node (the green disc)
+    private LevelNode target_tower_level_node; //the level node script on the target_tower_node
+    public GameObject m_TargetTowerNode 
+    { 
+        get { return target_tower_node; }
+        set { target_tower_node = value; 
+            try
+            {
+                target_tower_level_node = target_tower_node.GetComponent<LevelNode>();
+            }
+
+            catch
+            {
+
+            }
+        }
+    }
 
     /// <summary>
     /// A reference to the global game grid generator (who contains the actual grid)
@@ -106,7 +122,7 @@ public class EnemyMovement : MonoBehaviour
             {
                 
                 //TEMPORARY
-                target_tower_node = tower_node;
+                m_TargetTowerNode = tower_node;
                 //Debug.Log(message);
                 return true;
 
@@ -146,17 +162,13 @@ public class EnemyMovement : MonoBehaviour
     /// <returns></returns>
     protected virtual bool TowerNearby()
     {
-        Vector3 enemypos = this.transform.position;
-        foreach(GameObject o in tower_nodes)
+        
+        foreach(LevelNode n in tower_level_nodes)
         {
-            bool result = (enemypos - o.transform.position).magnitude <= m_WhatIsNearby;
-            //string message = (result) ? "Tower nearby!" : "Tower NOT nearby!";
-            //Debug.Log(message);
-            //Debug.Log(message + "(" + (enemypos - towerpos).magnitude + ")");//More specific logs
-            if (result)
+            if(this.gameObject.GetComponent<Character>().CurrentNode.Neighbors.Contains(n.GraphNode))
             {
-                target_tower_node = o;
-                return result;
+                m_TargetTowerNode = n.gameObject;
+                return true;
             }
         }
 
@@ -269,6 +281,7 @@ public class EnemyMovement : MonoBehaviour
     protected void Update()
     {
         tower_nodes = new List<GameObject>();
+        tower_level_nodes = new List<LevelNode>();
         if(grid_generator == null || grid_generator.Graph.Nodes == null)
         {
             grid_generator = FindObjectOfType<GenerateGrid>();
@@ -280,7 +293,11 @@ public class EnemyMovement : MonoBehaviour
             //if (!n.Value.Open)
             //    towers.Add(n.Value.Tower);
             if (!n.Value.Open)
+            {
                 tower_nodes.Add(n.Value.gameObject);
+                tower_level_nodes.Add(n.Value);
+            }
+                
         }
 
         //Debug.Log("towers: " + towers.Count);
