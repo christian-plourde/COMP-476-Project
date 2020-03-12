@@ -5,39 +5,48 @@ using Graph;
 using System.Linq;
 using System;
 
-public enum BEHAVIOUR_TYPE { BASE_SEEK, MOVE_TO_TOWER, MOVE_TO_PLAYER }
+public enum BEHAVIOUR_TYPE { BASE_SEEK, MOVE_TO_TOWER, MOVE_TO_PLAYER, ATTACK_TOWER, ATTACK_PLAYER }
 
 
 //a class used for an npc character
 public class Character : NPC
 {
-
     /// <summary>
     /// The node the character starts at.
     /// </summary>
     private LevelNode startNode;
+
     /// <summary>
     /// The node that the chracter is currently at in the graph
     /// </summary>
     private GraphNode<LevelNode> current_node;
+
     /// <summary>
     /// A reference to the graph used for setting the character's movement path
     /// </summary>
     private Graph<LevelNode> graph;
+
     /// <summary>
     /// A list containing the nodes in the character's path.
     /// </summary>
     private GraphNode<LevelNode>[] path = new GraphNode<LevelNode>[0];
+
     /// <summary>
     /// The index of the current node in the character path.
     /// </summary>
     private int current_path_node_index = 0;
     private GraphNode<LevelNode> currentTarget;
+
     /// <summary>
     /// A reference to the scene grid
     /// </summary>
     private GenerateGrid grid;
+
+    /// <summary>
+    /// The currently active behaviour type
+    /// </summary>
     private BEHAVIOUR_TYPE behaviour_type;
+
     /// <summary>
     /// A float to manage interpolation with our spline movement.
     /// </summary>
@@ -45,6 +54,9 @@ public class Character : NPC
 
     private PlayerMovement player;
 
+    /// <summary>
+    /// A publicly-accessible property corresponding to our currently active behaviour type private variable.
+    /// </summary>
     public BEHAVIOUR_TYPE BehaviourType
     {
         set { behaviour_type = value; }
@@ -200,13 +212,13 @@ public class Character : NPC
             Path = graph.ShortestPath(current_node, ClosestBaseNode.GraphNode).ToArray<GraphNode<LevelNode>>();
         }
 
-        //Call NPC.Update, which ensures we keep moving until we arrive at our destination
-        //as long as we are not at player keep moving
-        if(CurrentNode.Value.GridSquare != player.GridSquare)
-            base.Update();
+        //update while not at player base node (at which point we destroy the gameobject)
+        base.Update();
     }
 
-    //Our update function when we want to be moving to the tower
+    /// <summary>
+    /// Our update function when we want to be moving to the tower
+    /// </summary>
     private void MoveToTowerUpdate()
     {
         Debug.Log("Character : Seeking tower");
@@ -266,13 +278,13 @@ public class Character : NPC
         //if something goes wrong with the next node I want to visit, just return the base node closest to the player
         catch
         {
-            LevelNode ln = this.gameObject.GetComponent<ZombieMovement>().m_TargetTowerNode.gameObject.GetComponent<LevelNode>();
+            LevelNode ln = this.gameObject.GetComponent<ZombieBehaviour>().m_TargetTowerNode.gameObject.GetComponent<LevelNode>();
             Path = graph.ShortestPath(current_node, ln.GraphNode).ToArray<GraphNode<LevelNode>>();
         }
 
         //Call NPC.Update, which ensures we keep moving until we arrive at our destination
         //as long as we are not at tower keep moving
-        if (this.gameObject.GetComponent<ZombieMovement>().m_TargetTowerNode.gameObject.GetComponent<LevelNode>().GridSquare != CurrentNode.Value.GridSquare)
+        if (this.gameObject.GetComponent<ZombieBehaviour>().m_TargetTowerNode.gameObject.GetComponent<LevelNode>().GridSquare != CurrentNode.Value.GridSquare)
             base.Update();
     }
 
@@ -347,6 +359,55 @@ public class Character : NPC
             base.Update();
     }//end f'n
 
+    /// <summary>
+    /// Our movement update function when we want to be attacking the tower.
+    /// No actual movement involved, but orientation is still handled here.
+    /// </summary>
+    private void AttackTowerUpdate()
+    {
+        Debug.Log("Character : Attacking tower");
+
+        //1. ensure we face the tower
+        //No actual movement to do, but orientation will be managed
+        this.transform.LookAt(currentTarget.Value.transform.position);
+
+        //Take character, move towards the player
+        base.Update();
+    }//end f'n
+
+    /// <summary>
+    /// Our movement update function when we want to be attacking the player.
+    /// Follows the player about the scene, until we lose sight of the player, at which point we should return to the closest grid node and pathfind from there.
+    /// </summary>
+    private void AttackPlayerUpdate()
+    {
+        Debug.Log("Character : Attacking player");
+
+        //1. face player
+        //this.transform.LookAt(this.player.transform);
+        //2. move the enemy towards the player's position
+        Movement.Target = this.player.transform.position;
+
+        double smallest_dist = double.MaxValue;
+        //foreach of the squares, compare the position of the square to the player's position
+        foreach (GridSquare s in grid.GridSquares)
+        {
+            double curr_dist = (s.Position - this.transform.position).magnitude;
+            if (curr_dist < smallest_dist)
+            {
+                smallest_dist = curr_dist;
+                this.current_node = s.Node;
+                //current_path_node_index = 0;
+                //currentTarget = current_node;
+                //Debug.Log("New current node: " + this.current_node.Value.GridSquare.ToString());
+            }
+        }
+
+        //Take character, move towards the player
+        base.Update();
+    }//end f'n
+
+
     public GraphNode<LevelNode> CurrentNode
     {
         get { return current_node; }
@@ -367,6 +428,8 @@ public class Character : NPC
                 case BEHAVIOUR_TYPE.BASE_SEEK: BaseSeekUpdate(); break;
                 case BEHAVIOUR_TYPE.MOVE_TO_PLAYER: MoveToPlayerUpdate(); break;
                 case BEHAVIOUR_TYPE.MOVE_TO_TOWER: MoveToTowerUpdate(); break;
+                case BEHAVIOUR_TYPE.ATTACK_PLAYER: AttackPlayerUpdate(); break;
+                case BEHAVIOUR_TYPE.ATTACK_TOWER: AttackTowerUpdate(); break;
             }
         }
     }

@@ -19,12 +19,12 @@ public class ProjectileDeathEffect : MonoBehaviour
                 {
                     if (col && col.tag == "Enemy" && (col.gameObject.GetComponent<EnemyAttributes>().GetIsDead() == false))
                     {
-                        Debug.Log(value1 * (value2 - (col.gameObject.transform.position - transform.position).magnitude / value2));
-                        Debug.Log(value1);
-                        Debug.Log(value2);
-                        Debug.Log(value2 - (col.gameObject.transform.position - transform.position).magnitude);
-                        Debug.Log(value2 - (col.gameObject.transform.position - transform.position).magnitude / value2);
-                        Debug.Log((col.gameObject.transform.position - transform.position).magnitude);
+                        //Debug.Log(value1 * (value2 - (col.gameObject.transform.position - transform.position).magnitude / value2));
+                        //Debug.Log(value1);
+                        //Debug.Log(value2);
+                        //Debug.Log(value2 - (col.gameObject.transform.position - transform.position).magnitude);
+                        //Debug.Log(value2 - (col.gameObject.transform.position - transform.position).magnitude / value2);
+                        //Debug.Log((col.gameObject.transform.position - transform.position).magnitude);
 
 
                         col.gameObject.GetComponent<EnemyAttributes>().DealDamage(value1 * ((value2- (col.gameObject.transform.position - transform.position).magnitude) / value2));

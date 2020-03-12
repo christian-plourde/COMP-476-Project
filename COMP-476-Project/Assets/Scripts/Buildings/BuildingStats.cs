@@ -35,4 +35,17 @@ public class BuildingStats : MonoBehaviour
     {
         return description;
     }
+
+    /// <summary>
+    /// A function to cause damage to the tower
+    /// </summary>
+    /// <param name="damage"></param>
+    public void Damage(float damage)
+    {
+        this.health -= damage;
+        //if (this.health < 0.0f)
+        //{
+        //    GameObject.Destroy(this.gameObject);
+        //}
+    }
 }
