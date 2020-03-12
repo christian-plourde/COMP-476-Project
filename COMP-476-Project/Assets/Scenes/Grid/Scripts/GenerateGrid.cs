@@ -177,6 +177,7 @@ public class GenerateGrid : Subject
 
     void Update()
     {
+        
         if (Input.GetMouseButtonDown(0))
         {
             Ray ray = cam.ScreenPointToRay(Input.mousePosition);
@@ -184,6 +185,7 @@ public class GenerateGrid : Subject
 
             if (Physics.Raycast(ray, out hit))
             {
+                //Debug.Log("Hit: "+hit.transform.name);
                 if (hit.transform.gameObject.GetComponent<LevelNode>())
                 {
                     hit.transform.gameObject.GetComponent<LevelNode>().ToggleOpen();
@@ -212,6 +214,7 @@ public class GenerateGrid : Subject
             }
 
         }
+        
     }
 
     private List<GraphNode<LevelNode>> getNeighbors(GridSquare square)

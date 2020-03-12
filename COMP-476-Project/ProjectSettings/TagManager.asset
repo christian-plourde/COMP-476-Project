@@ -10,6 +10,7 @@ TagManager:
   - Tower
   - GridObstacle
   - GraphNode
+  - TowerObjectUI
   layers:
   - Default
   - TransparentFX
