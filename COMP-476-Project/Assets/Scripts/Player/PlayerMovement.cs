@@ -35,6 +35,8 @@ public class PlayerMovement : MonoBehaviour
     public bool controlLock;
     public bool isDead;
     public string playerClass;
+    public bool inBuildMode;
+    public bool building;
 
     [HideInInspector]public bool warriorUltimate;
     [Header("References")]
@@ -80,7 +82,7 @@ public class PlayerMovement : MonoBehaviour
         respawnPos = transform.position;
         this.grid = FindObjectOfType<GenerateGrid>();
 
-        
+        inBuildMode = true;
     }
 
     void Update()
@@ -99,6 +101,9 @@ public class PlayerMovement : MonoBehaviour
             DealDamage(25f);
         //set the current grid square
         UpdateGridSquare();
+
+
+
         
     }
 
@@ -173,6 +178,11 @@ public class PlayerMovement : MonoBehaviour
         
     }
 
+    public void StopWalkingAnim()
+    {
+        animator.SetFloat("Movement", 0);
+    }
+
     
 
     void AlignOrientation(Vector3 FaceDir)
@@ -224,7 +234,12 @@ public class PlayerMovement : MonoBehaviour
         animator.SetLayerWeight(1, 0);
         animator.SetLayerWeight(2, 0);
 
+        GameObject gb=GameObject.FindGameObjectWithTag("BuildMenu");
+        if (gb != null)
+            Destroy(gb.gameObject);
         Instantiate(respawnUIPrefab);
+
+
     }
 
 
@@ -232,6 +247,9 @@ public class PlayerMovement : MonoBehaviour
     {
         controlLock = false;
         isDead = false;
+        inBuildMode = true;
+        building = false;
+
         animator.SetBool("Dead", false);
         health = maxHealth;
         invincible = false;

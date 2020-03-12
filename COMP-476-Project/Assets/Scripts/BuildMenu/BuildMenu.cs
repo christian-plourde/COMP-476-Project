@@ -9,25 +9,26 @@ public class BuildMenu : MonoBehaviour
     public Button cancelButton;
     public List<GameObject> listOfTowers = new List<GameObject>();
 
-    public float xoffset=-2;
+    public Transform spawnPos;
 
     void Start()
     {
-        //instantiate all prefabs of towers
-        /*
-        foreach (GameObject gb in listOfTowers)
-        {
-            //Instantiate(gb, transform.position,Quaternion.identity,transform.GetChild(0));
-            Instantiate(gb, transform.position,Quaternion.identity,transform.GetChild(0));
-            xoffset += 2;
-        }
-        */
+
+        // control lock on player
+        GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>().controlLock = true ;
+        GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>().building = true;
+        GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>().StopWalkingAnim();
+
     }
 
     public void CancelButton()
     {
+        GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>().controlLock = false;
+        GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>().building = false;
+
         Destroy(this.gameObject);
     }
+
 
     
 

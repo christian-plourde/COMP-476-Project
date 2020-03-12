@@ -172,6 +172,9 @@ public class WarriorCombatBehavior : MonoBehaviour
                 Attacking = false;
                 animator.SetLayerWeight(1, 0);
 
+                PlayerMovementRef.inBuildMode = true;
+
+
             }
             else
             {
@@ -180,6 +183,8 @@ public class WarriorCombatBehavior : MonoBehaviour
                 HandSword.SetActive(true);
                 Attacking = true;
                 animator.SetLayerWeight(1, 1);
+
+                PlayerMovementRef.inBuildMode = false;
             }
         }
 

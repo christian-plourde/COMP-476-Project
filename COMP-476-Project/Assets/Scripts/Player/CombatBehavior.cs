@@ -87,12 +87,17 @@ public class CombatBehavior : MonoBehaviour
                 animator.SetBool("Shooting", false);
                 UnEquipWeapon();
                 ArcherArrowSheath();
+
+                PlayerMovementRef.inBuildMode = true;
             }
             else
             {
                 Attacking = true;
                 EquipWeapon();
                 animator.SetLayerWeight(1, 1);
+
+                PlayerMovementRef.inBuildMode = false;
+
             }
         }
 

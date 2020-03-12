@@ -37,4 +37,27 @@ public class TowerUIObject : MonoBehaviour
             buildButton.interactable = false;
         }
     }
+
+    public void BuildTower()
+    {
+        //Debug.Log("Building towering my friending");
+
+        // build the actual tower
+        GameObject []arr=GameObject.FindGameObjectsWithTag("Map");
+        GameObject gridObject=arr[0];
+        foreach (GameObject gb in arr)
+        {
+            if (gb.transform.name == "Floor")
+            {
+                gridObject = gb;
+                break;
+            }
+        }
+        gridObject.GetComponent<GenerateGrid>().PlaceTower(towerPrefab, GameObject.FindGameObjectWithTag("BuildMenu").GetComponent<BuildMenu>().spawnPos);
+
+        // deduct money
+        playerRef.GetComponent<PlayerMovement>().RemoveGold(towerCost);
+
+        GameObject.FindGameObjectWithTag("BuildMenu").GetComponent<BuildMenu>().CancelButton();
+    }
 }

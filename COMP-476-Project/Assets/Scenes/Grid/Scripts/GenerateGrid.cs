@@ -127,6 +127,11 @@ public class GenerateGrid : Subject
     public GameObject terrainRayCaster;
     public float y_offset_for_connection;
     
+    [Header("Build Menu Prefab")]
+    public GameObject BuildMenuPrefab;
+
+    PlayerMovement playerScriptRef;
+
     private void AddPlayerBaseNode(LevelNode n)
     {
         player_base_nodes.Add(n);
@@ -173,23 +178,33 @@ public class GenerateGrid : Subject
             AttachObserver(c);
         }
 
+        playerScriptRef = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>();
+
     }
 
     void Update()
     {
         
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) && playerScriptRef.inBuildMode && !playerScriptRef.building)
         {
-            Ray ray = cam.ScreenPointToRay(Input.mousePosition);
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
 
             if (Physics.Raycast(ray, out hit))
             {
-                //Debug.Log("Hit: "+hit.transform.name);
                 if (hit.transform.gameObject.GetComponent<LevelNode>())
                 {
-                    hit.transform.gameObject.GetComponent<LevelNode>().ToggleOpen();
+                    if (hit.transform.gameObject.GetComponent<LevelNode>().Open)
+                    {
+                        //spawn menu
+                        GameObject gb=Instantiate(BuildMenuPrefab);
+                        gb.GetComponent<BuildMenu>().spawnPos = hit.transform;
+                    }
 
+
+                    /*
+                    hit.transform.gameObject.GetComponent<LevelNode>().ToggleOpen();
+                     
                     //if the node is open, create a tower, otherwise destory it
                     if(!hit.transform.gameObject.GetComponent<LevelNode>().Open)
                     {
@@ -210,11 +225,22 @@ public class GenerateGrid : Subject
                     //Debug.Log(hit.transform.gameObject.GetComponent<LevelNode>().GridSquare);
                     
                     Notify();
+                    */
                 }
             }
 
         }
         
+    }
+
+    public void PlaceTower(GameObject towerPrefab, Transform hitLocation)
+    {
+        GameObject tower = Instantiate(towerPrefab, hitLocation.transform.position, Quaternion.identity);
+        hitLocation.transform.gameObject.GetComponent<LevelNode>().Tower = tower;
+        hitLocation.transform.gameObject.GetComponent<LevelNode>().ToggleOpen();
+        tower.transform.parent = hitLocation.transform.gameObject.transform;
+
+        Notify();
     }
 
     private List<GraphNode<LevelNode>> getNeighbors(GridSquare square)
