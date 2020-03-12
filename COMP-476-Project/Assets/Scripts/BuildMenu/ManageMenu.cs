@@ -8,6 +8,8 @@ public class ManageMenu : MonoBehaviour
     PlayerMovement playerScriptRef;
 
     public GameObject currentTower;
+    public bool hasUpgrade;
+    public int upgradeCost;
 
     [Header("UI References")]
     public Button CancelButton;
@@ -36,7 +38,10 @@ public class ManageMenu : MonoBehaviour
         GameObject upgradedTower = currentTower.GetComponent<BuildingStats>().upgrade;
         if (upgradedTower != null)
         {
-            upgradeCostText.text = "Cost: " + upgradedTower.GetComponent<BuildingStats>().price;
+            hasUpgrade = true;
+            upgradeCost = upgradedTower.GetComponent<BuildingStats>().price;
+
+            upgradeCostText.text = "Cost: " + upgradeCost;
             if (playerScriptRef.gold >= upgradedTower.GetComponent<BuildingStats>().price)
             {
                 UpgradeButton.interactable = true;
@@ -97,5 +102,16 @@ public class ManageMenu : MonoBehaviour
         playerScriptRef.controlLock = false;
         playerScriptRef.managingTower = false;
         Destroy(this.gameObject);
+    }
+
+    public void UpdateIfCanAfford()
+    {
+        if (hasUpgrade)
+        {
+            if (playerScriptRef.gold >= upgradeCost)
+            {
+                UpgradeButton.interactable = true;
+            }
+        }
     }
 }

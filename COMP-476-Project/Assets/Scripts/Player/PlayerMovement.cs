@@ -283,6 +283,17 @@ public class PlayerMovement : MonoBehaviour
     public void AddGold(int amount)
     {
         gold += amount;
+
+        // call update affordable on menus
+        GameObject gb;
+        gb = GameObject.FindGameObjectWithTag("BuildMenu");
+        if (gb != null)
+            gb.GetComponent<BuildMenu>().UpdateIfCanAfford();
+
+        gb = GameObject.FindGameObjectWithTag("ManageMenu");
+        if (gb != null)
+            gb.GetComponent<ManageMenu>().UpdateIfCanAfford();
+
     }
 
     public void RemoveGold(int amount)

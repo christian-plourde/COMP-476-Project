@@ -245,9 +245,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cancelButton: {fileID: 7755408054821785012}
-  listOfTowers:
-  - {fileID: 5935538077631917662, guid: 0153c882a4213fa47a70ca1e615869a6, type: 3}
   spawnPos: {fileID: 0}
+  listTransform: {fileID: 7755408055585933407}
 --- !u!1 &7755408054884063170
 GameObject:
   m_ObjectHideFlags: 0
@@ -282,7 +281,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 268}
+  m_AnchoredPosition: {x: 0, y: 280}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7755408054884063199

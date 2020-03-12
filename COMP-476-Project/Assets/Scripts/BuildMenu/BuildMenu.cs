@@ -7,9 +7,9 @@ public class BuildMenu : MonoBehaviour
 {
 
     public Button cancelButton;
-    public List<GameObject> listOfTowers = new List<GameObject>();
 
     public Transform spawnPos;
+    public GameObject listTransform;
 
     void Start()
     {
@@ -29,6 +29,24 @@ public class BuildMenu : MonoBehaviour
         Destroy(this.gameObject);
     }
 
+    /// <summary>
+    /// This function checks if player can now afford any towers, so that if a player gets enough gold while the menu was open, the button to buy that 
+    /// tower would be clickable.
+    /// </summary>
+    public void UpdateIfCanAfford()
+    {
+        int currentGold = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>().gold;
+
+        int count = 0;
+        for (int i = 0; i < listTransform.transform.childCount; i++)
+        {
+            GameObject temp = listTransform.transform.GetChild(i).GetChild(0).gameObject;
+            if (temp.GetComponent<TowerUIObject>().towerCost <= currentGold)
+            {
+                temp.GetComponent<TowerUIObject>().buildButton.interactable = true;
+            }
+        }
+    }
 
     
 

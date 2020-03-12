@@ -11,6 +11,7 @@ public class EnemyAttributes : MonoBehaviour
     public float speed;
     public bool isDead;
     public float heightOffset;
+    public int goldDrop;
 
     Animator animator;
 
@@ -71,11 +72,15 @@ public class EnemyAttributes : MonoBehaviour
             transform.GetChild(0).gameObject.SetActive(false);
         }
 
+        // give player monies
+        playerRef.GetComponent<PlayerMovement>().AddGold(goldDrop);
+
+
         // remove UI Health display & destroy object in few seconds, remove own collider
         GetComponent<CapsuleCollider>().enabled = false;
         GetComponent<Rigidbody>().isKinematic = true;
         HealthUI.enabled = false;
-        Destroy(this.gameObject, 1.5f);
+        Destroy(this.gameObject, 5.5f);
     }
 
 }
