@@ -8,9 +8,20 @@ using System;
 public enum BEHAVIOUR_TYPE { BASE_SEEK, MOVE_TO_TOWER, MOVE_TO_PLAYER, ATTACK_TOWER, ATTACK_PLAYER }
 
 
+public class PathIndexOutOfBoundException : Exception
+{
+    public PathIndexOutOfBoundException() : base()
+    { }
+}
+
 //a class used for an npc character
 public class Character : NPC
 {
+    #region Fields And Properties
+
+    private static float PLAYER_CHASE_STOP_DISTANCE = 0.4f; //this is a small distance at which enemies will stop when 
+                                                            //chasing the player so he doesnt get ppushed around.
+
     /// <summary>
     /// The node the character starts at.
     /// </summary>
@@ -95,7 +106,13 @@ public class Character : NPC
         }
     }
 
-    
+    public GraphNode<LevelNode> CurrentNode
+    {
+        get { return current_node; }
+    }
+
+    #endregion
+
     protected override void Start()
     {
         base.Start();
@@ -147,12 +164,13 @@ public class Character : NPC
         }
     }
 
+    #region Update Functions
     /// <summary>
     /// An update function to manage our pseudo-wander, Base Seek. Manages movement such that the enemy seek the player's base.
     /// </summary>
     private void BaseSeekUpdate()
     {
-        Debug.Log("Character : Seeking base");
+        //Debug.Log("Character : Seeking base");
         try
         {
             //if we haven't set a target yet, or if the target has been closed,... 
@@ -185,6 +203,9 @@ public class Character : NPC
 
         try
         {
+            if (current_path_node_index < 0 || current_path_node_index >= Path.Length)
+                throw new Exception();
+
             //If we've arrived...
             if (Movement.HasArrived)
             {
@@ -221,7 +242,7 @@ public class Character : NPC
     /// </summary>
     private void MoveToTowerUpdate()
     {
-        Debug.Log("Character : Seeking tower");
+        //Debug.Log("Character : Seeking tower");
         try
         {
             //if we haven't set a target yet, or if the target has been closed,... 
@@ -254,6 +275,9 @@ public class Character : NPC
 
         try
         {
+            if (current_path_node_index < 0 || current_path_node_index >= Path.Length)
+                throw new Exception();
+
             //If we've arrived...
             if (Movement.HasArrived)
             {
@@ -293,7 +317,7 @@ public class Character : NPC
     /// </summary>
     private void MoveToPlayerUpdate()
     {
-        Debug.Log("Character : Seeking player");
+        //Debug.Log("Character : Seeking player");
         try
         {
             //if we haven't set a target yet, or if the target has been closed,... 
@@ -326,6 +350,9 @@ public class Character : NPC
 
         try
         {
+            if (current_path_node_index < 0 || current_path_node_index >= Path.Length)
+                throw new Exception();
+
             //If we've arrived...
             if (Movement.HasArrived)
             {
@@ -365,7 +392,7 @@ public class Character : NPC
     /// </summary>
     private void AttackTowerUpdate()
     {
-        Debug.Log("Character : Attacking tower");
+        //Debug.Log("Character : Attacking tower");
 
         //1. ensure we face the tower
         //No actual movement to do, but orientation will be managed
@@ -381,12 +408,18 @@ public class Character : NPC
     /// </summary>
     private void AttackPlayerUpdate()
     {
-        Debug.Log("Character : Attacking player");
+        //Debug.Log("Character : Attacking player");
 
         //1. face player
         //this.transform.LookAt(this.player.transform);
         //2. move the enemy towards the player's position
-        Movement.Target = this.player.transform.position;
+
+        //get the target just in front of the player
+        //get vector from the player to our position
+        Vector3 player_to_npc = this.transform.position - this.player.transform.position;
+        player_to_npc = player_to_npc.normalized * PLAYER_CHASE_STOP_DISTANCE;
+
+        Movement.Target = this.player.transform.position + player_to_npc;
 
         double smallest_dist = double.MaxValue;
         //foreach of the squares, compare the position of the square to the player's position
@@ -396,23 +429,18 @@ public class Character : NPC
             if (curr_dist < smallest_dist)
             {
                 smallest_dist = curr_dist;
-                this.current_node = s.Node;
-                //current_path_node_index = 0;
-                //currentTarget = current_node;
-                //Debug.Log("New current node: " + this.current_node.Value.GridSquare.ToString());
+                current_node = s.Node;
             }
         }
+
+        currentTarget = current_node;
+        current_path_node_index = -1;
 
         //Take character, move towards the player
         base.Update();
     }//end f'n
 
-
-    public GraphNode<LevelNode> CurrentNode
-    {
-        get { return current_node; }
-    }
-
+    #endregion
 
     // Update is called once per frame
     protected override void Update()
