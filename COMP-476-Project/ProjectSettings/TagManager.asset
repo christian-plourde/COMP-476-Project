@@ -12,6 +12,7 @@ TagManager:
   - GraphNode
   - TowerObjectUI
   - BuildMenu
+  - ManageMenu
   layers:
   - Default
   - TransparentFX

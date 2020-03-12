@@ -129,6 +129,7 @@ public class GenerateGrid : Subject
     
     [Header("Build Menu Prefab")]
     public GameObject BuildMenuPrefab;
+    public GameObject ManageMenuPrefab;
 
     PlayerMovement playerScriptRef;
 
@@ -185,7 +186,7 @@ public class GenerateGrid : Subject
     void Update()
     {
         
-        if (Input.GetMouseButtonDown(0) && playerScriptRef.inBuildMode && !playerScriptRef.building)
+        if (Input.GetMouseButtonDown(0) && playerScriptRef.inBuildMode && !playerScriptRef.building && !playerScriptRef.managingTower)
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
@@ -197,9 +198,10 @@ public class GenerateGrid : Subject
                     if (hit.transform.gameObject.GetComponent<LevelNode>().Open)
                     {
                         //spawn menu
-                        GameObject gb=Instantiate(BuildMenuPrefab);
+                        GameObject gb = Instantiate(BuildMenuPrefab);
                         gb.GetComponent<BuildMenu>().spawnPos = hit.transform;
                     }
+
 
 
                     /*
@@ -227,6 +229,15 @@ public class GenerateGrid : Subject
                     Notify();
                     */
                 }
+                else if (hit.transform.tag == "Tower")
+                {
+                    //Debug.Log("Clicked tower");
+                    playerScriptRef.managingTower = true;
+                    GameObject gb = Instantiate(ManageMenuPrefab);
+                    //Debug.Log("Parent of tower: "+hit.transform.parent.name);
+                    gb.GetComponent<ManageMenu>().currentTower = hit.transform.gameObject;
+                    gb.GetComponent<ManageMenu>().InitializeMenu();
+                }
             }
 
         }
@@ -239,6 +250,16 @@ public class GenerateGrid : Subject
         hitLocation.transform.gameObject.GetComponent<LevelNode>().Tower = tower;
         hitLocation.transform.gameObject.GetComponent<LevelNode>().ToggleOpen();
         tower.transform.parent = hitLocation.transform.gameObject.transform;
+
+        Notify();
+    }
+
+    public void DestroyTower(GameObject Tower, int refund)
+    {
+        Tower.transform.parent.GetComponent<LevelNode>().ToggleOpen();
+        playerScriptRef.AddGold(refund);
+
+        Destroy(Tower.gameObject);
 
         Notify();
     }
