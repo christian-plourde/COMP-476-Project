@@ -149,6 +149,7 @@ public class AnimationEvents : MonoBehaviour
         gb.transform.Translate(Vector3.down * 1.0f);
         // play sound
         SFXManager.instance.Play("Thunder");
+        SFXManager.instance.Play("SwordSwing3");
 
     }
 

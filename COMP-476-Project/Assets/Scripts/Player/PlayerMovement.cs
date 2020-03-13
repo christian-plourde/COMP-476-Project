@@ -225,6 +225,10 @@ public class PlayerMovement : MonoBehaviour
                 health = 0;
                 KillPlayer();
             }
+
+            // play a random hurt sound (1 to 4)
+            int r = Random.Range(1,4);
+            SFXManager.instance.Play("PlayerHurt"+r);
         }
     }
 
