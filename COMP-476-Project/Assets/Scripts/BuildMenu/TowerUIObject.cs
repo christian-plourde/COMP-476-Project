@@ -18,6 +18,12 @@ public class TowerUIObject : MonoBehaviour
     public Text towerNameUI;
     public Text costUI;
 
+    //stats
+    [Header("Tower Stats")]
+    public Text damageText;
+    public Text healthText;
+    public Text rangeText;
+
     private void Start()
     {
         playerRef = GameObject.FindGameObjectWithTag("Player");
@@ -27,6 +33,12 @@ public class TowerUIObject : MonoBehaviour
 
         towerNameUI.text = "" + towerName;
         costUI.text = towerCost + " Gold";
+
+        damageText.text = "Damage: " + towerPrefab.GetComponent<TowerAttack>().damage;
+        rangeText.text = "Range: " + towerPrefab.GetComponent<TowerAttack>().range;
+        healthText.text = "Health: " + towerPrefab.GetComponent<BuildingStats>().health;
+
+
         CheckIfAffordable();
     }
 

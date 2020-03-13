@@ -19,6 +19,16 @@ public class ManageMenu : MonoBehaviour
     public Text destroyRefundText;
     public Text TowerName;
 
+    [Header("Comparision Text UI")]
+    public Text OldDMG;
+    public Text OldHP;
+    public Text OldRange;
+    public Text OldTier;
+    public Text NewDMG;
+    public Text NewHP;
+    public Text NewRange;
+    public Text NewTier;
+
     int refund;
 
     void Start()
@@ -39,6 +49,13 @@ public class ManageMenu : MonoBehaviour
         //TowerName.text = "" + currentTower.GetComponent<BuildingStats>().name;
         TowerName.text = str.Remove(str.Length-7,7);      // get rid of clone in the name
 
+
+        // comparison old
+        OldDMG.text = currentTower.GetComponent<TowerAttack>().damage+"";
+        OldRange.text = currentTower.GetComponent<TowerAttack>().range+"";
+        OldHP.text = currentTower.GetComponent<BuildingStats>().health+"";
+        OldTier.text = currentTower.GetComponent<BuildingStats>().tier + "";
+
         // see if theres an upgrade or if player can afford it.
         GameObject upgradedTower = currentTower.GetComponent<BuildingStats>().upgrade;
         if (upgradedTower != null)
@@ -47,6 +64,14 @@ public class ManageMenu : MonoBehaviour
             upgradeCost = upgradedTower.GetComponent<BuildingStats>().price;
 
             upgradeCostText.text = "Cost: " + upgradeCost;
+
+            // comparison new
+            NewDMG.text = upgradedTower.GetComponent<TowerAttack>().damage + "";
+            NewRange.text = upgradedTower.GetComponent<TowerAttack>().range + "";
+            NewHP.text = upgradedTower.GetComponent<BuildingStats>().health + "";
+            NewTier.text = upgradedTower.GetComponent<BuildingStats>().tier + "";
+
+
             if (playerScriptRef.gold >= upgradedTower.GetComponent<BuildingStats>().price)
             {
                 UpgradeButton.interactable = true;
