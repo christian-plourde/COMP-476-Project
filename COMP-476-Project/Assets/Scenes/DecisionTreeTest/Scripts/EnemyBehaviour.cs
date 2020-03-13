@@ -113,8 +113,8 @@ public class EnemyBehaviour : MonoBehaviour
         //If our dot product is exactly 1, then the player is exactly in front of us
         float desired_result = 1.0f;
         bool facing_player = (desired_result - m_VisionErrorMargin <= dot && dot <= desired_result + m_VisionErrorMargin);
-        string message = (facing_player) ? "Player spotted!" : "Player NOT spotted!";
-        Debug.Log(message);
+        //string message = (facing_player) ? "Player spotted!" : "Player NOT spotted!";
+        //Debug.Log(message);
 
         //if we're facing the target, then we can consider a raycast
         if (facing_player)
@@ -153,8 +153,8 @@ public class EnemyBehaviour : MonoBehaviour
             bool facing_tower = (desired_result - m_VisionErrorMargin <= dot && dot <= desired_result + m_VisionErrorMargin);
 
             //Debug.Log(message + " (" + dot + ")");//More specific logs
-            string message = (facing_tower) ? "Tower spotted" : "Tower NOT spotted";
-            Debug.Log(message);
+            //string message = (facing_tower) ? "Tower spotted" : "Tower NOT spotted";
+            //Debug.Log(message);
             //if we're facing the target, then we can consider a raycast
             if (facing_tower)
             {
@@ -224,8 +224,8 @@ public class EnemyBehaviour : MonoBehaviour
         Vector3 enemypos = this.transform.position;
         Vector3 playerpos = this.m_Player.position;
         bool result = (enemypos - playerpos).magnitude <= m_WhatIsNearby;
-        string message = (result) ? "Player nearby!" : "Player NOT nearby!";
-        Debug.Log(message);
+        //string message = (result) ? "Player nearby!" : "Player NOT nearby!";
+        //Debug.Log(message);
         return (result);
     }
 
@@ -234,7 +234,7 @@ public class EnemyBehaviour : MonoBehaviour
     /// </summary>
     protected virtual void AttackTower()
     {
-        Debug.Log("Attacking tower!");
+       // Debug.Log("Attacking tower!");
         //Make enemy face player in order to force continuous attack
         this.m_Character.BehaviourType = BEHAVIOUR_TYPE.ATTACK_TOWER;
         //if our attack timer is negative, we haven't started attacking yet
@@ -261,7 +261,7 @@ public class EnemyBehaviour : MonoBehaviour
     /// </summary>
     protected virtual void AttackPlayer()
     {
-        Debug.Log("Attacking player!");
+        //Debug.Log("Attacking player!");
         //Make enemy face player in order to force continuous attack
         this.m_Character.BehaviourType = BEHAVIOUR_TYPE.ATTACK_PLAYER;
 
