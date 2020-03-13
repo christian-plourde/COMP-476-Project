@@ -7,16 +7,27 @@ public class MenuWolfSpawner : MonoBehaviour
     public float timer;
     float spawnTimer;
     bool spawning;
+    bool finishedIntro;
 
     public GameObject wolfPrefab;
     public Transform spawnLocation;
-    
 
+    Vector3 camOgPosition;
+    Quaternion camOgRotation;
+
+
+    
     // Update is called once per frame
     void Update()
     {
         timer += Time.deltaTime;
-        if (timer > 85 && !spawning)
+        if (timer > 74.95f && timer < 75.00f)
+        {
+            camOgPosition = Camera.main.transform.position;
+            camOgRotation = Camera.main.transform.rotation;
+        }
+
+        if (timer > 85 && !spawning && !finishedIntro)
         {
             spawning = true;
         }
@@ -36,6 +47,12 @@ public class MenuWolfSpawner : MonoBehaviour
                 float offsetX = Random.Range(-1.5f,1.5f);
                 spawnLoc.x += offsetX;
                 Instantiate(wolfPrefab, spawnLoc, Quaternion.identity);
+            }
+
+            if (timer > 155)
+            {
+                finishedIntro = true;
+                Camera.main.GetComponent<Animator>().SetBool("FinalPosition",true);
             }
         }
     }
