@@ -39,6 +39,7 @@ public class AnimationEvents : MonoBehaviour
     public void ArcherShoot()
     {
         combatScriptRef.ArcherShoot();
+        SFXManager.instance.Play("ArrowShoot");
     }
 
     public void ArcherEquipArrow()
@@ -59,9 +60,9 @@ public class AnimationEvents : MonoBehaviour
         warriorCombatRef.attackingSword = false;
         //Debug.Log("Animation Event called");
         animator.SetLayerWeight(2, 0);
-        animator.SetBool("FastAttack1",false);
+        animator.SetBool("FastAttack1", false);
 
-        
+
         movementScriptRef.controlLock = false;
 
         SwordColliderOff();
@@ -115,7 +116,7 @@ public class AnimationEvents : MonoBehaviour
     {
         movementScriptRef.controlLock = false;
         movementScriptRef.warriorUltimate = false;
-        
+
         // reset variables
         warriorCombatRef.ultimateCooldown = true;
         warriorCombatRef.usingUltimate = false;
@@ -143,10 +144,12 @@ public class AnimationEvents : MonoBehaviour
 
     public void CreateUltimateAOE()
     {
-        GameObject gb= Instantiate(warriorCombatRef.WarriorAOEPefab, movementScriptRef.transform.position, Quaternion.identity);
+        GameObject gb = Instantiate(warriorCombatRef.WarriorAOEPefab, movementScriptRef.transform.position, Quaternion.identity);
         gb.GetComponent<WarriorAOE>().SetDeletion(warriorCombatRef.AOETime);
         gb.transform.Translate(Vector3.down * 1.0f);
         // play sound
+        SFXManager.instance.Play("Thunder");
+
     }
 
 
@@ -159,9 +162,9 @@ public class AnimationEvents : MonoBehaviour
         warriorCombatRef.fastAttack2 = false;
         warriorCombatRef.fastAttack3 = false;
 
-        animator.SetBool("FastAttack1",false);
-        animator.SetBool("FastAttack2",false);
-        animator.SetBool("FastAttack3",false);
+        animator.SetBool("FastAttack1", false);
+        animator.SetBool("FastAttack2", false);
+        animator.SetBool("FastAttack3", false);
 
         KickColliderOff();
         movementScriptRef.controlLock = false;
@@ -183,7 +186,7 @@ public class AnimationEvents : MonoBehaviour
 
     public void KickColliderOn()
     {
-        animator.SetBool("Kicking",false);
+        animator.SetBool("Kicking", false);
         warriorCombatRef.LeftLeg.SetActive(true);
     }
     public void KickColliderOff()
@@ -202,4 +205,20 @@ public class AnimationEvents : MonoBehaviour
     {
         warriorCombatRef.fastAttack3 = true;
     }
+
+
+    // sounds
+    public void SwordSwing1()
+    {
+        SFXManager.instance.Play("SwordSwing1");
+    }
+    public void SwordSwing2()
+    {
+        SFXManager.instance.Play("SwordSwing2");
+    }
+    public void SwordSwing3()
+    {
+        SFXManager.instance.Play("SwordSwing3");
+    }
+
 }

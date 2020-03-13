@@ -248,6 +248,8 @@ public class PlayerMovement : MonoBehaviour
 
         Instantiate(respawnUIPrefab);
 
+        SFXManager.instance.Play("PlayerDeath");
+
 
     }
 
@@ -263,9 +265,14 @@ public class PlayerMovement : MonoBehaviour
         animator.SetBool("Dead", false);
         health = maxHealth;
         invincible = false;
-        if(!buyback)
+        if (!buyback)
+        {
             transform.position = respawnPos;
-
+        }
+        else
+        {
+            SFXManager.instance.Play("BuybackRespawn");
+        }
         //Reset weapons and stuff.
         if (playerClass == "Warrior")
         {

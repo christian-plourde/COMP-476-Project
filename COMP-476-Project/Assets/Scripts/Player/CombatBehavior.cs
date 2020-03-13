@@ -26,6 +26,8 @@ public class CombatBehavior : MonoBehaviour
 
     PlayerMovement PlayerMovementRef;
 
+    // audio bool
+    bool playingDrawSound = false;
 
 
     [HideInInspector]public bool ultimateCooldown;
@@ -75,6 +77,7 @@ public class CombatBehavior : MonoBehaviour
 
     void Controls()
     {
+        
         // input just for testing
         if (Input.GetKeyDown(KeyCode.E))
         {
@@ -126,7 +129,12 @@ public class CombatBehavior : MonoBehaviour
                 PlayerMesh.LookAt(PlayerMeshLookAt);
             }
             //Debug.DrawRay(PlayerMesh.position,PlayerMesh.forward,Color.yellow);
-            Debug.DrawRay(LaunchPoint.position, LaunchPoint.forward, Color.yellow);
+            //Debug.DrawRay(LaunchPoint.position, LaunchPoint.forward, Color.yellow);
+            if (!playingDrawSound)
+            {
+                playingDrawSound = true;
+                SFXManager.instance.Play("BowDraw");
+            }
         }
         /*
         else if(Input.GetMouseButton(0) && !Attacking)
@@ -145,12 +153,15 @@ public class CombatBehavior : MonoBehaviour
             {
                 animator.SetBool("Shot", true);
                 animator.SetBool("Shooting", false);
+                playingDrawSound = false;
             }
             else
             {
                 animator.SetBool("Shot", false);
                 animator.SetBool("Shooting", false);
                 Invoke("ArcherArrowSheath",0.4f);
+                SFXManager.instance.Stop("BowDraw");
+                playingDrawSound = false;
             }
             //Shoot();
             mouseClickTime = 0;

@@ -70,6 +70,7 @@ public class UltimateAreaController : MonoBehaviour
             PlayerRef.GetComponent<PlayerMovement>().controlLock = false;
             GetComponent<Renderer>().material = targetSetMat;
             GameObject.FindGameObjectWithTag("Player").GetComponent<CombatBehavior>().ultimateCooldown = true;
+            SFXManager.instance.Play("ArcherUltimate");
             Destroy(this.gameObject, 13f);
         }
         if (Input.GetMouseButtonDown(1))
