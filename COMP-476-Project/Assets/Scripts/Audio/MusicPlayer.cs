@@ -16,20 +16,16 @@ public class MusicPlayer : MonoBehaviour
         if (curScene.name == "MainMenu")
         {
             AudioManager.instance.Play("Titlescreen");
-            MenuScene();
+            curPlayingAudio = "Titlescreen";
         }
     }
 
-    private void Update()
+    public void StopCurrentAudio()
     {
-        
+        AudioManager.instance.Stop(curPlayingAudio);
+        timer = 0;
     }
-
-    void MenuScene()
-    {
-
-    }
-
+    
 
 
 

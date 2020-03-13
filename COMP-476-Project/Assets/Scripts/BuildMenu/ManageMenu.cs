@@ -134,11 +134,11 @@ public class ManageMenu : MonoBehaviour
         Destroy(this.gameObject);
     }
 
-    public void UpdateIfCanAfford()
+    public void UpdateIfCanAfford(int gold)
     {
         if (hasUpgrade)
         {
-            if (playerScriptRef.gold >= upgradeCost)
+            if (gold >= upgradeCost)
             {
                 UpgradeButton.interactable = true;
             }

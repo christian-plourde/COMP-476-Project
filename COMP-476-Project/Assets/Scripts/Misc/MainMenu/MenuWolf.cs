@@ -5,6 +5,7 @@ using UnityEngine;
 public class MenuWolf : MonoBehaviour
 {
     float timer;
+    public float speed=11f;
 
     void Start()
     {
@@ -15,9 +16,9 @@ public class MenuWolf : MonoBehaviour
     void Update()
     {
         timer += Time.deltaTime;
-        if (timer > 9)
+        if (timer > 11)
             Destroy(this.gameObject);
-        transform.Translate(transform.forward*11f*Time.deltaTime);   
+        transform.Translate(transform.forward*speed*Time.deltaTime);   
 
     }
 }

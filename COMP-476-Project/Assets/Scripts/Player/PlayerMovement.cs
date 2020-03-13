@@ -301,11 +301,15 @@ public class PlayerMovement : MonoBehaviour
         GameObject gb;
         gb = GameObject.FindGameObjectWithTag("BuildMenu");
         if (gb != null)
-            gb.GetComponent<BuildMenu>().UpdateIfCanAfford();
+            gb.GetComponent<BuildMenu>().UpdateIfCanAfford(gold);
 
         gb = GameObject.FindGameObjectWithTag("ManageMenu");
         if (gb != null)
-            gb.GetComponent<ManageMenu>().UpdateIfCanAfford();
+            gb.GetComponent<ManageMenu>().UpdateIfCanAfford(gold);
+
+        gb = GameObject.FindGameObjectWithTag("RespawnMenu");
+        if (gb != null)
+            gb.GetComponent<RespawnButton>().UpdateIfCanAfford(gold);
 
     }
 

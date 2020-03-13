@@ -33,9 +33,8 @@ public class BuildMenu : MonoBehaviour
     /// This function checks if player can now afford any towers, so that if a player gets enough gold while the menu was open, the button to buy that 
     /// tower would be clickable.
     /// </summary>
-    public void UpdateIfCanAfford()
+    public void UpdateIfCanAfford(int currentGold)
     {
-        int currentGold = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>().gold;
 
         int count = 0;
         for (int i = 0; i < listTransform.transform.childCount; i++)

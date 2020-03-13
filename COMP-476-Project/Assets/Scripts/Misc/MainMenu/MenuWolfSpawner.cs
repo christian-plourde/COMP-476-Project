@@ -10,6 +10,7 @@ public class MenuWolfSpawner : MonoBehaviour
     bool finishedIntro;
 
     public GameObject wolfPrefab;
+    public GameObject zombiePrefab;
     public Transform spawnLocation;
 
     Vector3 camOgPosition;
@@ -46,7 +47,12 @@ public class MenuWolfSpawner : MonoBehaviour
                 Vector3 spawnLoc = spawnLocation.position;
                 float offsetX = Random.Range(-1.5f,1.5f);
                 spawnLoc.x += offsetX;
-                Instantiate(wolfPrefab, spawnLoc, Quaternion.identity);
+
+                int r = Random.Range(1, 10);
+                if(r<=3)
+                    Instantiate(zombiePrefab, spawnLoc, Quaternion.identity);
+                else
+                    Instantiate(wolfPrefab, spawnLoc, Quaternion.identity);
             }
 
             if (timer > 155)

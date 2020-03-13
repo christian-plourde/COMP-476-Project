@@ -174,6 +174,12 @@ public class CombatBehavior : MonoBehaviour
             animator.SetBool("Shooting", true);
             mouseClickTime += Time.deltaTime;
 
+            if (!playingDrawSound)
+            {
+                playingDrawSound = true;
+                SFXManager.instance.Play("BowDraw");
+            }
+
             //test
             if (AttackTarget != null)
             {
@@ -194,12 +200,17 @@ public class CombatBehavior : MonoBehaviour
                 animator.SetBool("Shooting", false);
                 secondaryArrowCooldown = true;
                 useSecondaryArrow = true;
+
+                playingDrawSound = false;
             }
             else
             {
                 animator.SetBool("Shot", false);
                 animator.SetBool("Shooting", false);
                 Invoke("ArcherArrowSheath", 0.4f);
+                SFXManager.instance.Stop("BowDraw");
+                playingDrawSound = false;
+
             }
             //Shoot();
             mouseClickTime = 0;
