@@ -46,9 +46,11 @@ public class BuildingStats : MonoBehaviour
     public void Damage(float damage)
     {
         this.health -= damage;
-        //if (this.health < 0.0f)
-        //{
-        //    GameObject.Destroy(this.gameObject);
-        //}
+        if (this.health <= 0.0f)
+        {
+            // clear node
+            transform.parent.GetComponent<LevelNode>().ToggleOpen();
+            GameObject.Destroy(this.gameObject);
+        }
     }
 }
