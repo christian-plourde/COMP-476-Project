@@ -10,6 +10,9 @@ public class BuildingStats : MonoBehaviour
     public Dictionary<string, int> multipliers = new Dictionary<string, int>();
     public string description;
 
+    [Header("Upgrades if any")]
+    public GameObject upgrade;
+
     private void Start()
     {
         multipliers.Add("health", 1);

@@ -760,6 +760,8 @@ MonoBehaviour:
   y_offset_for_connection: 0.14
   BuildMenuPrefab: {fileID: 7755408054859417334, guid: e0a40c214f7376142b0b8a6b6c362af4,
     type: 3}
+  ManageMenuPrefab: {fileID: 727127899446876067, guid: 3e4eb6fe0df325b4fb8dbce17ab0c2d2,
+    type: 3}
 --- !u!1001 &757193241
 PrefabInstance:
   m_ObjectHideFlags: 0

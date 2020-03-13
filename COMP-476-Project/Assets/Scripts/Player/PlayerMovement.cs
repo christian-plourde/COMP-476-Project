@@ -37,6 +37,7 @@ public class PlayerMovement : MonoBehaviour
     public string playerClass;
     public bool inBuildMode;
     public bool building;
+    public bool managingTower;
 
     [HideInInspector]public bool warriorUltimate;
     [Header("References")]
@@ -239,6 +240,12 @@ public class PlayerMovement : MonoBehaviour
         GameObject gb=GameObject.FindGameObjectWithTag("BuildMenu");
         if (gb != null)
             Destroy(gb.gameObject);
+
+        gb=GameObject.FindGameObjectWithTag("ManageMenu");
+        if (gb != null)
+            Destroy(gb.gameObject);
+
+
         Instantiate(respawnUIPrefab);
 
 
@@ -251,6 +258,7 @@ public class PlayerMovement : MonoBehaviour
         isDead = false;
         inBuildMode = true;
         building = false;
+        managingTower = false;
 
         animator.SetBool("Dead", false);
         health = maxHealth;
@@ -277,6 +285,17 @@ public class PlayerMovement : MonoBehaviour
     public void AddGold(int amount)
     {
         gold += amount;
+
+        // call update affordable on menus
+        GameObject gb;
+        gb = GameObject.FindGameObjectWithTag("BuildMenu");
+        if (gb != null)
+            gb.GetComponent<BuildMenu>().UpdateIfCanAfford();
+
+        gb = GameObject.FindGameObjectWithTag("ManageMenu");
+        if (gb != null)
+            gb.GetComponent<ManageMenu>().UpdateIfCanAfford();
+
     }
 
     public void RemoveGold(int amount)
