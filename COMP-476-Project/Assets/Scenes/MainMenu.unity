@@ -2003,6 +2003,11 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5621603593754673807, guid: 9a732200ce206354397fc61259b45edf,
+        type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: bdca2b30bff949142b12205ba44f3537, type: 2}
     - target: {fileID: 5624515256727938955, guid: 9a732200ce206354397fc61259b45edf,
         type: 3}
       propertyPath: m_LocalPosition.x
