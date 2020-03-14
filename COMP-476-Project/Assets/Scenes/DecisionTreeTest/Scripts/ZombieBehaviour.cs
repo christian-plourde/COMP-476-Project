@@ -23,17 +23,17 @@ public class ZombieBehaviour : EnemyBehaviour
     }
 
     //Tells us whether a tower is within some distance of the zombie; to be used in the decision tree
-    protected override bool TowerNearby()
+    protected override bool IsTowerNearby()
     {
         //Debug.Log("ZombieMovement : TowerNearby");
-        return base.TowerNearby();
+        return base.IsTowerNearby();
     }
 
     //Tells us whether the player is within sight of the zombie; to be used in the decision tree
-    protected override bool PlayerNearby()
+    protected override bool IsPlayerNearby()
     {
         //Debug.Log("ZombieMovement : PlayerNearby");
-        return base.PlayerNearby();
+        return base.IsPlayerNearby();
     }
 
     //Our decision tree action nodes
