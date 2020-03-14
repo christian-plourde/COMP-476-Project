@@ -55,6 +55,8 @@ public class EnemyBehaviour : MonoBehaviour
         }
     }
 
+    [SerializeField] private bool m_OutputDebugLogs = false;
+
     /// <summary>
     /// A reference to the global game grid generator (who contains the actual grid)
     /// </summary>
@@ -113,8 +115,11 @@ public class EnemyBehaviour : MonoBehaviour
     protected virtual bool IsAlive()
     {
         bool result = this.m_EnemyAttributes.health > 0.0f;
-        Debug.Log("Enemy " + (result ? "IS" : "ISN'T") + " alive!");
-        return this.m_EnemyAttributes.health > 0.0f;
+        if (m_OutputDebugLogs)
+        {
+            Debug.Log("Enemy " + (result ? "IS" : "ISN'T") + " alive!");
+        }
+        return result;
     }
 
     /// <summary>
@@ -134,6 +139,10 @@ public class EnemyBehaviour : MonoBehaviour
 
         catch
         {
+            if (m_OutputDebugLogs)
+            {
+                Debug.Log("Enemy NOT facing player!");
+            }
             return false;
         }
         
@@ -151,6 +160,11 @@ public class EnemyBehaviour : MonoBehaviour
             this.m_PlayerLastSeenTimer = 0.0f;
             //Increment it just a touch, to get HasSeenPlayerRecently moving
             this.m_PlayerLastSeenTimer += DELTA_T;
+
+            if (m_OutputDebugLogs)
+            {
+                Debug.Log("Enemy IS facing player!");
+            }
             return true;
 
             //RaycastHit hit;
@@ -162,7 +176,10 @@ public class EnemyBehaviour : MonoBehaviour
             //    }
             //}
         }
-        //Debug.Log(message + " (" + dot + ")");//More specific logs
+        if (m_OutputDebugLogs)
+        {
+            Debug.Log("Enemy NOT facing player!");
+        }
         return false;
     }
 
@@ -225,7 +242,10 @@ public class EnemyBehaviour : MonoBehaviour
             }
         }
 
-        Debug.Log("Tower " + (result ? "IS " : "ISN'T") + " seen!");
+        if (m_OutputDebugLogs)
+        {
+            Debug.Log("Tower " + (result ? "IS " : "ISN'T") + " seen!");
+        }
         return result;
     }
 
@@ -249,7 +269,10 @@ public class EnemyBehaviour : MonoBehaviour
             }
         }
 
-        Debug.Log("Tower " + (result ? "IS " : "ISN'T") + " nearby!");
+        if (m_OutputDebugLogs)
+        {
+            Debug.Log("Tower " + (result ? "IS " : "ISN'T") + " nearby!");
+        }
         return result;
     }
 
@@ -270,7 +293,10 @@ public class EnemyBehaviour : MonoBehaviour
                 this.m_PlayerLastSeenTimer = 0.0f;
             }
         }
-        Debug.Log("Enemy " + (timer_in_range ? "HAS " : "HASN'T") + " seen player recently!");
+        if (m_OutputDebugLogs)
+        {
+            Debug.Log("Enemy " + (timer_in_range ? "HAS " : "HASN'T") + " seen player recently!");
+        }
         return timer_in_range;
     }
 
@@ -286,7 +312,10 @@ public class EnemyBehaviour : MonoBehaviour
         bool result = (enemypos - playerpos).magnitude <= m_WhatIsNearby;
         //string message = (result) ? "Player nearby!" : "Player NOT nearby!";
         //Debug.Log(message);
-        Debug.Log("Player " + (result ? "IS " : "ISN'T") + " nearby!");
+        if (m_OutputDebugLogs)
+        {
+            Debug.Log("Player " + (result ? "IS " : "ISN'T") + " nearby!");
+        }
         return (result);
     }
 
@@ -295,7 +324,10 @@ public class EnemyBehaviour : MonoBehaviour
     /// </summary>
     protected virtual void DoNothing()
     {
-        Debug.Log("Doing nothing!");
+        if (m_OutputDebugLogs)
+        {
+            Debug.Log("Doing nothing!");
+        }
         return;
     }
 
@@ -304,7 +336,10 @@ public class EnemyBehaviour : MonoBehaviour
     /// </summary>
     protected virtual void AttackTower()
     {
-        Debug.Log("Attacking tower!");
+        if (m_OutputDebugLogs)
+        {
+            Debug.Log("Attacking tower!");
+        }
         if (this.m_TargetTowerNode.GetComponent<LevelNode>().Tower == null)
         {
             return;
@@ -336,7 +371,10 @@ public class EnemyBehaviour : MonoBehaviour
     /// </summary>
     protected virtual void AttackPlayer()
     {
-        Debug.Log("Attacking player!");
+        if (m_OutputDebugLogs)
+        {
+            Debug.Log("Attacking player!");
+        }
         //Make enemy face player in order to force continuous attack
         this.m_Character.BehaviourType = BEHAVIOUR_TYPE.ATTACK_PLAYER;
 
@@ -364,7 +402,10 @@ public class EnemyBehaviour : MonoBehaviour
     /// </summary>
     protected virtual void MoveToTower()
     {
-        Debug.Log("Moving to tower!");
+        if (m_OutputDebugLogs)
+        {
+            Debug.Log("Moving to tower!");
+        }
         this.m_Character.BehaviourType = BEHAVIOUR_TYPE.MOVE_TO_TOWER;
     }
 
@@ -374,7 +415,10 @@ public class EnemyBehaviour : MonoBehaviour
     /// </summary>
     protected virtual void MoveToPlayer()
     {
-        Debug.Log("Moving to player!");
+        if (m_OutputDebugLogs)
+        {
+            Debug.Log("Moving to player!");
+        }
         this.m_Character.BehaviourType = BEHAVIOUR_TYPE.MOVE_TO_PLAYER;
     }
 
@@ -383,7 +427,10 @@ public class EnemyBehaviour : MonoBehaviour
     /// </summary>
     protected virtual void Default()
     {
-        Debug.Log("Base seeking!");
+        if (m_OutputDebugLogs)
+        {
+            Debug.Log("Base seeking!");
+        }
         this.m_Character.BehaviourType = BEHAVIOUR_TYPE.BASE_SEEK;
     }
 
