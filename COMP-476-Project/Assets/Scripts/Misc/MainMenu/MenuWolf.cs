@@ -6,6 +6,8 @@ public class MenuWolf : MonoBehaviour
 {
     float timer;
     public float speed=11f;
+    public float deleteTime=11f;
+
 
     void Start()
     {
@@ -16,7 +18,7 @@ public class MenuWolf : MonoBehaviour
     void Update()
     {
         timer += Time.deltaTime;
-        if (timer > 11)
+        if (timer > deleteTime)
             Destroy(this.gameObject);
         transform.Translate(transform.forward*speed*Time.deltaTime);   
 

@@ -48,9 +48,17 @@ public class BuildingStats : MonoBehaviour
         this.health -= damage;
         if (this.health <= 0.0f)
         {
-            // clear node
-            transform.parent.GetComponent<LevelNode>().ToggleOpen();
-            GameObject.Destroy(this.gameObject);
+            GameObject[] arr = GameObject.FindGameObjectsWithTag("Map");
+            GameObject gridObject = arr[0];
+            foreach (GameObject gb in arr)
+            {
+                if (gb.transform.name == "Floor")
+                {
+                    gridObject = gb;
+                    break;
+                }
+            }
+            gridObject.GetComponent<GenerateGrid>().DestroyTower(this.gameObject, 0);
         }
     }
 }

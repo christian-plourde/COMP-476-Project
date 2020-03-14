@@ -95,8 +95,11 @@ public class PlayerMovement : MonoBehaviour
 
 
         // respawn test:
+        /*
         if (isDead && Input.GetKeyDown(KeyCode.R))
             RespawnPlayer(false);
+            */
+
 
         if (!isDead && Input.GetKeyDown(KeyCode.K))
             DealDamage(25f);

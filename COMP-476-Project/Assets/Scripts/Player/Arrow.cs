@@ -48,6 +48,7 @@ public class Arrow : MonoBehaviour
 
             // for scale adjustment on static arrows
             gb.transform.localScale = new Vector3(scaleFactor,scaleFactor,scaleFactor);
+            //gb.transform.localScale = new Vector3(gb.transform.localScale.x*0.25f, gb.transform.localScale.x * 0.25f, gb.transform.localScale.x * 0.25f);
 
             // damage if its an enemy
             if (collision.collider.tag == "Enemy")
