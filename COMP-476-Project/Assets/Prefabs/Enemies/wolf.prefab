@@ -24803,7 +24803,7 @@ MonoBehaviour:
   speed: 6
   isDead: 0
   heightOffset: 0
-  goldDrop: 0
+  goldDrop: 15
   HealthUI: {fileID: 64341479603795002}
 --- !u!95 &7424372955921300265
 Animator:
