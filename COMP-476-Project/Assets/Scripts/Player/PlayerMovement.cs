@@ -12,7 +12,7 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Player Variables")]
     public float health = 100f;
-    float maxHealth;
+    public float maxHealth;
     public int gold = 200;
     public bool invincible;
     Vector3 respawnPos;
