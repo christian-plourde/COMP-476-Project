@@ -1,37 +1,27 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class EnemySpawner : MonoBehaviour
 {
-    [SerializeField] GameObject m_ZombiePrefab;
-
-    private List<GameObject> m_Zombies = new List<GameObject>();
-
-    public int initial_monster_count = 2;
     public int initial_start_delay_seconds = 2;
     public int spawner_interval_seconds = 10;
+    GameObject[] enemies;
 
-    void InitializeZombies()
-    {
-        m_Zombies.Clear();
-
-        for (int i = 0; i < initial_monster_count; i++)
-        {
-            this.m_Zombies.Add(GameObject.Instantiate(this.m_ZombiePrefab));
-        }
-
-        foreach (GameObject g in m_Zombies)
-        {
-            ZombieBehaviour zm = g.GetComponent<ZombieBehaviour>();
-            zm.Initialize();
-        }
-    }
-
-    // Start is called before the first frame update
     void Start()
     {
+        //load all the enemies from our folder
+        enemies = Resources.LoadAll<GameObject>("Prefabs/Enemies");
+
         InvokeRepeating("InitializeZombies", initial_start_delay_seconds, spawner_interval_seconds);
     }
 
+    void InitializeZombies()
+    {
+        int enemy_index = Random.Range(0, enemies.Length); //generate random index for enemy spawn
+        GameObject new_enemy = GameObject.Instantiate(enemies[enemy_index]); //load random enemy
+        ZombieBehaviour zm = new_enemy.GetComponent<ZombieBehaviour>();
+        zm.Initialize();
+    }
 }
