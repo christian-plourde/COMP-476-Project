@@ -38,7 +38,24 @@ public abstract class NPC : Observer
     public float Velocity
     {
         get { return currentVelocity; }
-        set { currentVelocity = value; }
+        set { currentVelocity = value;
+
+            try
+            {
+                this.GetComponent<Animator>().SetBool("Chasing", this.transform.parent.GetComponent<Character>().currentVelocity > 0 ? true : false);
+            }
+
+            catch
+            {
+                try
+                {
+                    this.GetComponent<Animator>().SetBool("Chasing", currentVelocity > 0 ? true : false);
+                }
+
+                catch { }
+            }
+
+        }
     }
 
     public float AngularVelocity

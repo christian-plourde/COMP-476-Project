@@ -70,7 +70,18 @@ public class Character : NPC
     /// </summary>
     public BEHAVIOUR_TYPE BehaviourType
     {
-        set { behaviour_type = value; }
+        set { behaviour_type = value; 
+        
+            switch(behaviour_type)
+            {
+                case BEHAVIOUR_TYPE.ATTACK_PLAYER: GetComponent<Animator>().SetBool("Attacking", true); break;
+                case BEHAVIOUR_TYPE.ATTACK_TOWER: GetComponent<Animator>().SetBool("Attacking", true); break;
+                case BEHAVIOUR_TYPE.BASE_SEEK: break;
+                case BEHAVIOUR_TYPE.MOVE_TO_PLAYER: break;
+                case BEHAVIOUR_TYPE.MOVE_TO_TOWER: break;
+            }
+        
+        }
     }
 
     /// <summary>

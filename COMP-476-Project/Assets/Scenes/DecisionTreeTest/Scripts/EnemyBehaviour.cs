@@ -114,7 +114,14 @@ public class EnemyBehaviour : MonoBehaviour
     /// <returns></returns>
     protected virtual bool IsAlive()
     {
-        bool result = this.m_EnemyAttributes.health > 0.0f;
+        bool result = false;
+        try
+        {
+            result = this.m_EnemyAttributes.health > 0.0f;
+        }
+
+        catch { }
+        
         if (m_OutputDebugLogs)
         {
             Debug.Log("Enemy " + (result ? "IS" : "ISN'T") + " alive!");
