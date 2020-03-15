@@ -103,6 +103,7 @@ public class ManageMenu : MonoBehaviour
         Destroy(currentTower.gameObject);
 
         CloseMenu();
+        SFXManager.instance.Play("BuildingUpgrade");
     }
 
     public void DestroyTower()
@@ -122,7 +123,7 @@ public class ManageMenu : MonoBehaviour
 
 
 
-
+        SFXManager.instance.Play("Destroy");
         CloseMenu();
     }
 

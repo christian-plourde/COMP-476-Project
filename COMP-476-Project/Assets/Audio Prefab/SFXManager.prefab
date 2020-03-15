@@ -128,8 +128,14 @@ MonoBehaviour:
     pitch: 1
     loop: 0
     source: {fileID: 0}
-  - name: 
-    clip: {fileID: 0}
+  - name: BuildSound
+    clip: {fileID: 8300000, guid: 300a001f4e81c9d43bf3f036a4f5dfab, type: 3}
+    volume: 0.049
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: BuildingUpgrade
+    clip: {fileID: 8300000, guid: e50b4e1719dad574abc74460c4ccb4ef, type: 3}
     volume: 0.5
     pitch: 1
     loop: 0

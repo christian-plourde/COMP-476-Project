@@ -2526,6 +2526,46 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2144748623305117102, guid: 12b3fcfa17461a64bbb60ac0577e4e42,
+        type: 3}
+      propertyPath: sounds.Array.size
+      value: 17
+      objectReference: {fileID: 0}
+    - target: {fileID: 2144748623305117102, guid: 12b3fcfa17461a64bbb60ac0577e4e42,
+        type: 3}
+      propertyPath: sounds.Array.data[14].name
+      value: BuildSound
+      objectReference: {fileID: 0}
+    - target: {fileID: 2144748623305117102, guid: 12b3fcfa17461a64bbb60ac0577e4e42,
+        type: 3}
+      propertyPath: sounds.Array.data[14].clip
+      value: 
+      objectReference: {fileID: 8300000, guid: 300a001f4e81c9d43bf3f036a4f5dfab, type: 3}
+    - target: {fileID: 2144748623305117102, guid: 12b3fcfa17461a64bbb60ac0577e4e42,
+        type: 3}
+      propertyPath: sounds.Array.data[14].volume
+      value: 0.049
+      objectReference: {fileID: 0}
+    - target: {fileID: 2144748623305117102, guid: 12b3fcfa17461a64bbb60ac0577e4e42,
+        type: 3}
+      propertyPath: sounds.Array.data[16].volume
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2144748623305117102, guid: 12b3fcfa17461a64bbb60ac0577e4e42,
+        type: 3}
+      propertyPath: sounds.Array.data[16].pitch
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2144748623305117102, guid: 12b3fcfa17461a64bbb60ac0577e4e42,
+        type: 3}
+      propertyPath: sounds.Array.data[15].name
+      value: BuildingUpgrade
+      objectReference: {fileID: 0}
+    - target: {fileID: 2144748623305117102, guid: 12b3fcfa17461a64bbb60ac0577e4e42,
+        type: 3}
+      propertyPath: sounds.Array.data[15].clip
+      value: 
+      objectReference: {fileID: 8300000, guid: e50b4e1719dad574abc74460c4ccb4ef, type: 3}
     - target: {fileID: 2144748623305117103, guid: 12b3fcfa17461a64bbb60ac0577e4e42,
         type: 3}
       propertyPath: m_Name
