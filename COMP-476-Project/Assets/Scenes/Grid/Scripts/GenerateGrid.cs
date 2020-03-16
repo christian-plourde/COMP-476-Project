@@ -179,14 +179,21 @@ public class GenerateGrid : Subject
             AttachObserver(c);
         }
 
-        playerScriptRef = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>();
+        //playerScriptRef = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>();
 
+    }
+
+    private void Start()
+    {
+        //playerScriptRef = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>();
     }
 
     void Update()
     {
-        
-        if (Input.GetMouseButtonDown(0) && playerScriptRef.inBuildMode && !playerScriptRef.building && !playerScriptRef.managingTower)
+        if(playerScriptRef==null)
+            playerScriptRef = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>();
+
+        if (Input.GetMouseButtonDown(0) && playerScriptRef.inBuildMode && !playerScriptRef.building && !playerScriptRef.managingTower && !playerScriptRef.isDead)
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;

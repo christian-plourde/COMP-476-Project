@@ -20,6 +20,11 @@ public class PlayerSelect : MonoBehaviour
     public GameObject ArcherA1;
     public GameObject WarriorA1;
 
+    [Header("GameInfo ref")]
+    public GameObject info;
+
+    bool gameLaunched;
+
     private void Start()
     {
         ArcherAbilityName.text = ArcherA1.GetComponent<AbilityDetail>().abilityName;
@@ -37,7 +42,8 @@ public class PlayerSelect : MonoBehaviour
 
     private void Update()
     {
-        RayCastInput();
+        if(!gameLaunched)
+            RayCastInput();
     }
 
     void RayCastInput()
@@ -85,16 +91,42 @@ public class PlayerSelect : MonoBehaviour
 
     public void StartGameArcher()
     {
-        AudioManager.instance.Play("StartGame");
+        info.GetComponent<GameInfo>().playerClass = "Archer";
+        try
+        {
+            AudioManager.instance.Play("StartGame");
+        }
+        catch { }
+        gameLaunched = true;
+        Invoke("LaunchGame", 1f);
+        StopMusic();
+
     }
 
     public void StartGameWarrior()
     {
-        AudioManager.instance.Play("StartGame");
+        info.GetComponent<GameInfo>().playerClass = "Warrior";
+        try
+        {
+            AudioManager.instance.Play("StartGame");
+        }
+        catch { }
+        gameLaunched = true;
+        Invoke("LaunchGame",1f);
+        StopMusic();
+
+        
     }
 
-    void LaunchGame(GameObject playerPrefab)
+    void LaunchGame()
     {
+        SceneManager.LoadScene("Grid");
+    }
 
+    void StopMusic()
+    {
+        GameObject gb = GameObject.FindGameObjectWithTag("MusicPlayer");
+        if (gb != null)
+            gb.GetComponent<MusicPlayer>().StopCurrentAudio();
     }
 }
