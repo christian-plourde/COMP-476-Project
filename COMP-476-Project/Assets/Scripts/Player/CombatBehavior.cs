@@ -37,6 +37,10 @@ public class CombatBehavior : MonoBehaviour
     public float secondaryArrowCooldownTimer=0;
     bool useSecondaryArrow;
 
+    [Header("Cooldown Time Parameters")]
+    public float howLongUltimateCooldown;
+    public float howLongSecondaryCooldown;
+
     void Start()
     {
         animator = transform.GetChild(0).GetComponent<Animator>();
@@ -57,7 +61,7 @@ public class CombatBehavior : MonoBehaviour
         if (ultimateCooldown)
         {
             ultimateCooldownTimer += Time.deltaTime;
-            if (ultimateCooldownTimer > 30f)
+            if (ultimateCooldownTimer > howLongUltimateCooldown)
             {
                 ultimateCooldown = false;
                 ultimateCooldownTimer = 0;
@@ -67,7 +71,7 @@ public class CombatBehavior : MonoBehaviour
         if (secondaryArrowCooldown)
         {
             secondaryArrowCooldownTimer += Time.deltaTime;
-            if (secondaryArrowCooldownTimer > 15)
+            if (secondaryArrowCooldownTimer > howLongSecondaryCooldown)
             {
                 secondaryArrowCooldown = false;
                 secondaryArrowCooldownTimer = 0;

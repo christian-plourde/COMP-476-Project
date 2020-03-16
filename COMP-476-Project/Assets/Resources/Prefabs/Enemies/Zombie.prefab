@@ -2917,12 +2917,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aaec248e2e9532549866ab01e51bbb0f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 50
+  health: 35
   damage: 3
   speed: 3
   isDead: 0
   heightOffset: 0.05
-  goldDrop: 0
+  goldDrop: 20
   HealthUI: {fileID: 1322159949329337041}
 --- !u!114 &358279785962484220
 MonoBehaviour:

@@ -2410,6 +2410,7 @@ GameObject:
   - component: {fileID: 7144771478404947807}
   - component: {fileID: 7144771478404947806}
   - component: {fileID: 7144771478404947810}
+  - component: {fileID: 2027420323}
   m_Layer: 0
   m_Name: Player_Archer
   m_TagString: Player
@@ -2426,7 +2427,7 @@ Transform:
   m_GameObject: {fileID: 7144771478404947801}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 13.483555, y: 0, z: 9.465325}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.25, y: 0.25, z: 0.25}
   m_Children:
   - {fileID: 20853646704690874}
   m_Father: {fileID: 0}
@@ -2476,7 +2477,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 75
   maxHealth: 0
-  gold: 200
+  gold: 300
   invincible: 0
   mSpeed: 5
   sprintMultiplier: 1
@@ -2519,6 +2520,53 @@ MonoBehaviour:
   ultimateCooldownTimer: 0
   secondaryArrowCooldown: 0
   secondaryArrowCooldownTimer: 0
+  howLongUltimateCooldown: 55
+  howLongSecondaryCooldown: 20
+--- !u!114 &2027420323
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7144771478404947801}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a1f238264d7d4f4f9bab02f3fc9f33c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  wAbility1: {fileID: 4034220533786276973, guid: ac0b0fe2858fb8546822338b5b11e6be,
+    type: 3}
+  wAbility2: {fileID: -4849742286420106071, guid: ac0b0fe2858fb8546822338b5b11e6be,
+    type: 3}
+  wAbility3: {fileID: -4573957267488142179, guid: ac0b0fe2858fb8546822338b5b11e6be,
+    type: 3}
+  aAbility1: {fileID: -1998338153741720999, guid: ac0b0fe2858fb8546822338b5b11e6be,
+    type: 3}
+  aAbility2: {fileID: -3883894641507649012, guid: ac0b0fe2858fb8546822338b5b11e6be,
+    type: 3}
+  aAbility3: {fileID: -52277512063790124, guid: ac0b0fe2858fb8546822338b5b11e6be,
+    type: 3}
+  wAbility2G: {fileID: 3108315301061666720, guid: 0053fd01858a40a4fa51f069ddef9534,
+    type: 3}
+  wAbility3G: {fileID: 5670843616968309514, guid: 0053fd01858a40a4fa51f069ddef9534,
+    type: 3}
+  aAbility2G: {fileID: 7490263070313451839, guid: 0053fd01858a40a4fa51f069ddef9534,
+    type: 3}
+  aAbility3G: {fileID: 3888885927669863452, guid: 0053fd01858a40a4fa51f069ddef9534,
+    type: 3}
+  fightMode: {fileID: -2168515312980338141, guid: ac0b0fe2858fb8546822338b5b11e6be,
+    type: 3}
+  buildMode: {fileID: 4083120365143026508, guid: ac0b0fe2858fb8546822338b5b11e6be,
+    type: 3}
+  health: {fileID: 0}
+  mode: {fileID: 0}
+  ability1: {fileID: 0}
+  ability2: {fileID: 0}
+  ability3: {fileID: 0}
+  ability2Cd: {fileID: 0}
+  ability3Cd: {fileID: 0}
+  gold: {fileID: 0}
+  wave: {fileID: 0}
 --- !u!1 &7144771478849193476
 GameObject:
   m_ObjectHideFlags: 0

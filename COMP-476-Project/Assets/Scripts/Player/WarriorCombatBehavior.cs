@@ -42,7 +42,11 @@ public class WarriorCombatBehavior : MonoBehaviour
 
     [HideInInspector] public bool secondaryCooldown=false;
     [HideInInspector] public float secondaryCooldownTimer;
-    
+
+
+    [Header("Cooldown Time Parameters")]
+    public float howLongUltimateCooldown;
+    public float howLongSecondaryCooldown;
 
 
     Vector3 FacingDir;
@@ -129,7 +133,7 @@ public class WarriorCombatBehavior : MonoBehaviour
         if (ultimateCooldown)
         {
             ultimateCooldownTimer += Time.deltaTime;
-            if (ultimateCooldownTimer > 30f)
+            if (ultimateCooldownTimer > howLongUltimateCooldown)
             {
                 ultimateCooldown = false;
                 ultimateCooldownTimer = 0f;
@@ -142,7 +146,7 @@ public class WarriorCombatBehavior : MonoBehaviour
         {
             
             secondaryCooldownTimer += Time.deltaTime;
-            if (secondaryCooldownTimer > 15f)
+            if (secondaryCooldownTimer > howLongSecondaryCooldown)
             {
                 secondaryCooldownTimer = 0;
                 secondaryCooldown = false;
