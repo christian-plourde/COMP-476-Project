@@ -18,6 +18,15 @@ public class MusicPlayer : MonoBehaviour
             AudioManager.instance.Play("Titlescreen");
             curPlayingAudio = "Titlescreen";
         }
+
+        DontDestroyOnLoad(this.gameObject);
+    }
+
+    public void PlayPlayerSelectionMusic()
+    {
+        StopCurrentAudio();
+        AudioManager.instance.Play("PlayerSelect");
+        curPlayingAudio = "PlayerSelect";
     }
 
     public void StopCurrentAudio()

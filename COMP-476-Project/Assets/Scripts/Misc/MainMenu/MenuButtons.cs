@@ -10,7 +10,7 @@ public class MenuButtons : MonoBehaviour
     {
         // load player class selecter menu
         GameObject.FindGameObjectWithTag("MusicPlayer").GetComponent<MusicPlayer>().StopCurrentAudio();
-        SceneManager.LoadScene("Grid");
+        SceneManager.LoadScene("Player Select");
     }
 
     public void StartCredits()

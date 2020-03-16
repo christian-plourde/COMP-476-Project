@@ -25,7 +25,7 @@ public class BastardSword : MonoBehaviour
             bool crit=false;
             if (r < criticalChance)
             {
-                dmg += baseDMG * criticalChance;
+                dmg += baseDMG * 2;
                 crit = true;
             }
 
