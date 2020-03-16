@@ -22,6 +22,13 @@ public class MusicPlayer : MonoBehaviour
         DontDestroyOnLoad(this.gameObject);
     }
 
+    public void PlayPlayerSelectionMusic()
+    {
+        StopCurrentAudio();
+        AudioManager.instance.Play("PlayerSelect");
+        curPlayingAudio = "PlayerSelect";
+    }
+
     public void StopCurrentAudio()
     {
         AudioManager.instance.Stop(curPlayingAudio);

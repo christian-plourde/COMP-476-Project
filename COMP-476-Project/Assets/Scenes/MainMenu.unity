@@ -1720,6 +1720,24 @@ MonoBehaviour:
     pitch: 1
     loop: 0
     source: {fileID: 0}
+  - name: StartGame
+    clip: {fileID: 8300000, guid: 3b4681787c48cda439446aac8e248d0f, type: 3}
+    volume: 0.257
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: PlayerSelect
+    clip: {fileID: 8300000, guid: 1cec16b458ec6bf4abfeef0135bf60af, type: 3}
+    volume: 0.39
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: 
+    clip: {fileID: 0}
+    volume: 0.257
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
 --- !u!4 &1325650051
 Transform:
   m_ObjectHideFlags: 0

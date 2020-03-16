@@ -170,6 +170,8 @@ MonoBehaviour:
   abilityName: Chain Shot
   abilityCoolDown: 25
   abilityDetails: On hit the first enemy, spawn upto 10 arrows to hit nearby enemies.
+  AbilityBG: {fileID: 1639278584}
+  hovering: 0
 --- !u!65 &55388814
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1948,10 +1950,10 @@ Light:
   m_Enabled: 1
   serializedVersion: 9
   m_Type: 0
-  m_Color: {r: 1, g: 0.7228693, b: 0.08018869, a: 1}
-  m_Intensity: 1.3
+  m_Color: {r: 1, g: 0.8874147, b: 0.6273585, a: 1}
+  m_Intensity: 9.36
   m_Range: 10
-  m_SpotAngle: 46.64
+  m_SpotAngle: 67
   m_InnerSpotAngle: 21.80208
   m_CookieSize: 10
   m_Shadows:
@@ -2199,6 +2201,8 @@ MonoBehaviour:
   abilityName: Whirlwind Force field
   abilityCoolDown: 65
   abilityDetails: Spin 360 & create a forced field to hurt enemies around you.
+  AbilityBG: {fileID: 836158067}
+  hovering: 0
 --- !u!65 &1157604184
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2493,13 +2497,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1269888545}
-  m_LocalRotation: {x: 0.40821788, y: -0.23456968, z: 0.10938163, w: 0.8754261}
-  m_LocalPosition: {x: 0, y: 3, z: 0}
+  m_LocalRotation: {x: 0.85171026, y: 0.25222638, z: -0.42170158, w: 0.18204209}
+  m_LocalPosition: {x: 363, y: 183, z: -145}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+  m_LocalEulerAnglesHint: {x: 31.522001, y: -132.697, z: -198.89899}
 --- !u!1 &1277906685
 GameObject:
   m_ObjectHideFlags: 0
@@ -2627,6 +2631,8 @@ MonoBehaviour:
   abilityName: Sword Combo
   abilityCoolDown: 0
   abilityDetails: A 3 combo sword attack.
+  AbilityBG: {fileID: 538288482}
+  hovering: 0
 --- !u!65 &1284699153
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2908,6 +2914,8 @@ MonoBehaviour:
   abilityName: Arrow Shot
   abilityCoolDown: 0
   abilityDetails: Shoot a regular arrow, draw your bow completely to shoot.
+  AbilityBG: {fileID: 1183728013}
+  hovering: 0
 --- !u!65 &1597916408
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3320,6 +3328,8 @@ MonoBehaviour:
   abilityCoolDown: 55
   abilityDetails: Select a region to rain arrows in and hurt anything that enters
     the area.
+  AbilityBG: {fileID: 1630394475}
+  hovering: 0
 --- !u!65 &1766356336
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3429,6 +3439,8 @@ MonoBehaviour:
   abilityName: Hard Kick
   abilityCoolDown: 15
   abilityDetails: Kick hard to weaken and hurt enemies.
+  AbilityBG: {fileID: 391030753}
+  hovering: 0
 --- !u!65 &1772536266
 BoxCollider:
   m_ObjectHideFlags: 0

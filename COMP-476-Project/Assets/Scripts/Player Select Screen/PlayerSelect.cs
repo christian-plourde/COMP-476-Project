@@ -31,7 +31,7 @@ public class PlayerSelect : MonoBehaviour
         GameObject gb = GameObject.FindGameObjectWithTag("MusicPlayer");
         if (gb != null)
         {
-            //play selection music
+            gb.GetComponent<MusicPlayer>().PlayPlayerSelectionMusic();
         }
     }
 
@@ -47,6 +47,7 @@ public class PlayerSelect : MonoBehaviour
 
         if (Physics.Raycast(ray, out hit) && raycastTarget.transform.name!=hit.transform.name)
         {
+            raycastTarget.GetComponent<AbilityDetail>().hovering = false;
             raycastTarget = hit.transform.gameObject;
 
             // change details
@@ -56,11 +57,16 @@ public class PlayerSelect : MonoBehaviour
             {
                 ArcherAbilityName.text = aDetails.abilityName;
                 ArcherAbilityDetails.text = aDetails.abilityDetails;
+                raycastTarget.GetComponent<AbilityDetail>().hovering = true;
+                raycastTarget.GetComponent<AbilityDetail>().AbilityBG.color = Color.yellow;
             }
             else
             {
                 WarriorAbilityName.text = aDetails.abilityName;
                 WarriorAbilityDetails.text = aDetails.abilityDetails;
+                raycastTarget.GetComponent<AbilityDetail>().hovering = true;
+                raycastTarget.GetComponent<AbilityDetail>().AbilityBG.color = Color.yellow;
+
             }
         }
     }

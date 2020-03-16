@@ -13,8 +13,20 @@ public class AbilityDetail : MonoBehaviour
     [TextArea]
     public string abilityDetails;
 
+    public Image AbilityBG;
+
+    Color ogColor;
+    public bool hovering;
+
     private void Start()
     {
+        ogColor = AbilityBG.color;
         GetComponent<MeshRenderer>().enabled = false;
+    }
+
+    private void Update()
+    {
+        if(!hovering)
+            AbilityBG.color = ogColor;
     }
 }
