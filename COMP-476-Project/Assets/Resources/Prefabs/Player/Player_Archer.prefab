@@ -2416,7 +2416,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &7144771478404947805
 Transform:
   m_ObjectHideFlags: 0
@@ -2475,6 +2475,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 75
+  maxHealth: 0
   gold: 200
   invincible: 0
   mSpeed: 5
@@ -2483,6 +2484,9 @@ MonoBehaviour:
   controlLock: 0
   isDead: 0
   playerClass: Archer
+  inBuildMode: 0
+  building: 0
+  managingTower: 0
   warriorUltimate: 0
   respawnUIPrefab: {fileID: 2027443529192807965, guid: 1a9f9f1ed06de9f499b232c889715452,
     type: 3}
@@ -2512,6 +2516,7 @@ MonoBehaviour:
   AbilityCircle: {fileID: 4885258449618130248, guid: 00bdd71ea6ee79f4a9ddbbe20eb1661f,
     type: 3}
   ultimateCooldown: 0
+  ultimateCooldownTimer: 0
   secondaryArrowCooldown: 0
   secondaryArrowCooldownTimer: 0
 --- !u!1 &7144771478849193476
