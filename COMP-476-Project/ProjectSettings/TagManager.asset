@@ -15,6 +15,7 @@ TagManager:
   - ManageMenu
   - MusicPlayer
   - RespawnMenu
+  - AudioManager
   layers:
   - Default
   - TransparentFX

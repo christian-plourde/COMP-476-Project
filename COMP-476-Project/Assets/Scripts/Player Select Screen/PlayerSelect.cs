@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class PlayerSelect : MonoBehaviour
 {
@@ -26,6 +27,12 @@ public class PlayerSelect : MonoBehaviour
 
         WarriorAbilityName.text=WarriorA1.GetComponent<AbilityDetail>().abilityName;
         WarriorAbilityDetails.text=WarriorA1.GetComponent<AbilityDetail>().abilityDetails;
+
+        GameObject gb = GameObject.FindGameObjectWithTag("MusicPlayer");
+        if (gb != null)
+        {
+            //play selection music
+        }
     }
 
     private void Update()
@@ -56,5 +63,32 @@ public class PlayerSelect : MonoBehaviour
                 WarriorAbilityDetails.text = aDetails.abilityDetails;
             }
         }
+    }
+
+    // buttons
+    public void GoBack()
+    {
+        GameObject gb=GameObject.FindGameObjectWithTag("MusicPlayer");
+        if (gb != null)
+        {
+            gb.GetComponent<MusicPlayer>().StopCurrentAudio();
+            Destroy(gb.gameObject);
+            SceneManager.LoadScene("MainMenu");
+        }
+    }
+
+    public void StartGameArcher()
+    {
+        AudioManager.instance.Play("StartGame");
+    }
+
+    public void StartGameWarrior()
+    {
+        AudioManager.instance.Play("StartGame");
+    }
+
+    void LaunchGame(GameObject playerPrefab)
+    {
+
     }
 }
