@@ -87,34 +87,39 @@ public class PlayerSelect : MonoBehaviour
             Destroy(gb.gameObject);
             SceneManager.LoadScene("MainMenu");
         }
+        Destroy(info.gameObject);
     }
 
     public void StartGameArcher()
     {
-        info.GetComponent<GameInfo>().playerClass = "Archer";
-        try
+        if (!gameLaunched)
         {
-            AudioManager.instance.Play("StartGame");
+            info.GetComponent<GameInfo>().playerClass = "Archer";
+            try
+            {
+                AudioManager.instance.Play("StartGame");
+            }
+            catch { }
+            gameLaunched = true;
+            Invoke("LaunchGame", 1f);
+            StopMusic();
         }
-        catch { }
-        gameLaunched = true;
-        Invoke("LaunchGame", 1f);
-        StopMusic();
-
     }
 
     public void StartGameWarrior()
     {
-        info.GetComponent<GameInfo>().playerClass = "Warrior";
-        try
+        if (!gameLaunched)
         {
-            AudioManager.instance.Play("StartGame");
+            info.GetComponent<GameInfo>().playerClass = "Warrior";
+            try
+            {
+                AudioManager.instance.Play("StartGame");
+            }
+            catch { }
+            gameLaunched = true;
+            Invoke("LaunchGame", 1f);
+            StopMusic();
         }
-        catch { }
-        gameLaunched = true;
-        Invoke("LaunchGame",1f);
-        StopMusic();
-
         
     }
 
