@@ -55,6 +55,8 @@ public class EnemyBehaviour : MonoBehaviour
         }
     }
 
+    [SerializeField] private bool m_OutputDebugLogs = false;
+
     /// <summary>
     /// A reference to the global game grid generator (who contains the actual grid)
     /// </summary>
@@ -77,7 +79,18 @@ public class EnemyBehaviour : MonoBehaviour
     /// The frequency at which the enemy should be able to attack.
     /// </summary>
     public float m_AttackFrequency = 1.5f;
+    /// <summary>
+    /// the time for which the enemy should hunt the player after having seen them, given that the enemy no longer sees the player. In other words, after X seconds, lost interest in chasing the player.
+    /// </summary>
+    public float m_AttentionSpan = 2.0f;
+    /// <summary>
+    /// A timer to keep track of when the last time we attacked was.
+    /// </summary>
     private float m_AttackTimer = 0.0f;
+    /// <summary>
+    /// A timer to keep track of when we last saw the player.
+    /// </summary>
+    private float m_PlayerLastSeenTimer = 0.0f;
     /// <summary>
     /// The rate at which we increase our timer variable
     /// </summary>
@@ -87,16 +100,43 @@ public class EnemyBehaviour : MonoBehaviour
     /// A reference to the character component associated to this gameobject. Initialized in Start()
     /// </summary>
     protected Character m_Character;
+    /// <summary>
+    /// A reference to the enemy's attributes, i.e. health
+    /// </summary>
+    protected EnemyAttributes m_EnemyAttributes;
 
 
     //Our decision tree condition nodes
 
     /// <summary>
-    /// Tells us whether the player is within sight of the zombie; to be used in the decision tree.
+    /// Tells us whether the enemy is still alive; this will in turn determine whether the rest of the decision tree should be considered at all.
+    /// </summary>
+    /// <returns></returns>
+    protected virtual bool IsAlive()
+    {
+        bool result = false;
+        try
+        {
+            result = this.m_EnemyAttributes.health > 0.0f;
+        }
+
+        catch { }
+        
+        if (m_OutputDebugLogs)
+        {
+            Debug.Log("Enemy " + (result ? "IS" : "ISN'T") + " alive!");
+        }
+        return result;
+    }
+
+    /// <summary>
+    /// Tells us whether the player is within sight of the enemy; to be used in the decision tree.
+    /// Reinitializes [m_PlayerLastSeenTimer] on enemy sees player.
     /// </summary>
     /// <returns></returns>
     protected virtual bool SeesPlayer()
     {
+        
         Vector3 enemypos = this.transform.position;
         Vector3 playerpos;
         try
@@ -106,6 +146,10 @@ public class EnemyBehaviour : MonoBehaviour
 
         catch
         {
+            if (m_OutputDebugLogs)
+            {
+                Debug.Log("Enemy NOT facing player!");
+            }
             return false;
         }
         
@@ -119,7 +163,15 @@ public class EnemyBehaviour : MonoBehaviour
         //if we're facing the target, then we can consider a raycast
         if (facing_player)
         {
-            //TEMPORARY
+            //Reset the timer on seeing the player
+            this.m_PlayerLastSeenTimer = 0.0f;
+            //Increment it just a touch, to get HasSeenPlayerRecently moving
+            this.m_PlayerLastSeenTimer += DELTA_T;
+
+            if (m_OutputDebugLogs)
+            {
+                Debug.Log("Enemy IS facing player!");
+            }
             return true;
 
             //RaycastHit hit;
@@ -131,7 +183,10 @@ public class EnemyBehaviour : MonoBehaviour
             //    }
             //}
         }
-        //Debug.Log(message + " (" + dot + ")");//More specific logs
+        if (m_OutputDebugLogs)
+        {
+            Debug.Log("Enemy NOT facing player!");
+        }
         return false;
     }
 
@@ -144,6 +199,7 @@ public class EnemyBehaviour : MonoBehaviour
     protected virtual bool SeesTower()
     {
         Vector3 enemypos = this.transform.position;
+        bool result = false;
 
         foreach(GameObject tower_node in tower_nodes)
         {
@@ -162,7 +218,8 @@ public class EnemyBehaviour : MonoBehaviour
                 //TEMPORARY
                 m_TargetTowerNode = tower_node;
                 //Debug.Log(message);
-                return true;
+                result = true;
+                break;
 
                 //RaycastHit hit;
                 //if(Physics.Raycast(this.transform.position, transform.TransformDirection(Vector3.forward), out hit, this.m_RangeOfVision))
@@ -187,19 +244,25 @@ public class EnemyBehaviour : MonoBehaviour
             if (distance <= m_WhatIsNearby)
             {
                 //Debug.Log("Enemy doesn't see tower but is passing next to one; attacking!");
-                return true;
+                result = true;
+                break;
             }
         }
 
-        return false;
+        if (m_OutputDebugLogs)
+        {
+            Debug.Log("Tower " + (result ? "IS " : "ISN'T") + " seen!");
+        }
+        return result;
     }
 
     /// <summary>
     /// Tells us whether a tower is within some distance of the enemy AI; to be used in the decision tree
     /// </summary>
     /// <returns></returns>
-    protected virtual bool TowerNearby()
+    protected virtual bool IsTowerNearby()
     {
+        bool result = false;
         //For each level node containing a tower...
         foreach(LevelNode n in tower_level_nodes)
         {
@@ -208,25 +271,71 @@ public class EnemyBehaviour : MonoBehaviour
             {
                 //...then we consider this tower to be nearby
                 m_TargetTowerNode = n.gameObject;
-                return true;
+                result = true;
+                break;
             }
         }
 
-        return false;
+        if (m_OutputDebugLogs)
+        {
+            Debug.Log("Tower " + (result ? "IS " : "ISN'T") + " nearby!");
+        }
+        return result;
+    }
+
+    /// <summary>
+    /// Tells us whether or not the player's been seen in the last [ some amount of time
+    /// </summary>
+    /// <returns></returns>
+    protected virtual bool HasSeenPlayerRecently()
+    {
+        //On seeing the player, we reset the timer to 0 and add DELTA T.
+        bool timer_in_range = this.m_PlayerLastSeenTimer > 0.0f && this.m_PlayerLastSeenTimer < this.m_AttentionSpan;
+        //if the timer is greater than 0, then keep incrementing it
+        if (timer_in_range)
+        {
+            this.m_PlayerLastSeenTimer += DELTA_T;
+            if (this.m_PlayerLastSeenTimer > this.m_AttentionSpan)
+            {
+                this.m_PlayerLastSeenTimer = 0.0f;
+            }
+        }
+        if (m_OutputDebugLogs)
+        {
+            Debug.Log("Enemy " + (timer_in_range ? "HAS " : "HASN'T") + " seen player recently!");
+        }
+        return timer_in_range;
     }
 
     /// <summary>
     /// Tells us whether the player is within some distance [m_WhatIsNearby] of the enemy AI; to be used in the decision tree
     /// </summary>
     /// <returns></returns>
-    protected virtual bool PlayerNearby()
+    protected virtual bool IsPlayerNearby()
     {
+        
         Vector3 enemypos = this.transform.position;
         Vector3 playerpos = this.m_Player.position;
         bool result = (enemypos - playerpos).magnitude <= m_WhatIsNearby;
         //string message = (result) ? "Player nearby!" : "Player NOT nearby!";
         //Debug.Log(message);
+        if (m_OutputDebugLogs)
+        {
+            Debug.Log("Player " + (result ? "IS " : "ISN'T") + " nearby!");
+        }
         return (result);
+    }
+
+    /// <summary>
+    /// The function to be executed on !isAlive
+    /// </summary>
+    protected virtual void DoNothing()
+    {
+        if (m_OutputDebugLogs)
+        {
+            Debug.Log("Doing nothing!");
+        }
+        return;
     }
 
     /// <summary>
@@ -234,13 +343,21 @@ public class EnemyBehaviour : MonoBehaviour
     /// </summary>
     protected virtual void AttackTower()
     {
-       // Debug.Log("Attacking tower!");
+        if (m_OutputDebugLogs)
+        {
+            Debug.Log("Attacking tower!");
+        }
+        if (this.m_TargetTowerNode.GetComponent<LevelNode>().Tower == null)
+        {
+            return;
+        }
+
         //Make enemy face player in order to force continuous attack
         this.m_Character.BehaviourType = BEHAVIOUR_TYPE.ATTACK_TOWER;
         //if our attack timer is negative, we haven't started attacking yet
         if (m_AttackTimer == 0.0f)
         {
-            Debug.Log("Dealing damage to tower");
+            //Debug.Log("Dealing damage to tower");
             //Attack Tower
             float attack_damage = this.GetComponent<EnemyAttributes>().damage;
             this.m_TargetTowerNode.GetComponent<LevelNode>().Tower.GetComponent<BuildingStats>().Damage(attack_damage);
@@ -261,13 +378,16 @@ public class EnemyBehaviour : MonoBehaviour
     /// </summary>
     protected virtual void AttackPlayer()
     {
-        //Debug.Log("Attacking player!");
+        if (m_OutputDebugLogs)
+        {
+            Debug.Log("Attacking player!");
+        }
         //Make enemy face player in order to force continuous attack
         this.m_Character.BehaviourType = BEHAVIOUR_TYPE.ATTACK_PLAYER;
 
         if (m_AttackTimer == 0.0f)
         {
-            Debug.Log("Dealing damage to player");
+            //Debug.Log("Dealing damage to player");
             //Attack player
             float attack_damage = this.GetComponent<EnemyAttributes>().damage;
             this.m_Player.GetComponent<PlayerMovement>().DealDamage(attack_damage);
@@ -289,7 +409,10 @@ public class EnemyBehaviour : MonoBehaviour
     /// </summary>
     protected virtual void MoveToTower()
     {
-        //Debug.Log("Moving to tower!");
+        if (m_OutputDebugLogs)
+        {
+            Debug.Log("Moving to tower!");
+        }
         this.m_Character.BehaviourType = BEHAVIOUR_TYPE.MOVE_TO_TOWER;
     }
 
@@ -299,7 +422,10 @@ public class EnemyBehaviour : MonoBehaviour
     /// </summary>
     protected virtual void MoveToPlayer()
     {
-        //Debug.Log("Moving to player!");
+        if (m_OutputDebugLogs)
+        {
+            Debug.Log("Moving to player!");
+        }
         this.m_Character.BehaviourType = BEHAVIOUR_TYPE.MOVE_TO_PLAYER;
     }
 
@@ -308,11 +434,16 @@ public class EnemyBehaviour : MonoBehaviour
     /// </summary>
     protected virtual void Default()
     {
+        if (m_OutputDebugLogs)
+        {
+            Debug.Log("Base seeking!");
+        }
         this.m_Character.BehaviourType = BEHAVIOUR_TYPE.BASE_SEEK;
     }
 
     /// <summary>
     /// A pseudoconstructor to allow us to easily spawn and initialize enemy AI movement types
+    /// Refer to this diagram https://docs.google.com/drawings/d/1qOOZjceQnmuGH2RxBY521rWqPFpAjUt2HtGHsXuAP04/edit
     /// </summary>
     public void Initialize()
     {
@@ -321,30 +452,86 @@ public class EnemyBehaviour : MonoBehaviour
 
         //Set our decision tree
         //Conditions
-        DTNode.ConditionNode r1n1 = new DTNode.ConditionNode(SeesTower);
-        DTNode.ConditionNode r2n1 = new DTNode.ConditionNode(TowerNearby);
-        DTNode.ConditionNode r2n2 = new DTNode.ConditionNode(SeesPlayer);
-        DTNode.ConditionNode r3n3 = new DTNode.ConditionNode(PlayerNearby);
+        //DTNode.ConditionNode r1n1 = new DTNode.ConditionNode(SeesTower);
+        //DTNode.ConditionNode r2n1 = new DTNode.ConditionNode(TowerNearby);
+        //DTNode.ConditionNode r2n2 = new DTNode.ConditionNode(SeesPlayer);
+        //DTNode.ConditionNode r3n3 = new DTNode.ConditionNode(PlayerNearby);
+
+        ////Actions
+        //DTNode.ActionNode r3n1 = new DTNode.ActionNode(AttackTower);
+        //DTNode.ActionNode r3n2 = new DTNode.ActionNode(MoveToTower);
+        //DTNode.ActionNode r3n4 = new DTNode.ActionNode(Default);
+        //DTNode.ActionNode r4n1 = new DTNode.ActionNode(AttackPlayer);
+        //DTNode.ActionNode r4n2 = new DTNode.ActionNode(MoveToPlayer);
+
+        ////Row 1
+        //r1n1.affirmative = r2n1;
+        //r1n1.negative = r2n2;
+        ////Row 2
+        //r2n1.affirmative = r3n1;
+        //r2n1.negative = r3n2;
+        //r2n2.affirmative = r3n3;
+        //r2n2.negative = r3n4;
+        ////Row 3
+        //r3n3.affirmative = r4n1;
+        //r3n3.negative = r4n2;
+
+        /*
+        The convention for the naming of the nodes is as follows: r => row, n => number, where: r1n1 means "the first node on the first row"
+        This corresponds to the diagram referred to in this Initialize function's associated summary.
+         */
+
+        //Set our decision tree
+        //Conditions
+        DTNode.ConditionNode r1n1 = new DTNode.ConditionNode(IsAlive);
+        DTNode.ConditionNode r2n1 = new DTNode.ConditionNode(SeesTower);
+        DTNode.ConditionNode r3n1 = new DTNode.ConditionNode(IsTowerNearby);
+        DTNode.ConditionNode r3n2 = new DTNode.ConditionNode(SeesPlayer);
+        DTNode.ConditionNode r4n3 = new DTNode.ConditionNode(IsPlayerNearby);
+        DTNode.ConditionNode r4n4 = new DTNode.ConditionNode(HasSeenPlayerRecently);
+        DTNode.ConditionNode r5n3 = new DTNode.ConditionNode(IsPlayerNearby);
 
         //Actions
-        DTNode.ActionNode r3n1 = new DTNode.ActionNode(AttackTower);
-        DTNode.ActionNode r3n2 = new DTNode.ActionNode(MoveToTower);
-        DTNode.ActionNode r3n4 = new DTNode.ActionNode(Default);
-        DTNode.ActionNode r4n1 = new DTNode.ActionNode(AttackPlayer);
-        DTNode.ActionNode r4n2 = new DTNode.ActionNode(MoveToPlayer);
+        DTNode.ActionNode r2n2 = new DTNode.ActionNode(DoNothing);
+        DTNode.ActionNode r4n1 = new DTNode.ActionNode(AttackTower);
+        DTNode.ActionNode r4n2 = new DTNode.ActionNode(MoveToTower);
+        DTNode.ActionNode r5n1 = new DTNode.ActionNode(AttackPlayer);
+        DTNode.ActionNode r5n2 = new DTNode.ActionNode(MoveToPlayer);
+        DTNode.ActionNode r5n4 = new DTNode.ActionNode(Default);
+        DTNode.ActionNode r6n1 = new DTNode.ActionNode(AttackPlayer);
+        DTNode.ActionNode r6n2 = new DTNode.ActionNode(MoveToPlayer);
 
         //Assign the order of the tree, per row in our tree diagram (https://docs.google.com/drawings/d/1qOOZjceQnmuGH2RxBY521rWqPFpAjUt2HtGHsXuAP04/edit)
         //Row 1
-        r1n1.affirmative = r2n1;
-        r1n1.negative = r2n2;
+        //Are you alive?
+        r1n1.affirmative = r2n1;//Then do you see a tower?
+        r1n1.negative = r2n2;//Then do nothing
         //Row 2
-        r2n1.affirmative = r3n1;
-        r2n1.negative = r3n2;
-        r2n2.affirmative = r3n3;
-        r2n2.negative = r3n4;
+        //Do you see a tower?
+        r2n1.affirmative = r3n1;//Then is the tower nearby?
+        r2n1.negative = r3n2;//Then do you see the player?
+        
         //Row 3
-        r3n3.affirmative = r4n1;
-        r3n3.negative = r4n2;
+        //Is the tower nearby?
+        r3n1.affirmative = r4n1;//Then attack the tower
+        r3n1.negative = r4n2;//Then move to the tower
+        //Do you see the player?
+        r3n2.affirmative = r4n3;//Then is the player nearby?
+        r3n2.negative = r4n4;//Then have you seen the player recently?
+
+        //Row 4
+        //Is the player nearby?
+        r4n3.affirmative = r5n1;//Then attack the player
+        r4n3.negative = r5n2;//Then move to the player
+
+        //Have you seen the player recently?
+        r4n4.affirmative = r5n3;//then is the player nearby?
+        r4n4.negative = r5n4;//then base seek / default movement
+
+        //Row 5
+        //Is the player nearby?
+        r5n3.affirmative = r6n1;//then attack the player
+        r5n3.negative = r6n2;//then move to the player
 
         this.m_DecisionTree = new DecisionTree(r1n1);
     }
@@ -382,5 +569,6 @@ public class EnemyBehaviour : MonoBehaviour
     private void Start()
     {
         this.m_Character = this.GetComponent<Character>();
+        this.m_EnemyAttributes = this.GetComponent<EnemyAttributes>();
     }
 }

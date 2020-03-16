@@ -24798,7 +24798,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aaec248e2e9532549866ab01e51bbb0f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 10000
+  health: 20
   damage: 2
   speed: 6
   isDead: 0
@@ -24851,11 +24851,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Player: {fileID: 0}
+  m_OutputDebugLogs: 0
   grid_generator: {fileID: 0}
   m_WhatIsNearby: 1
   m_VisionErrorMargin: 0.2
   m_RangeOfVision: 10
   m_AttackFrequency: 1
+  m_AttentionSpan: 2
 --- !u!114 &8675522791493954225
 MonoBehaviour:
   m_ObjectHideFlags: 0

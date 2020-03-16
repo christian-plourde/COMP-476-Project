@@ -31,7 +31,7 @@ public class CombatBehavior : MonoBehaviour
 
 
     [HideInInspector]public bool ultimateCooldown;
-    float ultimateCooldownTimer = 0;
+    public float ultimateCooldownTimer = 0;
 
     public bool secondaryArrowCooldown;
     public float secondaryArrowCooldownTimer=0;
