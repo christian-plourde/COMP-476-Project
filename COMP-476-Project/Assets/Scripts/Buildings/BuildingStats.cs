@@ -46,9 +46,19 @@ public class BuildingStats : MonoBehaviour
     public void Damage(float damage)
     {
         this.health -= damage;
-        //if (this.health < 0.0f)
-        //{
-        //    GameObject.Destroy(this.gameObject);
-        //}
+        if (this.health <= 0.0f)
+        {
+            GameObject[] arr = GameObject.FindGameObjectsWithTag("Map");
+            GameObject gridObject = arr[0];
+            foreach (GameObject gb in arr)
+            {
+                if (gb.transform.name == "Floor")
+                {
+                    gridObject = gb;
+                    break;
+                }
+            }
+            gridObject.GetComponent<GenerateGrid>().DestroyTower(this.gameObject, 0);
+        }
     }
 }

@@ -71,5 +71,7 @@ public class TowerUIObject : MonoBehaviour
         playerRef.GetComponent<PlayerMovement>().RemoveGold(towerCost);
 
         GameObject.FindGameObjectWithTag("BuildMenu").GetComponent<BuildMenu>().CancelButton();
+        SFXManager.instance.Play("BuildSound");
+        
     }
 }

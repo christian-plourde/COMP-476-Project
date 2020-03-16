@@ -24,7 +24,7 @@ public class Arrow : MonoBehaviour
     private void Update()
     {
         Timer += Time.deltaTime;
-        if (Timer > 120)
+        if (Timer > 8)
             Destroy(this.gameObject);             // just incase arrow doesnt collide with anything
     }
 
@@ -35,6 +35,7 @@ public class Arrow : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
+        
         if (collision.collider.tag != "Player")
         {
             GameObject gb;
@@ -48,14 +49,14 @@ public class Arrow : MonoBehaviour
 
             // for scale adjustment on static arrows
             gb.transform.localScale = new Vector3(scaleFactor,scaleFactor,scaleFactor);
+            //gb.transform.localScale = new Vector3(gb.transform.localScale.x*0.25f, gb.transform.localScale.x * 0.25f, gb.transform.localScale.x * 0.25f);
 
             // damage if its an enemy
             if (collision.collider.tag == "Enemy")
             {
                 collision.collider.GetComponent<EnemyAttributes>().DealDamage(baseDamage);
             }
-
-
+            //Debug.Log("Collided with "+collision.transform.tag);
             Destroy(this.gameObject);                // Destroy Rigid body arrow.
         }
     }

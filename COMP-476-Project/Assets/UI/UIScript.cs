@@ -87,16 +87,16 @@ public class UIScript : MonoBehaviour
         if (isArcher)
         {
             if(archerRef.secondaryArrowCooldown)
-                ability2Cd.fillAmount =(15.0f - archerRef.secondaryArrowCooldownTimer) / 15.0f;
+                ability2Cd.fillAmount =(archerRef.howLongSecondaryCooldown - archerRef.secondaryArrowCooldownTimer) / archerRef.howLongSecondaryCooldown;
             if (archerRef.ultimateCooldown)
-                ability3Cd.fillAmount = (30.0f - archerRef.ultimateCooldownTimer) / 30.0f;
+                ability3Cd.fillAmount = (archerRef.howLongUltimateCooldown - archerRef.ultimateCooldownTimer) / archerRef.howLongUltimateCooldown;
         }
         else
         {
             if(warriorRef.secondaryCooldown)
-                ability2Cd.fillAmount = (15.0f - warriorRef.secondaryCooldownTimer) / 15.0f;
+                ability2Cd.fillAmount = (warriorRef.howLongSecondaryCooldown - warriorRef.secondaryCooldownTimer) / warriorRef.howLongSecondaryCooldown;
             if(warriorRef.ultimateCooldown)
-                ability3Cd.fillAmount = (30.0f - warriorRef.ultimateCooldownTimer) / 30.0f;
+                ability3Cd.fillAmount = (warriorRef.howLongUltimateCooldown - warriorRef.ultimateCooldownTimer) / warriorRef.howLongUltimateCooldown;
         }
     }
 }

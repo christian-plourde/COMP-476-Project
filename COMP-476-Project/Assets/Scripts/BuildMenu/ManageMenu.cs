@@ -103,6 +103,7 @@ public class ManageMenu : MonoBehaviour
         Destroy(currentTower.gameObject);
 
         CloseMenu();
+        SFXManager.instance.Play("BuildingUpgrade");
     }
 
     public void DestroyTower()
@@ -122,7 +123,7 @@ public class ManageMenu : MonoBehaviour
 
 
 
-
+        SFXManager.instance.Play("Destroy");
         CloseMenu();
     }
 
@@ -134,11 +135,11 @@ public class ManageMenu : MonoBehaviour
         Destroy(this.gameObject);
     }
 
-    public void UpdateIfCanAfford()
+    public void UpdateIfCanAfford(int gold)
     {
         if (hasUpgrade)
         {
-            if (playerScriptRef.gold >= upgradeCost)
+            if (gold >= upgradeCost)
             {
                 UpgradeButton.interactable = true;
             }

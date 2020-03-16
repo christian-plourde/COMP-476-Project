@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 6626829842159821204}
   - component: {fileID: 4885258449618130251}
   - component: {fileID: 2462926404069536697}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: UltimateArea_Effect
   m_TagString: Untagged
   m_Icon: {fileID: 0}

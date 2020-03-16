@@ -95,8 +95,11 @@ public class PlayerMovement : MonoBehaviour
 
 
         // respawn test:
+        /*
         if (isDead && Input.GetKeyDown(KeyCode.R))
             RespawnPlayer(false);
+            */
+
 
         if (!isDead && Input.GetKeyDown(KeyCode.K))
             DealDamage(25f);
@@ -225,6 +228,10 @@ public class PlayerMovement : MonoBehaviour
                 health = 0;
                 KillPlayer();
             }
+
+            // play a random hurt sound (1 to 4)
+            int r = Random.Range(1,4);
+            SFXManager.instance.Play("PlayerHurt"+r);
         }
     }
 
@@ -248,6 +255,8 @@ public class PlayerMovement : MonoBehaviour
 
         Instantiate(respawnUIPrefab);
 
+        SFXManager.instance.Play("PlayerDeath");
+
 
     }
 
@@ -263,9 +272,14 @@ public class PlayerMovement : MonoBehaviour
         animator.SetBool("Dead", false);
         health = maxHealth;
         invincible = false;
-        if(!buyback)
+        if (!buyback)
+        {
             transform.position = respawnPos;
-
+        }
+        else
+        {
+            SFXManager.instance.Play("BuybackRespawn");
+        }
         //Reset weapons and stuff.
         if (playerClass == "Warrior")
         {
@@ -290,11 +304,15 @@ public class PlayerMovement : MonoBehaviour
         GameObject gb;
         gb = GameObject.FindGameObjectWithTag("BuildMenu");
         if (gb != null)
-            gb.GetComponent<BuildMenu>().UpdateIfCanAfford();
+            gb.GetComponent<BuildMenu>().UpdateIfCanAfford(gold);
 
         gb = GameObject.FindGameObjectWithTag("ManageMenu");
         if (gb != null)
-            gb.GetComponent<ManageMenu>().UpdateIfCanAfford();
+            gb.GetComponent<ManageMenu>().UpdateIfCanAfford(gold);
+
+        gb = GameObject.FindGameObjectWithTag("RespawnMenu");
+        if (gb != null)
+            gb.GetComponent<RespawnButton>().UpdateIfCanAfford(gold);
 
     }
 
