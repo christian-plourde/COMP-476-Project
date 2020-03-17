@@ -299,7 +299,7 @@ public class GenerateGrid : Subject
 
                 //we need to linecast to the terrain to determine the y value at that x z position
                 if(Physics.Linecast(terrainRayCaster.transform.position, new Vector3(x, this.transform.position.y, z), out hit))
-                {
+                {                   
                     y = hit.point.y;
                 }
 

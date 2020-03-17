@@ -304,8 +304,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 150935734325568646}
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: -2.17, y: -6.911417e-17, z: 3.94}
-  m_LocalScale: {x: 0.35, y: 0.35, z: 0.35}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.28, y: 0.28, z: 0.28}
   m_Children:
   - {fileID: 9160536444574840016}
   - {fileID: 148289342177084392}
@@ -386,7 +386,7 @@ MonoBehaviour:
   damage: 50
   speed: 0.5
   isDead: 0
-  heightOffset: 0.15
+  heightOffset: 0
   goldDrop: 750
   HealthUI: {fileID: 2896172432133589368}
 --- !u!114 &727261008920275103
@@ -3846,7 +3846,7 @@ PrefabInstance:
     - target: {fileID: 3039898585801579832, guid: 16da458c277bdb0459e248f1c588ad4f,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 4.08
+      value: 4.472
       objectReference: {fileID: 0}
     - target: {fileID: 3039898585801579832, guid: 16da458c277bdb0459e248f1c588ad4f,
         type: 3}

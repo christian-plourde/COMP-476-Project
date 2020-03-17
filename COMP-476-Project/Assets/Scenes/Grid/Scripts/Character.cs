@@ -19,7 +19,7 @@ public class Character : NPC
 {
     #region Fields And Properties
 
-    private static float PLAYER_CHASE_STOP_DISTANCE = 0.4f; //this is a small distance at which enemies will stop when 
+    private static float PLAYER_CHASE_STOP_DISTANCE = 0.5f; //this is a small distance at which enemies will stop when 
                                                             //chasing the player so he doesnt get ppushed around.
 
     /// <summary>
@@ -130,8 +130,16 @@ public class Character : NPC
 
         grid = FindObjectOfType<GenerateGrid>();
 
-        startNode = grid.EnemyBaseNodes[UnityEngine.Random.Range(0, grid.EnemyBaseNodes.Count)];
+        try
+        {
+            this.startNode = this.gameObject.transform.parent.GetComponent<Character>().startNode;
+        }
 
+        catch
+        {
+            startNode = grid.EnemyBaseNodes[UnityEngine.Random.Range(0, grid.EnemyBaseNodes.Count)];
+        }
+        
         //initialize the node that the character is at to the graph node of the level node that he was placed at to begin
         current_node = startNode.GetComponent<LevelNode>().GraphNode;
 
