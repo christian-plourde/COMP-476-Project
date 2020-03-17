@@ -18,6 +18,11 @@ public class EnemyAttributes : MonoBehaviour
     //UI
     public Image HealthUI;
 
+    [Header("Drop Health Prefab")]
+    public GameObject healthDropPrefab;
+    [Range(0,1)]
+    public float healthDropRate;
+
     // Start is called before the first frame update
     void Start()
     {       
@@ -75,12 +80,24 @@ public class EnemyAttributes : MonoBehaviour
         // give player monies
         playerRef.GetComponent<PlayerMovement>().AddGold(goldDrop);
 
+        // spawn health potion depending on drop rate chance
+        DropHealth();
+
 
         // remove UI Health display & destroy object in few seconds, remove own collider
         GetComponent<CapsuleCollider>().enabled = false;
         GetComponent<Rigidbody>().isKinematic = true;
         HealthUI.enabled = false;
         Destroy(this.gameObject, 5.5f);
+    }
+
+    void DropHealth()
+    {
+        float r = Random.Range(0f, 1f);
+        if (r < healthDropRate && healthDropPrefab!=null)
+        {
+            Instantiate(healthDropPrefab,transform.position,Quaternion.identity);
+        }
     }
 
 }

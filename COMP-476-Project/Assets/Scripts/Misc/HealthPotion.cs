@@ -9,10 +9,19 @@ public class HealthPotion : MonoBehaviour
     public float moveSpeed=5f;
     public float pickupRadius=1f;
     public float DeletionTimer=30f;
+    float timer;
+    bool beingPickedUp;
 
-    private void Start()
+    private void Update()
     {
-        Destroy(this.gameObject,DeletionTimer);
+        if (!beingPickedUp)
+        {
+            timer += Time.deltaTime;
+            if (timer > DeletionTimer)
+            {
+                Destroy(this.gameObject);
+            }
+        }
     }
 
 
@@ -26,11 +35,11 @@ public class HealthPotion : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        if (other.tag == "Player" && !other.GetComponent<PlayerMovement>().isDead && other.GetComponent<PlayerMovement>().health< other.GetComponent<PlayerMovement>().maxHealth)
+        if (other.tag == "Player" && !other.GetComponent<PlayerMovement>().isDead && other.GetComponent<PlayerMovement>().health < other.GetComponent<PlayerMovement>().maxHealth)
         {
             Vector3 moveTo = (other.transform.position - transform.position).normalized;
             moveTo.y -= 0.3f;
-            transform.Translate(moveTo*moveSpeed*Time.deltaTime);
+            transform.Translate(moveTo * moveSpeed * Time.deltaTime);
 
             if (Vector3.Distance(transform.position, other.transform.position) < pickupRadius)
             {
@@ -38,7 +47,9 @@ public class HealthPotion : MonoBehaviour
             }
 
             moveSpeed += 0.02f;
+            beingPickedUp = true;
         }
-        
+        else
+            beingPickedUp = false;
     }
 }
