@@ -25560,8 +25560,10 @@ GameObject:
   - component: {fileID: 1828692052023918376}
   - component: {fileID: 1828692052018601907}
   - component: {fileID: 1828692052018601905}
+  - component: {fileID: 4287646296606865425}
+  - component: {fileID: -2236527596585305207}
   m_Layer: 0
-  m_Name: TrollBoss
+  m_Name: EvilTroll
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -25658,6 +25660,41 @@ MonoBehaviour:
   heightOffset: 0
   goldDrop: 200
   HealthUI: {fileID: 1599795343138746621}
+--- !u!114 &4287646296606865425
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1828692052018601904}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e621c67f52a704139ac4ba18634499e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Player: {fileID: 0}
+  m_OutputDebugLogs: 0
+  grid_generator: {fileID: 0}
+  m_WhatIsNearby: 1
+  m_VisionErrorMargin: 0.2
+  m_RangeOfVision: 10
+  m_AttackFrequency: 1
+  m_AttentionSpan: 2
+--- !u!114 &-2236527596585305207
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1828692052018601904}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5b64f7e69995724ba236a9a3907927a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MAX_VELOCITY: 1
+  MAX_ANGULAR_VELOCITY: 300
+  MAX_ANGULAR_ACCELERATION: 2000
 --- !u!1 &1828692052018601906
 GameObject:
   m_ObjectHideFlags: 0
