@@ -30835,6 +30835,8 @@ GameObject:
   - component: {fileID: 5976620684907872522}
   - component: {fileID: 5976620684907872523}
   - component: {fileID: 5976620684907872520}
+  - component: {fileID: 3559358110198280962}
+  - component: {fileID: -2878035289289250584}
   m_Layer: 0
   m_Name: GhostMage
   m_TagString: Enemy
@@ -30932,6 +30934,41 @@ MonoBehaviour:
   heightOffset: 0.1
   goldDrop: 100
   HealthUI: {fileID: 3928796927610369947}
+--- !u!114 &3559358110198280962
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5976620684907872521}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e621c67f52a704139ac4ba18634499e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Player: {fileID: 0}
+  m_OutputDebugLogs: 0
+  grid_generator: {fileID: 0}
+  m_WhatIsNearby: 1
+  m_VisionErrorMargin: 0.2
+  m_RangeOfVision: 10
+  m_AttackFrequency: 1
+  m_AttentionSpan: 2
+--- !u!114 &-2878035289289250584
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5976620684907872521}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5b64f7e69995724ba236a9a3907927a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MAX_VELOCITY: 1
+  MAX_ANGULAR_VELOCITY: 300
+  MAX_ANGULAR_ACCELERATION: 2000
 --- !u!1 &5976620684922836755
 GameObject:
   m_ObjectHideFlags: 0

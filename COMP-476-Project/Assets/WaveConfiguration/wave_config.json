@@ -1,0 +1,22 @@
+{
+	"waves":
+	[
+		{
+			"enemies": 
+			[
+				"wolf",
+				"Zombie",
+				"EvilTroll"
+			]
+		},
+		{
+			"enemies": 
+			[
+				"Hobgoblin",
+				"Skeleton",
+				"WolfPack",
+				"GhostMage"
+			]
+		}
+	]
+}

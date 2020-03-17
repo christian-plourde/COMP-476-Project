@@ -2237,6 +2237,8 @@ GameObject:
   - component: {fileID: 2859044855803167488}
   - component: {fileID: 960752422914480998}
   - component: {fileID: 5294238320071517663}
+  - component: {fileID: 6207721456236426472}
+  - component: {fileID: 8064043078080216674}
   m_Layer: 0
   m_Name: Halblitzer
   m_TagString: Enemy
@@ -2333,6 +2335,41 @@ MonoBehaviour:
   heightOffset: 0
   goldDrop: 45
   HealthUI: {fileID: 5520141864807197719}
+--- !u!114 &6207721456236426472
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2802474444711012322}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e621c67f52a704139ac4ba18634499e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Player: {fileID: 0}
+  m_OutputDebugLogs: 0
+  grid_generator: {fileID: 0}
+  m_WhatIsNearby: 1
+  m_VisionErrorMargin: 0.2
+  m_RangeOfVision: 10
+  m_AttackFrequency: 1
+  m_AttentionSpan: 2
+--- !u!114 &8064043078080216674
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2802474444711012322}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5b64f7e69995724ba236a9a3907927a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MAX_VELOCITY: 1
+  MAX_ANGULAR_VELOCITY: 300
+  MAX_ANGULAR_ACCELERATION: 2000
 --- !u!1 &2802474444759336568
 GameObject:
   m_ObjectHideFlags: 0
