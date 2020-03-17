@@ -294,6 +294,13 @@ public class PlayerMovement : MonoBehaviour
         
     }
 
+    public void HealPlayer(int hp)
+    {
+        health += hp;
+        if (health > maxHealth)
+            health = maxHealth;
+    }
+
     // gold exchange functions
     
     public void AddGold(int amount)

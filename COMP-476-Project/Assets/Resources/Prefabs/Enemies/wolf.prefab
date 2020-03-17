@@ -24805,6 +24805,9 @@ MonoBehaviour:
   heightOffset: 0
   goldDrop: 15
   HealthUI: {fileID: 64341479603795002}
+  healthDropPrefab: {fileID: 2698641719317733580, guid: d8e5e7034a69a5747b7b675c7622bd8a,
+    type: 3}
+  healthDropRate: 0.2
 --- !u!95 &7424372955921300265
 Animator:
   serializedVersion: 3

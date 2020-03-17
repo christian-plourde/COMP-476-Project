@@ -2335,6 +2335,9 @@ MonoBehaviour:
   heightOffset: 0
   goldDrop: 45
   HealthUI: {fileID: 5520141864807197719}
+  healthDropPrefab: {fileID: 2698641719317733580, guid: d8e5e7034a69a5747b7b675c7622bd8a,
+    type: 3}
+  healthDropRate: 0.4
 --- !u!114 &6207721456236426472
 MonoBehaviour:
   m_ObjectHideFlags: 0
