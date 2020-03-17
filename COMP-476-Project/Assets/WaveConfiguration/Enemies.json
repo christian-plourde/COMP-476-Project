@@ -1,0 +1,57 @@
+{
+  "enemies":
+  [
+    {
+      "name": "CaveTroll",
+      "level": 3
+    },
+    {
+      "name": "EvilTroll",
+      "level": 4
+    },
+    {
+      "name": "GhostMage",
+      "level": 4
+    },
+    {
+      "name": "Halblitzer",
+      "level": 3
+    },
+    {
+      "name": "Hobgoblin",
+      "level": 2
+    },
+    {
+      "name": "Skeleton",
+      "level": 1
+    },
+    {
+      "name": "wolf",
+      "level": 1
+    },
+    {
+      "name": "WolfPack",
+      "level": 2
+    },
+    {
+      "name": "Zombie",
+      "level": 1
+    },
+    {
+      "name": "HealedZombieHorde",
+      "level": 5
+	},
+    {
+      "name": "SkeletonDuo",
+      "level": 2
+	},
+    {
+      "name": "HobgoblinCrew",
+      "level": 3
+	},
+    {
+      "name": "TrollDuo",
+      "level": 5
+	}
+  ]
+}
