@@ -236,7 +236,7 @@ GameObject:
   - component: {fileID: 78191229}
   - component: {fileID: 78191231}
   - component: {fileID: 78191230}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: HPBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1463,7 +1463,7 @@ GameObject:
   - component: {fileID: 931585252}
   - component: {fileID: 931585251}
   - component: {fileID: 931585250}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1581,7 +1581,7 @@ GameObject:
   - component: {fileID: 950698252}
   - component: {fileID: 950698251}
   - component: {fileID: 950698250}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: BaseCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1655,8 +1655,8 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 950698249}
-  m_LocalRotation: {x: 0.16000469, y: -0.6411337, z: 0.13908534, w: 0.7375645}
-  m_LocalPosition: {x: 0, y: 0, z: -0.119999886}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 11}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 2122037034}
@@ -1667,10 +1667,10 @@ RectTransform:
   - {fileID: 1527049057}
   m_Father: {fileID: 1254286722}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 24.480001, y: -81.998, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: -0.47, y: 1.32}
+  m_AnchoredPosition: {x: -0.00000018676502, y: 0.27}
   m_SizeDelta: {x: 1920, y: 1080}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1001 &954080971
@@ -2210,7 +2210,7 @@ GameObject:
   - component: {fileID: 1254286722}
   - component: {fileID: 1254286721}
   - component: {fileID: 1254286720}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Base
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2230,6 +2230,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   BaseHealth: 1000
+  healthBar: {fileID: 78191230}
+  integrity: {fileID: 1393041764}
+  healthCount: {fileID: 1657094497}
 --- !u!65 &1254286721
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2299,7 +2302,7 @@ GameObject:
   - component: {fileID: 1393041763}
   - component: {fileID: 1393041765}
   - component: {fileID: 1393041764}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Integrity
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2660,7 +2663,7 @@ GameObject:
   - component: {fileID: 1516466159}
   - component: {fileID: 1516466161}
   - component: {fileID: 1516466160}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2735,7 +2738,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1527049057}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Buttons
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3135,7 +3138,7 @@ GameObject:
   - component: {fileID: 1657094496}
   - component: {fileID: 1657094498}
   - component: {fileID: 1657094497}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: HPCount
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3758,7 +3761,7 @@ GameObject:
   - component: {fileID: 2063184691}
   - component: {fileID: 2063184693}
   - component: {fileID: 2063184692}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: BG (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3911,7 +3914,7 @@ GameObject:
   - component: {fileID: 2122037034}
   - component: {fileID: 2122037036}
   - component: {fileID: 2122037035}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: BG
   m_TagString: Untagged
   m_Icon: {fileID: 0}
