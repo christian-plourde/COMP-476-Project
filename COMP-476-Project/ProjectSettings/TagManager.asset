@@ -17,6 +17,7 @@ TagManager:
   - RespawnMenu
   - AudioManager
   - GameInfo
+  - PlayerBase
   layers:
   - Default
   - TransparentFX

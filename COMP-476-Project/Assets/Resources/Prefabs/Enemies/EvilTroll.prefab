@@ -25655,11 +25655,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 100
   damage: 20
+  damageToBase: 100
   speed: 1
   isDead: 0
   heightOffset: 0
-  goldDrop: 200
+  goldDrop: 150
   HealthUI: {fileID: 1599795343138746621}
+  healthDropPrefab: {fileID: 0}
+  healthDropRate: 0
 --- !u!114 &4287646296606865425
 MonoBehaviour:
   m_ObjectHideFlags: 0

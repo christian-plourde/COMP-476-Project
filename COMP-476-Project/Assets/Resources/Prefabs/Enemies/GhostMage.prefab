@@ -30929,6 +30929,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 300
   damage: 45
+  damageToBase: 300
   speed: 3
   isDead: 0
   heightOffset: 0.1

@@ -146,8 +146,8 @@ MonoBehaviour:
     pitch: 1
     loop: 0
     source: {fileID: 0}
-  - name: 
-    clip: {fileID: 0}
+  - name: Ballista
+    clip: {fileID: 8300000, guid: 0890adae1cc24794a9e85ff4e0325311, type: 3}
     volume: 0.5
     pitch: 1
     loop: 0

@@ -1733,6 +1733,18 @@ MonoBehaviour:
     pitch: 1
     loop: 0
     source: {fileID: 0}
+  - name: Gameplay
+    clip: {fileID: 8300000, guid: 919d1723cc538434ea7b897d08ae3dd2, type: 3}
+    volume: 0.257
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: 
+    clip: {fileID: 0}
+    volume: 0.257
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
   - name: 
     clip: {fileID: 0}
     volume: 0.257

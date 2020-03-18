@@ -47,7 +47,7 @@ MonoBehaviour:
   moveSpeed: 10
   impactRadius: 0
   movementType: 
-  damage: 0
+  projectileType: Arrow
 --- !u!1 &4251973467570697581
 GameObject:
   m_ObjectHideFlags: 0
