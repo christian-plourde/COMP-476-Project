@@ -34,7 +34,13 @@ public class MusicPlayer : MonoBehaviour
         AudioManager.instance.Stop(curPlayingAudio);
         timer = 0;
     }
-    
+
+    public void StartGameplayTrack()
+    {
+        StopCurrentAudio();
+        AudioManager.instance.Play("Gameplay");
+        curPlayingAudio = "Gameplay";
+    }
 
 
 

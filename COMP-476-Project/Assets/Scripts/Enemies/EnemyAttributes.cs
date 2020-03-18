@@ -8,6 +8,7 @@ public class EnemyAttributes : MonoBehaviour
     public float health;
     float maxHealth;
     public float damage;
+    public int damageToBase;
     public float speed;
     public bool isDead;
     public float heightOffset;

@@ -277,7 +277,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackSpeed: 1.75
-  damage: 10
+  damage: 7
   range: 7
   rotationSpeed: 3
   heightLimit: 2.3

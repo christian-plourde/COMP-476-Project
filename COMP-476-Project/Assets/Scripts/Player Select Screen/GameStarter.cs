@@ -35,6 +35,13 @@ public class GameStarter : MonoBehaviour
             Destroy(gameInfo.gameObject);
             Destroy(this.gameObject);
         }
+
+        // music
+        GameObject music = GameObject.FindGameObjectWithTag("MusicPlayer");
+        if (music != null)
+        {
+            music.GetComponent<MusicPlayer>().StartGameplayTrack();
+        }
     }
 
   

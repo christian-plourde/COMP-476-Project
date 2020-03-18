@@ -147,7 +147,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackSpeed: 1
-  damage: 10
+  damage: 4
   range: 5
   rotationSpeed: 0
   heightLimit: 0
