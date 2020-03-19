@@ -168,17 +168,7 @@ public abstract class AlignedMovement : Movement
         float rotation_diff = target_rotation_euler - Orientation;
 
         if (rotation_diff >= 180)
-            rotation_diff = (-(360.0f - rotation_diff));
-
-        /*
-        if (Mathf.Sign(target_rotation_euler) == Mathf.Sign(Orientation))
-            rotation_diff = target_rotation_euler - Orientation;
-
-        else
-            rotation_diff = Orientation - target_rotation_euler;
-            */
-
-        //Debug.Log(target_rotation_euler + " " + Orientation + " " + rotation_diff);
+            rotation_diff = -(rotation_diff);
 
         //------------------------------------- RADIUS OF SATISFACTION CHECK ---------------------------------//
 

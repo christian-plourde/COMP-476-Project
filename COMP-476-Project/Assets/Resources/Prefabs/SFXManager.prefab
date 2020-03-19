@@ -1,0 +1,160 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &5818550950418599075
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5818550950418599073}
+  - component: {fileID: 5818550950418599074}
+  m_Layer: 0
+  m_Name: SFXManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5818550950418599073
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5818550950418599075}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 25.156593, y: 33.9953, z: -3.0213604}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5818550950418599074
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5818550950418599075}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c03782c4aff6407409a38dd17a93e8b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sounds:
+  - name: ArrowShoot
+    clip: {fileID: 8300000, guid: 9b4a92a3bb03faa4aa89bda9f04112ab, type: 3}
+    volume: 0.25
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: ArcherUltimate
+    clip: {fileID: 8300000, guid: b06c52cd9d214ec4d9eb6f52c242c72c, type: 3}
+    volume: 0.413
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: BowDraw
+    clip: {fileID: 8300000, guid: f08b070dfc3559e4aa395a076fcc5e80, type: 3}
+    volume: 0.761
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: WarriorUltimate
+    clip: {fileID: 0}
+    volume: 0.5
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: SwordSwing1
+    clip: {fileID: 8300000, guid: ca2f2df65e3c2bf4ba715a7b9cd46c97, type: 3}
+    volume: 0.262
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: SwordSwing2
+    clip: {fileID: 8300000, guid: da9dedca1072a0d44bd1dd461f582aef, type: 3}
+    volume: 0.258
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: SwordSwing3
+    clip: {fileID: 8300000, guid: e6c18cf93b0826d4a82c4b90a5189479, type: 3}
+    volume: 0.224
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: Thunder
+    clip: {fileID: 8300000, guid: e2db39d28e7f9ef4991c1ac88adf1dda, type: 3}
+    volume: 0.5
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: PlayerDeath
+    clip: {fileID: 8300000, guid: 9119e4da5f1df1747917b6a30c5ec0a0, type: 3}
+    volume: 0.5
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: BuybackRespawn
+    clip: {fileID: 8300000, guid: 92809c2605865644ba0d832db9b6cf4b, type: 3}
+    volume: 0.287
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: PlayerHurt1
+    clip: {fileID: 8300000, guid: 75ecaa722b6f4f44f8d34f1352896ced, type: 3}
+    volume: 0.5
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: PlayerHurt2
+    clip: {fileID: 8300000, guid: 7870ffdca196de143b98151b70a2e96a, type: 3}
+    volume: 0.5
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: PlayerHurt3
+    clip: {fileID: 8300000, guid: 49f42b1b740754e4da37d6cfcb9078fd, type: 3}
+    volume: 0.5
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: PlayerHurt4
+    clip: {fileID: 8300000, guid: 144194a3e0d42fc40bd9176f34792028, type: 3}
+    volume: 0.5
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: BuildSound
+    clip: {fileID: 8300000, guid: 300a001f4e81c9d43bf3f036a4f5dfab, type: 3}
+    volume: 0.049
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: BuildingUpgrade
+    clip: {fileID: 8300000, guid: e50b4e1719dad574abc74460c4ccb4ef, type: 3}
+    volume: 0.5
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: HealPlayer
+    clip: {fileID: 8300000, guid: fc68a8f9bbe86f5449bb36353fd3385b, type: 3}
+    volume: 0.5
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: Ballista
+    clip: {fileID: 8300000, guid: 0890adae1cc24794a9e85ff4e0325311, type: 3}
+    volume: 0.5
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: 
+    clip: {fileID: 0}
+    volume: 0.5
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}

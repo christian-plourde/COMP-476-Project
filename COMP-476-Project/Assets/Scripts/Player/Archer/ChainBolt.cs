@@ -56,11 +56,11 @@ public class ChainBolt : MonoBehaviour
     void ChainShot(Collider col)
     {
         //Debug.Log("Called Chainshot");
-        Collider[] arr = Physics.OverlapSphere(col.transform.position,15f);
+        Collider[] arr = Physics.OverlapSphere(col.transform.position,7.5f);
 
         int count=0;
         Vector3 spawnPos=col.transform.position;
-        spawnPos.y += 2.3f;                      // eventually replace with height
+        spawnPos.y += 0.6f;                      // eventually replace with height
         foreach (Collider c in arr) 
         {
             if (c.tag == "Enemy" && !c.GetComponent<EnemyAttributes>().isDead && c!=col)
@@ -70,18 +70,18 @@ public class ChainBolt : MonoBehaviour
 
                 GameObject gb = Instantiate(secondaryArrowPrefab, spawnPos, Quaternion.identity);
                 Vector3 aimAt = c.transform.position;
-                aimAt.y += 2f;
+                aimAt.y += 0.2f;
                 gb.transform.LookAt(aimAt);
                 //gb.GetComponent<Rigidbody>().isKinematic = true;
-                gb.GetComponent<Rigidbody>().AddForce(gb.transform.forward*25f,ForceMode.Impulse);
+                gb.GetComponent<Rigidbody>().AddForce(gb.transform.forward*15.5f,ForceMode.Impulse);
                 gb.GetComponent<Arrow>().SetArrowDamage(6);
-                spawnPos.y += 0.18f;
+                spawnPos.y += 0.08f;
                 //Debug.Log(c.transform.name);
 
                 if (count > 10)
                     break;
             }
         }
-        Debug.Log(count+" enemies found around this target.");
+        // Debug.Log(count+" enemies found around this target.");
     }
 }

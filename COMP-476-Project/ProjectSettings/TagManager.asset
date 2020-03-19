@@ -13,6 +13,12 @@ TagManager:
   - TowerObjectUI
   - BuildMenu
   - ManageMenu
+  - MusicPlayer
+  - RespawnMenu
+  - AudioManager
+  - GameInfo
+  - PlayerBase
+  - NoNode
   layers:
   - Default
   - TransparentFX

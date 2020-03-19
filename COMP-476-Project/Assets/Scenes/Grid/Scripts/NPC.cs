@@ -38,7 +38,24 @@ public abstract class NPC : Observer
     public float Velocity
     {
         get { return currentVelocity; }
-        set { currentVelocity = value; }
+        set { currentVelocity = value;
+
+            try
+            {
+                this.GetComponent<Animator>().SetBool("Chasing", this.transform.parent.GetComponent<Character>().currentVelocity > 0 ? true : false);
+            }
+
+            catch
+            {
+                try
+                {
+                    this.GetComponent<Animator>().SetBool("Chasing", currentVelocity > 0 ? true : false);
+                }
+
+                catch { }
+            }
+
+        }
     }
 
     public float AngularVelocity
@@ -73,6 +90,18 @@ public abstract class NPC : Observer
     // Update is called once per frame
     protected virtual void Update()
     {
+        //check if the character is dead
+        try
+        {
+            if (this.GetComponent<EnemyAttributes>().isDead)
+                return;
+        }
+
+        catch
+        {
+
+        }
+
         //move is called as long as the destination is not reached
         if (!Movement.HasArrived && !Immobilized)
             Movement.Move();

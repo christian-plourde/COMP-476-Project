@@ -20,12 +20,21 @@ public class ProjectileMovement : MonoBehaviour
     private Vector3 startPoint, controlPoint, endPoint, curve;
     private float lifeTime, bezierTime;
 
+    // for sound effects
+    public string projectileType;
+
     void Start()
     {
         movePerFrame = moveSpeed / 60;
 
         // Div by 2.5 for ballistic to give an approximate equivalence so that users can move speed in intuitive units per second and function handles the rest
         if (movementType == "ballistic") movePerFrame /= 2.5f;
+
+        // sounds
+        if (projectileType == "Arrow")
+        {
+            SFXManager.instance.Play("Ballista");
+        }
     }
 
     void Update()

@@ -26,14 +26,20 @@ public class CombatBehavior : MonoBehaviour
 
     PlayerMovement PlayerMovementRef;
 
+    // audio bool
+    bool playingDrawSound = false;
 
 
     [HideInInspector]public bool ultimateCooldown;
-    float ultimateCooldownTimer = 0;
+    public float ultimateCooldownTimer = 0;
 
     public bool secondaryArrowCooldown;
     public float secondaryArrowCooldownTimer=0;
     bool useSecondaryArrow;
+
+    [Header("Cooldown Time Parameters")]
+    public float howLongUltimateCooldown;
+    public float howLongSecondaryCooldown;
 
     void Start()
     {
@@ -55,7 +61,7 @@ public class CombatBehavior : MonoBehaviour
         if (ultimateCooldown)
         {
             ultimateCooldownTimer += Time.deltaTime;
-            if (ultimateCooldownTimer > 30f)
+            if (ultimateCooldownTimer > howLongUltimateCooldown)
             {
                 ultimateCooldown = false;
                 ultimateCooldownTimer = 0;
@@ -65,7 +71,7 @@ public class CombatBehavior : MonoBehaviour
         if (secondaryArrowCooldown)
         {
             secondaryArrowCooldownTimer += Time.deltaTime;
-            if (secondaryArrowCooldownTimer > 15)
+            if (secondaryArrowCooldownTimer > howLongSecondaryCooldown)
             {
                 secondaryArrowCooldown = false;
                 secondaryArrowCooldownTimer = 0;
@@ -75,6 +81,7 @@ public class CombatBehavior : MonoBehaviour
 
     void Controls()
     {
+        
         // input just for testing
         if (Input.GetKeyDown(KeyCode.E))
         {
@@ -126,7 +133,12 @@ public class CombatBehavior : MonoBehaviour
                 PlayerMesh.LookAt(PlayerMeshLookAt);
             }
             //Debug.DrawRay(PlayerMesh.position,PlayerMesh.forward,Color.yellow);
-            Debug.DrawRay(LaunchPoint.position, LaunchPoint.forward, Color.yellow);
+            //Debug.DrawRay(LaunchPoint.position, LaunchPoint.forward, Color.yellow);
+            if (!playingDrawSound)
+            {
+                playingDrawSound = true;
+                SFXManager.instance.Play("BowDraw");
+            }
         }
         /*
         else if(Input.GetMouseButton(0) && !Attacking)
@@ -145,12 +157,15 @@ public class CombatBehavior : MonoBehaviour
             {
                 animator.SetBool("Shot", true);
                 animator.SetBool("Shooting", false);
+                playingDrawSound = false;
             }
             else
             {
                 animator.SetBool("Shot", false);
                 animator.SetBool("Shooting", false);
                 Invoke("ArcherArrowSheath",0.4f);
+                SFXManager.instance.Stop("BowDraw");
+                playingDrawSound = false;
             }
             //Shoot();
             mouseClickTime = 0;
@@ -162,6 +177,12 @@ public class CombatBehavior : MonoBehaviour
             animator.SetBool("Shot", false);
             animator.SetBool("Shooting", true);
             mouseClickTime += Time.deltaTime;
+
+            if (!playingDrawSound)
+            {
+                playingDrawSound = true;
+                SFXManager.instance.Play("BowDraw");
+            }
 
             //test
             if (AttackTarget != null)
@@ -183,12 +204,17 @@ public class CombatBehavior : MonoBehaviour
                 animator.SetBool("Shooting", false);
                 secondaryArrowCooldown = true;
                 useSecondaryArrow = true;
+
+                playingDrawSound = false;
             }
             else
             {
                 animator.SetBool("Shot", false);
                 animator.SetBool("Shooting", false);
                 Invoke("ArcherArrowSheath", 0.4f);
+                SFXManager.instance.Stop("BowDraw");
+                playingDrawSound = false;
+
             }
             //Shoot();
             mouseClickTime = 0;

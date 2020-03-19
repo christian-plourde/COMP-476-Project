@@ -52,4 +52,12 @@ public class RespawnButton : MonoBehaviour
         Destroy(this.gameObject);
 
     }
+
+    public void UpdateIfCanAfford(int gold)
+    {
+        if (requiredBuyBackGold <= gold)
+        {
+            respawnButton.interactable = true;
+        }
+    }
 }
