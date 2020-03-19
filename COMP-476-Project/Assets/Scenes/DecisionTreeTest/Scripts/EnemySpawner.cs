@@ -146,20 +146,23 @@ public class EnemySpawner : MonoBehaviour
     {
         try
         {
-            GameObject new_enemy = GameObject.Instantiate(GetCurrentEnemy()); //load random enemy
-            ZombieBehaviour zm = new_enemy.GetComponent<ZombieBehaviour>();
-            zm.Initialize();
             try
             {
+                GameObject new_enemy = GameObject.Instantiate(GetCurrentEnemy()); //load random enemy
+                ZombieBehaviour zm = new_enemy.GetComponent<ZombieBehaviour>();
+                zm.Initialize();
                 waveManager.CurrentWave.IncrementIndex();
             }
 
             catch
             {
-                waveManager.IncrementWaveIndex();
-                SetWaveUIText();
-                CancelInvoke("InitializeEnemies");
-                InvokeRepeating("InitializeEnemies", timeBetweenWaves, spawnerInterval);
+                if(GameObject.FindGameObjectsWithTag("Enemy").Length == 0)
+                {
+                    waveManager.IncrementWaveIndex();
+                    SetWaveUIText();
+                    CancelInvoke("InitializeEnemies");
+                    InvokeRepeating("InitializeEnemies", timeBetweenWaves, spawnerInterval);
+                }
             }
             
         }
