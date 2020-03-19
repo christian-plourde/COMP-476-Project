@@ -32,7 +32,7 @@ public class TowerUIObject : MonoBehaviour
         towerName = towerPrefab.GetComponent<BuildingStats>().name;
 
         towerNameUI.text = "" + towerName;
-        costUI.text = towerCost + " Gold";
+        costUI.text = "Cost: " + towerCost;
 
         damageText.text = "Damage: " + towerPrefab.GetComponent<TowerAttack>().damage;
         rangeText.text = "Range: " + towerPrefab.GetComponent<TowerAttack>().range;
@@ -55,7 +55,7 @@ public class TowerUIObject : MonoBehaviour
         //Debug.Log("Building towering my friending");
 
         // build the actual tower
-        GameObject []arr=GameObject.FindGameObjectsWithTag("Map");
+        GameObject[]arr=GameObject.FindGameObjectsWithTag("Map");
         GameObject gridObject=arr[0];
         foreach (GameObject gb in arr)
         {
