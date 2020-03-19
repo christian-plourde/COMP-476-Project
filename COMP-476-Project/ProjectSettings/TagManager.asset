@@ -18,6 +18,7 @@ TagManager:
   - AudioManager
   - GameInfo
   - PlayerBase
+  - NoNode
   layers:
   - Default
   - TransparentFX

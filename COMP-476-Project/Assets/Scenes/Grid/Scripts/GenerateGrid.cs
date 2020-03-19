@@ -350,7 +350,9 @@ public class GenerateGrid : Subject
                     y = hit.point.y;
                 }
 
-                this.m_GridSquares.Add(new GridSquare(new Vector3(x, y, z), new GridCoordinate(i, j)));
+                //check if the hit should have a node on it. If so add a grid square otherwise skip it
+                if(hit.collider.tag != "NoNode")
+                    this.m_GridSquares.Add(new GridSquare(new Vector3(x, y, z), new GridCoordinate(i, j)));
             }
         }
 
