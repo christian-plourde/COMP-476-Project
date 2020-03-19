@@ -341,7 +341,7 @@ MonoBehaviour:
   m_BoidContainer: {fileID: 2114802321}
   m_BoidObject: {fileID: 1600638929047951761, guid: 9ea121aae74754cfd9e2ec3def390250,
     type: 3}
-  m_NumBoids: 6
+  m_NumBoids: 20
 --- !u!1 &1955319515
 GameObject:
   m_ObjectHideFlags: 0
