@@ -49,22 +49,58 @@ public class FormationManager : MonoBehaviour
         {
             //in order to do this we need to know what is the forward direction of the formation's anchor since one of them will
             //be placed at the back of the formation and the two others to either side.
-            characters[0].Immobilized = false;
-            characters[0].Movement.Target = this.Position - 2.0f / 3.0f * formation_scale * this.transform.forward;
-            if (characters[0].transform.position == (this.Position - 2.0f / 3.0f * formation_scale * this.transform.forward))
-                characters[0].Movement.Orientation = character.Movement.Orientation;
-            characters[1].Immobilized = false;
-            characters[1].Movement.Target = this.Position + 1.0f / 3.0f * formation_scale * this.transform.right;
-            if (characters[1].transform.position == (this.Position + 1.0f / 3.0f * formation_scale * this.transform.right))
-                characters[1].Movement.Orientation = character.Movement.Orientation;
-            characters[2].Immobilized = false;
-            characters[2].Movement.Target = this.Position + 1.0f / 3.0f * formation_scale * (-1.0f) * this.transform.right;
-            if (characters[2].transform.position == (this.Position + 1.0f / 3.0f * formation_scale * (-1.0f) * this.transform.right))
-                characters[2].Movement.Orientation = character.Movement.Orientation;
-            characters[3].Immobilized = false;
-            characters[3].Movement.Target = this.Position + 1.0f / 3.0f * formation_scale * this.transform.forward;
-            if (characters[3].transform.position == (this.Position + 1.0f / 3.0f * formation_scale * this.transform.forward))
-                characters[3].Movement.Orientation = character.Movement.Orientation;
+            
+            try
+            {
+                if (!characters[0].GetComponent<EnemyAttributes>().isDead)
+                {
+                    characters[0].Immobilized = false;
+                    characters[0].Movement.Target = this.Position - 2.0f / 3.0f * formation_scale * this.transform.forward;
+                    if (characters[0].transform.position == (this.Position - 2.0f / 3.0f * formation_scale * this.transform.forward))
+                        characters[0].Movement.Orientation = character.Movement.Orientation;
+                }
+            }
+
+            catch { }
+
+            try
+            {
+                if (!characters[1].GetComponent<EnemyAttributes>().isDead)
+                {
+                    characters[1].Immobilized = false;
+                    characters[1].Movement.Target = this.Position + 1.0f / 3.0f * formation_scale * this.transform.right;
+                    if (characters[1].transform.position == (this.Position + 1.0f / 3.0f * formation_scale * this.transform.right))
+                        characters[1].Movement.Orientation = character.Movement.Orientation;
+                }
+            }
+
+            catch { }
+
+            try
+            {
+                if (!characters[2].GetComponent<EnemyAttributes>().isDead)
+                {
+                    characters[2].Immobilized = false;
+                    characters[2].Movement.Target = this.Position + 1.0f / 3.0f * formation_scale * (-1.0f) * this.transform.right;
+                    if (characters[2].transform.position == (this.Position + 1.0f / 3.0f * formation_scale * (-1.0f) * this.transform.right))
+                        characters[2].Movement.Orientation = character.Movement.Orientation;
+                }
+            }
+
+            catch { }
+
+            try
+            {
+                if (!characters[3].GetComponent<EnemyAttributes>().isDead)
+                {
+                    characters[3].Immobilized = false;
+                    characters[3].Movement.Target = this.Position + 1.0f / 3.0f * formation_scale * this.transform.forward;
+                    if (characters[3].transform.position == (this.Position + 1.0f / 3.0f * formation_scale * this.transform.forward))
+                        characters[3].Movement.Orientation = character.Movement.Orientation;
+                }
+            }
+
+            catch { }
         }
 
         else if (UnitCount == 3)
@@ -78,18 +114,45 @@ public class FormationManager : MonoBehaviour
         {
             //in order to do this we need to know what is the forward direction of the formation's anchor since one of them will
             //be placed at the back of the formation and the two others to either side.
-            characters[0].Immobilized = false;
-            characters[0].Movement.Target = this.Position - 2.0f / 3.0f * formation_scale * this.transform.forward;
-            if (characters[0].transform.position == (this.Position - 2.0f / 3.0f * formation_scale * this.transform.forward))
-                characters[0].Movement.Orientation = character.Movement.Orientation;
-            characters[1].Immobilized = false;
-            characters[1].Movement.Target = this.Position + 1.0f / 3.0f * formation_scale * this.transform.right;
-            if (characters[1].transform.position == (this.Position + 1.0f / 3.0f * formation_scale * this.transform.right))
-                characters[1].Movement.Orientation = character.Movement.Orientation;
-            characters[2].Immobilized = false;
-            characters[2].Movement.Target = this.Position + 1.0f / 3.0f * formation_scale * (-1.0f) * this.transform.right;
-            if (characters[2].transform.position == (this.Position + 1.0f / 3.0f * formation_scale * (-1.0f) * this.transform.right))
-                characters[2].Movement.Orientation = character.Movement.Orientation;
+
+            try
+            {
+                if (!characters[0].GetComponent<EnemyAttributes>().isDead)
+                {
+                    characters[0].Immobilized = false;
+                    characters[0].Movement.Target = this.Position - 2.0f / 3.0f * formation_scale * this.transform.forward;
+                    if (characters[0].transform.position == (this.Position - 2.0f / 3.0f * formation_scale * this.transform.forward))
+                        characters[0].Movement.Orientation = character.Movement.Orientation;
+                }
+            }
+
+            catch { }
+
+            try
+            {
+                if (!characters[1].GetComponent<EnemyAttributes>().isDead)
+                {
+                    characters[1].Immobilized = false;
+                    characters[1].Movement.Target = this.Position + 1.0f / 3.0f * formation_scale * this.transform.right;
+                    if (characters[1].transform.position == (this.Position + 1.0f / 3.0f * formation_scale * this.transform.right))
+                        characters[1].Movement.Orientation = character.Movement.Orientation;
+                }
+            }
+
+            catch { }
+
+            try
+            {
+                if (!characters[2].GetComponent<EnemyAttributes>().isDead)
+                {
+                    characters[2].Immobilized = false;
+                    characters[2].Movement.Target = this.Position + 1.0f / 3.0f * formation_scale * (-1.0f) * this.transform.right;
+                    if (characters[2].transform.position == (this.Position + 1.0f / 3.0f * formation_scale * (-1.0f) * this.transform.right))
+                        characters[2].Movement.Orientation = character.Movement.Orientation;
+                }
+            }
+
+            catch { }
         }
 
         else if (UnitCount == 2)
@@ -103,18 +166,44 @@ public class FormationManager : MonoBehaviour
         {
             //in order to do this we need to know what is the forward direction of the formation's anchor since one of them will
             //be placed at the head of the formation and the two others to either side.
-            characters[0].Immobilized = false;
-            characters[0].Movement.Target = this.Position + 2.0f / 3.0f * formation_scale * this.transform.forward;
-            if (characters[0].transform.position == (this.Position + 2.0f / 3.0f * formation_scale * this.transform.forward))
-                characters[0].Movement.Orientation = character.Movement.Orientation;
-            characters[1].Immobilized = false;
-            characters[1].Movement.Target = this.Position + 1.0f / 3.0f * formation_scale * this.transform.right;
-            if (characters[1].transform.position == (this.Position + 1.0f / 3.0f * formation_scale * this.transform.right))
-                characters[1].Movement.Orientation = character.Movement.Orientation;
-            characters[2].Immobilized = false;
-            characters[2].Movement.Target = this.Position + 1.0f / 3.0f * formation_scale * (-1.0f) * this.transform.right;
-            if(characters[2].transform.position == (this.Position + 1.0f / 3.0f * formation_scale * (-1.0f) * this.transform.right))
-                characters[2].Movement.Orientation = character.Movement.Orientation;
+            try
+            {
+                if (!characters[0].GetComponent<EnemyAttributes>().isDead)
+                {
+                    characters[0].Immobilized = false;
+                    characters[0].Movement.Target = this.Position + 2.0f / 3.0f * formation_scale * this.transform.forward;
+                    if (characters[0].transform.position == (this.Position + 2.0f / 3.0f * formation_scale * this.transform.forward))
+                        characters[0].Movement.Orientation = character.Movement.Orientation;
+                }
+            }
+
+            catch { }
+
+            try
+            {
+                if (!characters[1].GetComponent<EnemyAttributes>().isDead)
+                {
+                    characters[1].Immobilized = false;
+                    characters[1].Movement.Target = this.Position + 1.0f / 3.0f * formation_scale * this.transform.right;
+                    if (characters[1].transform.position == (this.Position + 1.0f / 3.0f * formation_scale * this.transform.right))
+                        characters[1].Movement.Orientation = character.Movement.Orientation;
+                }
+            }
+
+            catch { }
+
+            try
+            {
+                if (!characters[2].GetComponent<EnemyAttributes>().isDead)
+                {
+                    characters[2].Immobilized = false;
+                    characters[2].Movement.Target = this.Position + 1.0f / 3.0f * formation_scale * (-1.0f) * this.transform.right;
+                    if (characters[2].transform.position == (this.Position + 1.0f / 3.0f * formation_scale * (-1.0f) * this.transform.right))
+                        characters[2].Movement.Orientation = character.Movement.Orientation;
+                }
+            }
+
+            catch { }
         }
 
         else if(UnitCount == 2)
@@ -126,23 +215,47 @@ public class FormationManager : MonoBehaviour
     {
         if(UnitCount == 2)
         {
-            characters[0].Immobilized = false;
-            characters[0].Movement.Target = this.Position + 1.0f / 3.0f * formation_scale * this.transform.right;
-            if (characters[0].transform.position == (this.Position + 1.0f / 3.0f * formation_scale * this.transform.right))
-                characters[0].Movement.Orientation = character.Movement.Orientation;
-            
-            characters[1].Immobilized = false;
-            characters[1].Movement.Target = this.Position + 1.0f / 3.0f * formation_scale * (-1.0f) * this.transform.right;
-            if (characters[1].transform.position == (this.Position + 1.0f / 3.0f * formation_scale * (-1.0f) * this.transform.right))
-                characters[1].Movement.Orientation = character.Movement.Orientation;
+            try
+            {
+                if (!characters[0].GetComponent<EnemyAttributes>().isDead)
+                {
+                    characters[0].Immobilized = false;
+                    characters[0].Movement.Target = this.Position + 1.0f / 3.0f * formation_scale * this.transform.right;
+                    if (characters[0].transform.position == (this.Position + 1.0f / 3.0f * formation_scale * this.transform.right))
+                        characters[0].Movement.Orientation = character.Movement.Orientation;
+                }
+            }
+
+            catch { }
+
+            try
+            {
+                if (!characters[1].GetComponent<EnemyAttributes>().isDead)
+                {
+                    characters[1].Immobilized = false;
+                    characters[1].Movement.Target = this.Position + 1.0f / 3.0f * formation_scale * (-1.0f) * this.transform.right;
+                    if (characters[1].transform.position == (this.Position + 1.0f / 3.0f * formation_scale * (-1.0f) * this.transform.right))
+                        characters[1].Movement.Orientation = character.Movement.Orientation;
+                }
+            }
+
+            catch { }
         }
 
         else if (UnitCount == 1)
         {
-            characters[0].Immobilized = false;
-            characters[0].Movement.Target = this.Position;
-            if (characters[0].transform.position == this.Position)
-                characters[0].Movement.Orientation = character.Movement.Orientation;
+            try
+            {
+                if (!characters[0].GetComponent<EnemyAttributes>().isDead)
+                {
+                    characters[0].Immobilized = false;
+                    characters[0].Movement.Target = this.Position;
+                    if (characters[0].transform.position == this.Position)
+                        characters[0].Movement.Orientation = character.Movement.Orientation;
+                }
+            }
+
+            catch { }
         }
     }
 
@@ -229,10 +342,13 @@ public class FormationManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (UnitCount == 0)
+            Destroy(this.gameObject);
+
        //we need to set the positions based on the formation.
        switch (formation_type)
        {
-            case FORMATION_TYPE.INVERTED_4_TRIANGLE: SetInverted4Triangle(); break;
+           case FORMATION_TYPE.INVERTED_4_TRIANGLE: SetInverted4Triangle(); break;
            case FORMATION_TYPE.INVERTED_TRIANGLE: SetInvertedTriangle(); break;
            case FORMATION_TYPE.TRIANGLE: SetTriangle(); break;
            case FORMATION_TYPE.SIDE_PAIR: SetSidePair(); break;

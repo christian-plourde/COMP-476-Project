@@ -101,6 +101,29 @@ public class GridSquare : IHeuristic<GridSquare>
 
 }
 
+//this class is used by the can build function for recursive depth from spawn searching
+public class NodeDepth
+{
+    private int depth_index;
+    private LevelNode node;
+
+    public int DepthIndex
+    {
+        get { return depth_index; }
+    }
+
+    public LevelNode Node
+    {
+        get { return node; }
+    }
+
+    public NodeDepth(int depth_index, LevelNode node)
+    {
+        this.depth_index = depth_index;
+        this.node = node;
+    }
+}
+
 public class GenerateGrid : Subject
 {
     public Transform m_TopRight;
@@ -126,6 +149,8 @@ public class GenerateGrid : Subject
     public GameObject terrain;
     public GameObject terrainRayCaster;
     public float y_offset_for_connection;
+
+    public int NeighborDepthForSpawnBuilding = 2;
     
     [Header("Build Menu Prefab")]
     public GameObject BuildMenuPrefab;
@@ -188,6 +213,55 @@ public class GenerateGrid : Subject
         //playerScriptRef = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>();
     }
 
+    private bool CanBuild(LevelNode n)
+    {
+        if (PlayerBaseNodes.Contains(n) || EnemyBaseNodes.Contains(n))
+            return false;
+
+        int i = 0;
+        List<NodeDepth> node_depths = new List<NodeDepth>();
+        
+        //first place the player and enemy base nodes in this list
+        foreach(LevelNode ln in PlayerBaseNodes)
+        {
+            node_depths.Add(new NodeDepth(i, ln));
+        }
+
+        foreach(LevelNode ln in EnemyBaseNodes)
+        {
+            node_depths.Add(new NodeDepth(i, ln));
+        }
+
+        //now for each node already in the list and whose depth is equal to the current depth i
+        //add all its neighbors with depth i + 1, then increment i when all have been added. do as long as i is
+        //less than the max depth for search
+        for(i = 0; i < NeighborDepthForSpawnBuilding; i++)
+        {
+            for(int j = 0; j < node_depths.Count; j++)
+            {
+                if(node_depths[j].DepthIndex == i)
+                {
+                    foreach(GraphNode<LevelNode> gn in node_depths[j].Node.GraphNode.Neighbors)
+                    {
+                        node_depths.Add(new NodeDepth(i + 1, gn.Value));
+                    }
+                }
+            }
+        }
+
+        foreach(NodeDepth nd in node_depths)
+        {
+            if(nd.Node == n)
+            {
+                return false;
+            }
+        }
+
+        return true;
+
+    }
+
+
     void Update()
     {
         if(playerScriptRef==null)
@@ -200,7 +274,7 @@ public class GenerateGrid : Subject
 
             if (Physics.Raycast(ray, out hit))
             {
-                if (hit.transform.gameObject.GetComponent<LevelNode>())
+                if (hit.transform.gameObject.GetComponent<LevelNode>() && CanBuild(hit.transform.gameObject.GetComponent<LevelNode>()))
                 {
                     if (hit.transform.gameObject.GetComponent<LevelNode>().Open)
                     {
@@ -208,33 +282,6 @@ public class GenerateGrid : Subject
                         GameObject gb = Instantiate(BuildMenuPrefab);
                         gb.GetComponent<BuildMenu>().spawnPos = hit.transform;
                     }
-
-
-
-                    /*
-                    hit.transform.gameObject.GetComponent<LevelNode>().ToggleOpen();
-                     
-                    //if the node is open, create a tower, otherwise destory it
-                    if(!hit.transform.gameObject.GetComponent<LevelNode>().Open)
-                    {
-                        GameObject tower = Instantiate(test_tower, hit.transform.position, Quaternion.identity);
-                        hit.transform.gameObject.GetComponent<LevelNode>().Tower = tower;
-                        tower.transform.parent = hit.transform.gameObject.transform;
-                    }
-
-                    else
-                    {
-                        foreach(Transform child in hit.transform)
-                        {
-                            Destroy(child.gameObject);
-                            hit.transform.gameObject.GetComponent<LevelNode>().Tower = null;
-                        }
-                    }
-
-                    //Debug.Log(hit.transform.gameObject.GetComponent<LevelNode>().GridSquare);
-                    
-                    Notify();
-                    */
                 }
                 else if (hit.transform.tag == "Tower")
                 {
@@ -303,7 +350,9 @@ public class GenerateGrid : Subject
                     y = hit.point.y;
                 }
 
-                this.m_GridSquares.Add(new GridSquare(new Vector3(x, y, z), new GridCoordinate(i, j)));
+                //check if the hit should have a node on it. If so add a grid square otherwise skip it
+                if(hit.collider.tag != "NoNode")
+                    this.m_GridSquares.Add(new GridSquare(new Vector3(x, y, z), new GridCoordinate(i, j)));
             }
         }
 
