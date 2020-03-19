@@ -10,14 +10,25 @@ public class BuildMenu : MonoBehaviour
 
     public Transform spawnPos;
     public GameObject listTransform;
+    public GameObject towerUIPrefab;
+
+    GameObject[] listOfTower;
 
     void Start()
     {
-
         // control lock on player
         GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>().controlLock = true ;
         GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>().building = true;
         GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>().StopWalkingAnim();
+
+        listOfTower = Resources.LoadAll<GameObject>("Prefabs/Buildings/Towers/BaseTower");
+
+        foreach(GameObject t in listOfTower)
+        {
+            GameObject gb = Instantiate(towerUIPrefab, towerUIPrefab.transform.position, Quaternion.identity);
+            gb.transform.SetParent(listTransform.transform, false);
+            gb.GetComponent<TowerUIObject>().towerPrefab = t;
+        }
 
     }
 
