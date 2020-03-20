@@ -5,8 +5,13 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 
+//the list of actions the player can make
 public enum PlayerAction { ATTACK, RUN, BUILD }
 
+/// <summary>
+/// This is a cell in the ngram. Each one represents some action so for example ATTACK, RUN, RUN, and tracks the number of 
+/// occurences in the data and allows us to get probability.
+/// </summary>
 public class NGramCell
 {
     private List<PlayerAction> actions; //the actions this cell represents
@@ -25,6 +30,8 @@ public class NGramCell
         get { return (double)occurences / (double)samples; }
     }
 
+    //checks if this cell has the same action header as the input string passed in. Necessary for finding the cell
+    //matching the input string we are using to compare probabilities
     public bool IsEqual(List<PlayerAction> input_string)
     {
         bool sameness = true;
@@ -46,6 +53,7 @@ public class NGramCell
         actions = new List<PlayerAction>();
     }
 
+    //add a character action to the list of actions that this cell represents. Used when building the cell initially
     public void AppendCharacterAction(PlayerAction action)
     {
         actions.Add(action);
@@ -74,6 +82,8 @@ public class NGramCell
         return s;
     }
 
+    //used whenever an occurence of this string (or observation) is found. First we check if the observation is the same (the first
+    //actions minus the last one. If it is add a sample. Then check if the entire strings are the same. If so then add an occurence
     public void UpdateCell(List<PlayerAction> temp)
     {
         //check if observation is the same
@@ -108,26 +118,30 @@ public class NGramCell
 
 }
 
+//The actual ngram is a collection of cells with prediction capability
 public class NGram
 {
-    private int level;
-    NGramManager manager;
-    NGramCell[] cells;
+    private int level; //the level of the ngram. level = 1 means a 1 gram, etc.
+    NGramManager manager; //a reference to the manager, which contains the training data to be parsed.
+    NGramCell[] cells; //the cells contained in this ngram
 
+    //used to predict the next action
     public PlayerAction Predict()
     {
         //first create the input string
         //input string based on prediction depth in ngrammanager
 
-        List<PlayerAction> observation = manager.Data.GetLastObservations(level - 1);
+        List<PlayerAction> observation = manager.Data.GetLastObservations(level - 1); //observation length is the level - 1. So if
+        //we have a 3 gram we look at the last two inputs and try to predict the third.
 
-        double best_probability = 0;
-        PlayerAction predicted_action = PlayerAction.ATTACK;
-        int failed_samples = 0;
+        double best_probability = 0; //keep track of the best probability so far
+        PlayerAction predicted_action = PlayerAction.ATTACK; //this will keep track of which action had the best probability
+        int failed_samples = 0; //keep track of if the ngram did not contain enough samples to predict with
 
-        for(int i = 0; i < Enum.GetNames(typeof(PlayerAction)).Length; i++)
+        for(int i = 0; i < Enum.GetNames(typeof(PlayerAction)).Length; i++) //for each player action
         {
-            List<PlayerAction> input_string = new List<PlayerAction>();
+            List<PlayerAction> input_string = new List<PlayerAction>(); //this is the input string to test. It is the observation
+            //plus each combination of possible actions
 
             for(int j = 0; j < observation.Count; j++)
             {
@@ -147,16 +161,18 @@ public class NGram
 
             //Debug.Log(s);
 
-            foreach(NGramCell n in cells)
+            foreach(NGramCell n in cells) //for each cell
             {
-                if(n.IsEqual(input_string))
+                if(n.IsEqual(input_string)) //check if the cell is equal to the input string
                 {
+                    //if we dont have enough samples increment the counter of failures and break
                     if (n.Samples < manager.SamplesForPrediction)
                     {
                         failed_samples++;
                         break;
                     }
-                        
+                    
+                    //if we have enough samples we can update the best probability if appropriate
                     else
                     {
                         //Debug.Log(n.Probability + " " + best_probability);
@@ -172,13 +188,15 @@ public class NGram
             }
         }
 
+        //if we had too many cases where we failed sample check (i.e. each action had not enough samples, we throw an exception
+        //this is caught in calling method and causes us to descenf in ngram heirarchy
         if (failed_samples == Enum.GetNames(typeof(PlayerAction)).Length)
         {
             //Debug.Log("not enough samples");
             throw new Exception();
         }
             
-
+        //if we had enough samples we return the predicted action
         return predicted_action;
     }
 
@@ -248,13 +266,18 @@ public class NGram
     }
 }
 
+/// <summary>
+/// Circular list that holds a set number of data to test with
+/// </summary>
 public class NGramString
 {
-    private int capacity;
-    private int length;
-    private NGramStringNode front;
-    private NGramStringNode back;
+    private int capacity; //the max count of data in the list
+    private int length; //the current length of the list
+    private NGramStringNode front; //the front of the list
+    private NGramStringNode back; //the back of the list
 
+    //this will get the last observations from the list. It will give (for observation count 2 for example) a list containing 2
+    //observations to be used in the ngrams predict function
     public List<PlayerAction> GetLastObservations(int observation_count)
     {
         List<PlayerAction> toReturn = new List<PlayerAction>();
@@ -279,6 +302,7 @@ public class NGramString
         }
     }
 
+    //index operator for easy access to elements in the string
     public PlayerAction this[int index]
     {
         get {
@@ -340,6 +364,7 @@ public class NGramString
         return s;
     }
 
+    //circular addition to the list. When it's full, we add to the front and delete the last element in the list
     public void Add(PlayerAction action)
     {
         //this is to add a player action to the string
@@ -378,6 +403,7 @@ public class NGramString
     }
 }
 
+//type used in ngram string. has pointers to next and previous and holds a player action as its value
 public class NGramStringNode
 {
     private NGramStringNode next;
@@ -407,12 +433,14 @@ public class NGramStringNode
     }
 }
 
+//holds a set of ngrams. this is the class to be used by user.
 public class NGramManager
 {
-    List<NGram> ngrams;
-    NGramString player_actions;
-    int depth_of_prediction;
-    int samples_for_prediction;
+    List<NGram> ngrams; //heirarchy of ngrams
+    NGramString player_actions; //the training data
+    int depth_of_prediction; //the depth of prediction. If three, we create a 3 gram heirarchy and when predicting we look
+    //at last two observations to guess the third
+    int samples_for_prediction; //the number of samples required for prediction by ngram
 
     public int SamplesForPrediction
     {
@@ -448,6 +476,8 @@ public class NGramManager
         }
     }
 
+    //if ngram predict fails we move to the next ngram, in descending order since they are in increasing order of
+    //complxity in ouyr collection
     public PlayerAction Predict()
     {
         int i = ngrams.Count - 1;
@@ -473,6 +503,8 @@ public class NGramManager
         this.ngrams.Add(nGram);
     }
 
+    //used to add a player action to the list.
+    //every time this is done, the samples and occurences are recalculated for each of the ngrams we have
     public void AppendPlayerAction(PlayerAction action)
     {
         player_actions.Add(action);
