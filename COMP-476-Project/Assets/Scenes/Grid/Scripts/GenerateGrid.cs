@@ -204,6 +204,12 @@ public class GenerateGrid : Subject
             AttachObserver(c);
         }
 
+        //also add the playeractiontracker
+        foreach(PlayerActionTracker at in FindObjectsOfType<PlayerActionTracker>())
+        {
+            AttachObserver(at);
+        }
+
         //playerScriptRef = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>();
 
     }
