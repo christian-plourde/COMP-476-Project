@@ -76,6 +76,7 @@ public class PlayerActionTracker : Observer
             buff_category = n_gram.Predict();
             //Debug.Log(buff_category);
             //instantiate the UI prefab where the player can select which buff he'd like to get.
+
         }
 
         catch

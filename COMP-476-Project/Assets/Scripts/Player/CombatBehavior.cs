@@ -14,6 +14,8 @@ public class CombatBehavior : MonoBehaviour
     public Transform LaunchPoint;
     public Transform AttackTarget;
 
+    public float baseDamage = 5;
+
     Transform PlayerMesh;
 
     [Header("Weapon Slots")]
@@ -261,7 +263,20 @@ public class CombatBehavior : MonoBehaviour
                     specialMult = 1.2f;
                 }
                 else
+                {
                     obj = Instantiate(ProjectilePrefab, LaunchPoint.position, Quaternion.identity);
+                    try
+                    {
+                        obj.GetComponent<Arrow>().SetArrowDamage(baseDamage);
+                        //Debug.Log("Arrow damage is: " + obj.GetComponent<Arrow>().baseDamage);
+                    }
+
+                    catch
+                    {
+                        
+                    }
+                }
+                    
 
                 Vector3 shotDirection = (AttackTarget.position - transform.position).normalized;
                 shotDirection.y += AttackTarget.GetComponent<EnemyAttributes>().GetHeightOffset();

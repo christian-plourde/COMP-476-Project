@@ -9,7 +9,7 @@ public class Arrow : MonoBehaviour
 
     public GameObject arrowPrefab;
 
-    public int baseDamage=5;
+    public float baseDamage=5;
     float Timer;
 
     // for automatic scale adjustment
@@ -28,7 +28,7 @@ public class Arrow : MonoBehaviour
             Destroy(this.gameObject);             // just incase arrow doesnt collide with anything
     }
 
-    public void SetArrowDamage(int dmg)
+    public void SetArrowDamage(float dmg)
     {
         baseDamage = dmg;
     }

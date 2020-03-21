@@ -18,6 +18,7 @@ public class WarriorCombatBehavior : MonoBehaviour
     [Header("Weapon Slots")]
     public GameObject BackSword;
     public GameObject HandSword;
+    public float baseDamage = 4;
     //public GameObject HeldArrow;
     //public GameObject AbilityCircle;
 
@@ -60,6 +61,23 @@ public class WarriorCombatBehavior : MonoBehaviour
     [Header("Leg Reference For Kickin")]
     public GameObject LeftLeg;
 
+    public float BaseDamage
+    {
+        get { return baseDamage; }
+        set { baseDamage = value;
+        
+            try
+            {
+                HandSword.GetComponent<BastardSword>().baseDMG = baseDamage;
+            }
+
+            catch
+            {
+
+            }
+        }
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -77,6 +95,16 @@ public class WarriorCombatBehavior : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //set the damage of the sword from the player's base damage
+        try
+        {
+            HandSword.GetComponent<BastardSword>().baseDMG = this.baseDamage;
+        }
+
+        catch
+        { }
+
+
         if (!PlayerMovementRef.isDead)
             Controls();
 

@@ -5,6 +5,14 @@ using System.Reflection;
 
 public class BuffMethods
 {
+    private float rallying_call_effect_range;
+
+    public float RallyingCallEffectRange
+    {
+        get { return rallying_call_effect_range; }
+        set { rallying_call_effect_range = value; }
+    }
+
     public BuffMethods()
     {
 
@@ -12,47 +20,116 @@ public class BuffMethods
 
     public void BuffTowerDamage(Buff buff)
     {
-        Debug.Log("Buffing Tower Damage");
+        float inc_per_level = 0.0f;
+
+        try
+        {
+            foreach(TowerAttack t in GameObject.FindObjectsOfType<TowerAttack>())
+            {
+                //Debug.Log("Found Tower " + t.name);
+                t.damage = (1 + buff.Level * inc_per_level) * t.damage; //adds 10 percent damage per level to each tower
+                //Debug.Log("Damage is now: " + t.damage);
+            }
+        }
+
+        catch { }
     }
 
     public void BuffAttackDamage(Buff buff)
     {
-        Debug.Log("Buffing Player Damage");
+        float inc_per_level = 0.05f;
+
+        //Debug.Log("Buffing Player Damage");
+        //first we need to find either the warrior combat behaviour or the archer combat behaviour
+        //lets try warrior first
+        try
+        {
+            WarriorCombatBehavior wc = GameObject.FindObjectOfType<WarriorCombatBehavior>();
+            //Debug.Log("old damage: " + wc.HandSword.GetComponent<BastardSword>().baseDMG);
+            wc.BaseDamage = (1 + buff.Level * inc_per_level) * wc.BaseDamage; //increase warrior base damage by a factor of 5 percent
+            //Debug.Log("new damage: " + wc.HandSword.GetComponent<BastardSword>().baseDMG);
+        }
+
+        catch
+        {
+
+        }
+
+        //now let's try the archer
+        try
+        {
+            CombatBehavior ac = GameObject.FindObjectOfType<CombatBehavior>();
+            ac.baseDamage = (1 + buff.Level * inc_per_level) * ac.baseDamage;
+        }
+
+        catch
+        {
+
+        }
     }
 
     public void BuffPlayerSpeed(Buff buff)
     {
-        Debug.Log("Buffing Player Speed");
+        float inc_per_level = 0.02f;
+
+        //Debug.Log("Buffing Player Speed");
+        try
+        {
+            PlayerMovement m = GameObject.FindObjectOfType<PlayerMovement>();
+            m.mSpeed = (1 + inc_per_level * buff.Level) * m.mSpeed;
+        }
+
+        catch
+        {
+
+        }
     }
 
     public void BuffRallyingCall(Buff buff)
     {
-        Debug.Log("Buffing Rallying Call");
+        float inc_per_level = 0.02f;
+
+        //Debug.Log("Buffing Rallying Call");
+        //increases tower attack speed when player is nearby
+        PlayerMovement p = GameObject.FindObjectOfType<PlayerMovement>();
+
+        foreach(TowerAttack t in GameObject.FindObjectsOfType<TowerAttack>())
+        {
+            if ((p.transform.position - t.transform.position).magnitude < RallyingCallEffectRange)
+            {
+                t.RallyingCallMultiplier = (1 - inc_per_level * buff.Level) * t.RallyingCallMultiplier;
+            }
+
+            else
+            {
+                t.RallyingCallMultiplier = 1;
+            }
+        }
     }
 
     public void BuffCementSoup(Buff buff)
     {
-        Debug.Log("Buffing Cement Soup");
+        //Debug.Log("Buffing Cement Soup");
     }
 
     public void BuffArtOfWar(Buff buff)
     {
-        Debug.Log("Buffing Art of War");
+        //Debug.Log("Buffing Art of War");
     }
 
     public void BuffFastestManAlive(Buff buff)
     {
-        Debug.Log("Buffing Fastest Man Alive");
+        //Debug.Log("Buffing Fastest Man Alive");
     }
 
     public void BuffThriller(Buff buff)
     {
-        Debug.Log("Buffing Thriller");
+        //Debug.Log("Buffing Thriller");
     }
 
     public void BuffDivideAndConquer(Buff buff)
     {
-        Debug.Log("Buffing Divide and Conquer");
+        //Debug.Log("Buffing Divide and Conquer");
     }
 }
 
@@ -81,6 +158,7 @@ public class Buff
 
     public BuffMethods BuffMethods
     {
+        get { return buff_methods; }
         set { buff_methods = value; }
     }
 
@@ -181,6 +259,9 @@ public class PlayerBuffManager : MonoBehaviour
     [Header("Player Buff Definitions")]
     public TextAsset player_buffs_json;
 
+    [Header("Rallying Call Parameters")]
+    public float rallyingCallEffectRange = 0;
+
     private BuffList buff_list;
 
     // Start is called before the first frame update
@@ -192,14 +273,22 @@ public class PlayerBuffManager : MonoBehaviour
         {
             b.BuffList = buff_list; //set buff list reference for each buff
             b.BuffMethods = new BuffMethods();
+            b.BuffMethods.RallyingCallEffectRange = this.rallyingCallEffectRange;
             b.SetPrerequisites(); //set prerequisites for each buff from the buff list by uid
-            b.ApplyBuff();
+            //b.ApplyBuff();
         }
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if(Input.GetKeyDown(KeyCode.L))
+        {
+            foreach(Buff b in buff_list.buffs)
+            {
+                b.Level++;
+                b.ApplyBuff();
+            }
+        }
     }
 }

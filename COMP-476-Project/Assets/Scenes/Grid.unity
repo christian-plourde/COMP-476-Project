@@ -253,6 +253,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player_buffs_json: {fileID: 4900000, guid: 79f698fe88972de4cbc005a6586edf18, type: 3}
+  rallyingCallEffectRange: 3
 --- !u!4 &13050912
 Transform:
   m_ObjectHideFlags: 0
@@ -33665,6 +33666,11 @@ PrefabInstance:
         type: 3}
       propertyPath: howLongUltimateCooldown
       value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 7144771478404947810, guid: ec58d484e28abb3499e5d94b1cf8523c,
+        type: 3}
+      propertyPath: baseDamage
+      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ec58d484e28abb3499e5d94b1cf8523c, type: 3}
