@@ -108,7 +108,7 @@ Transform:
   m_GameObject: {fileID: 2818103337241428834}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 3.29, y: 0, z: -2.03}
-  m_LocalScale: {x: 0.1, y: 0.35, z: 0.1}
+  m_LocalScale: {x: 0.06, y: 0.17, z: 0.06}
   m_Children:
   - {fileID: 2818103337241141056}
   - {fileID: 2818103337241141062}
@@ -155,7 +155,7 @@ MonoBehaviour:
   inaccuracy: 0
   projectile: {fileID: 2196552046661029865, guid: 9ac0c50f179b1624f9b3e3508943980d,
     type: 3}
-  projectileSpawnPointOffset: {x: 0, y: 4.5, z: 0}
+  projectileSpawnPointOffset: {x: 0, y: 1.55, z: 0}
   possibleTargets: both
   projectileType: homing
 --- !u!114 &1231994795544744464

@@ -284,7 +284,7 @@ MonoBehaviour:
   inaccuracy: 0.45
   projectile: {fileID: 3823272756201023609, guid: f2a4533ff0e177142886b300140104ac,
     type: 3}
-  projectileSpawnPointOffset: {x: 0, y: 2.3, z: 0.86}
+  projectileSpawnPointOffset: {x: 0, y: 1.15, z: 0.5}
   possibleTargets: ground
   projectileType: ballistic
 --- !u!136 &6707281434010578376

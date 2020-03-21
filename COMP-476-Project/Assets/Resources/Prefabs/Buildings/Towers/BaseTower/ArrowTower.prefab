@@ -154,7 +154,7 @@ MonoBehaviour:
   inaccuracy: 0
   projectile: {fileID: 2196552046661029865, guid: 9ac0c50f179b1624f9b3e3508943980d,
     type: 3}
-  projectileSpawnPointOffset: {x: 0, y: 2.5, z: 0}
+  projectileSpawnPointOffset: {x: 0, y: 1, z: 0}
   possibleTargets: both
   projectileType: homing
 --- !u!114 &1231994795544744464
