@@ -289,8 +289,8 @@ public class GenerateGrid : Subject
                 {
                     //Debug.Log("Clicked tower");
                     playerScriptRef.managingTower = true;
-                    GameObject gb = Instantiate(ManageMenuPrefab);
-                    //Debug.Log("Parent of tower: "+hit.transform.parent.name);
+                    GameObject gb = Instantiate(ManageMenuPrefab, ManageMenuPrefab.transform.position, Quaternion.identity);
+                    gb.transform.SetParent(Canvas.transform, false);
                     gb.GetComponent<ManageMenu>().currentTower = hit.transform.gameObject;
                     gb.GetComponent<ManageMenu>().InitializeMenu();
                 }
