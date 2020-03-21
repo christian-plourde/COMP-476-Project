@@ -10,11 +10,14 @@ public class ManageMenu : MonoBehaviour
     public GameObject currentTower;
     public bool hasUpgrade;
     public int upgradeCost;
+    int repairCost;
 
     [Header("UI References")]
     public Button CancelButton;
     public Button UpgradeButton;
     public Button DestroyButton;
+    public Button RepairButton;
+    public Text RepairCostText;
     public Text upgradeCostText;
     public Text destroyRefundText;
     public Text TowerName;
@@ -33,8 +36,7 @@ public class ManageMenu : MonoBehaviour
 
     void Start()
     {
-        //playerScriptRef = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>();
-        //playerScriptRef.controlLock = true;
+
     }
 
     public void InitializeMenu()
@@ -82,6 +84,14 @@ public class ManageMenu : MonoBehaviour
         {
             upgradeCostText.text = "No Upgrades";
         }
+
+        if(currentTower.GetComponent<BuildingStats>().health < currentTower.GetComponent<BuildingStats>().MaxHealth)
+        {
+            repairCost = (int)Mathf.Ceil(currentTower.GetComponent<BuildingStats>().price * (1-(currentTower.GetComponent<BuildingStats>().health / currentTower.GetComponent<BuildingStats>().MaxHealth)));
+
+            RepairCostText.text = "Repair: " + repairCost;
+            RepairButton.interactable = true;
+        }
     }
     
 
@@ -125,6 +135,16 @@ public class ManageMenu : MonoBehaviour
 
         SFXManager.instance.Play("Destroy");
         CloseMenu();
+    }
+
+    public void RepairTower()
+    {
+        playerScriptRef.RemoveGold(repairCost);
+
+        currentTower.GetComponent<BuildingStats>().health = currentTower.GetComponent<BuildingStats>().MaxHealth;
+
+        CloseMenu();
+        SFXManager.instance.Play("BuildSound");
     }
 
     void CloseMenu()

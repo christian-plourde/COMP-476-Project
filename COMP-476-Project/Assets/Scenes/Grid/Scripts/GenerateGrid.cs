@@ -155,6 +155,7 @@ public class GenerateGrid : Subject
     [Header("Build Menu Prefab")]
     public GameObject BuildMenuPrefab;
     public GameObject ManageMenuPrefab;
+    public GameObject Canvas;
 
     PlayerMovement playerScriptRef;
 
@@ -285,7 +286,8 @@ public class GenerateGrid : Subject
                     if (hit.transform.gameObject.GetComponent<LevelNode>().Open)
                     {
                         //spawn menu
-                        GameObject gb = Instantiate(BuildMenuPrefab);
+                        GameObject gb = Instantiate(BuildMenuPrefab, BuildMenuPrefab.transform.position, Quaternion.identity);
+                        gb.transform.SetParent(Canvas.transform, false);
                         gb.GetComponent<BuildMenu>().spawnPos = hit.transform;
                     }
                 }
@@ -293,8 +295,8 @@ public class GenerateGrid : Subject
                 {
                     //Debug.Log("Clicked tower");
                     playerScriptRef.managingTower = true;
-                    GameObject gb = Instantiate(ManageMenuPrefab);
-                    //Debug.Log("Parent of tower: "+hit.transform.parent.name);
+                    GameObject gb = Instantiate(ManageMenuPrefab, ManageMenuPrefab.transform.position, Quaternion.identity);
+                    gb.transform.SetParent(Canvas.transform, false);
                     gb.GetComponent<ManageMenu>().currentTower = hit.transform.gameObject;
                     gb.GetComponent<ManageMenu>().InitializeMenu();
                 }
