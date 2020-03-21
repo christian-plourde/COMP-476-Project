@@ -7,6 +7,7 @@ public class BuildingStats : MonoBehaviour
     [Tooltip("This script contains fields common to all buildings as well as getters for each value.")]
     public int price, tier;
     public float health;
+    float maxHealth;
     public Dictionary<string, int> multipliers = new Dictionary<string, int>();
     public string description;
 
@@ -15,8 +16,14 @@ public class BuildingStats : MonoBehaviour
 
     private void Start()
     {
+        maxHealth = health;
         multipliers.Add("health", 1);
         multipliers.Add("price", 1);
+    }
+
+    public float MaxHealth
+    {
+        get { return maxHealth; }
     }
 
     public int GetPrice()
