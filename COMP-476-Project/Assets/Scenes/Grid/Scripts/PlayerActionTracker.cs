@@ -6,43 +6,81 @@ public class PlayerActionTracker : Observer
 {
     NGramManager n_gram;
     [Header("Action Timers")]
-    public int runTimerSeconds = 10; //how many seconds player must run for it to count as a run action for ngram
-    public int attackTimerSeconds = 10; //how many seconds player needs to attack for it to count as a run action for ngram
+    [Tooltip("The number of seconds the player must run for the ngram to register a run action")]
+    public float runTimerSeconds = 1.0f; //how many seconds player must run for it to count as a run action for ngram
+    [Tooltip("The number of attack the player must make for the ngram to register an attack action")]
+    public int attackCount = 6; //how many hits player must do to count as an attack in n gram
 
     private float runTimer = 0.0f; //the current run timer (how long the player has been running). only reset when it exceeds
                                    //threshold for adding an action to training data
 
-    private float attackTimer = 0.0f; //the current attack timer (how long the player has been attacking). only reset when it exceeds
-                                      //threshold for adding an action to training data.
+    private int attackCounter = 0; //the current attack count (how many times the player has attacked). only reset when it exceeds
+                                   //threshold for adding an action to training data.
+
+    private PlayerAction buff_category; //the predicted action at the end of the wave. determines which buffs player has access to
+
+    public PlayerAction BuffCategory
+    {
+        get { return buff_category; }
+    }
 
     // Start is called before the first frame update
     void Start()
     {
-        n_gram = new NGramManager(30, 3, 2); //set ngram manager to get our heirarchy
+        n_gram = new NGramManager(100, 3, 2); //set ngram manager to get our heirarchy
         //Debug.Log(n_gram);
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKey(KeyCode.W))
-            n_gram.AppendPlayerAction(PlayerAction.RUN);
-
-        if (Input.GetKey(KeyCode.Mouse0) && !FindObjectOfType<PlayerMovement>().inBuildMode)
-            n_gram.AppendPlayerAction(PlayerAction.ATTACK);
-
-        if(Input.GetKey(KeyCode.O))
+        //if player pressed a movement key, increment the run timer by frame time
+        if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D))
         {
-            try
-            {
-                //Debug.Log(n_gram.Data);
-                Debug.Log(n_gram.Predict());
-            }
+            runTimer += Time.deltaTime;
+        }
 
-            catch
-            {
+        //if player has attacked or done secondary attack, increment the attack count
+        if ((Input.GetKeyDown(KeyCode.Mouse0) || Input.GetKeyDown(KeyCode.Mouse1)) && !FindObjectOfType<PlayerMovement>().inBuildMode)
+        {
+            attackCounter++;
+        }
 
-            }
+        //if player has done ultimate ability increment attak counter by attack count limit
+        if((Input.GetKeyDown(KeyCode.Q) || Input.GetKeyDown(KeyCode.T)) && !FindObjectOfType<PlayerMovement>().inBuildMode)
+        {
+            attackCounter += attackCount;
+        }
+
+        //now we need to check if we should append a run or attack action
+        //first for run
+        if(runTimer >= runTimerSeconds)
+        {
+            n_gram.AppendPlayerAction(PlayerAction.RUN);
+            runTimer -= runTimerSeconds;
+        }
+
+        //then for attack
+        if(attackCounter >= attackCount)
+        {
+            n_gram.AppendPlayerAction(PlayerAction.ATTACK);
+            attackCounter -= attackCount;
+        }
+    }
+
+    public void SetBuffCategory()
+    {
+        try
+        {
+            //set the buff category using the n grams prediction.
+            buff_category = n_gram.Predict();
+            //Debug.Log(buff_category);
+            //instantiate the UI prefab where the player can select which buff he'd like to get.
+        }
+
+        catch
+        {
+            Debug.Log("NGram failed to predict next action.");
         }
     }
 

@@ -102,6 +102,8 @@ public class EnemySpawner : MonoBehaviour
     private WaveManager waveManager; //this contains an array of waves, each wave contains a list of enemies
     private EnemyLevelInfo enemy_level_info; //this contains info about each enemy and its level
     public Text wave_ui_text;
+    private PlayerActionTracker player_actions; //the player action tracker, when a wave ends, we should call predict on its
+                                                //ngram
 
     private GameObject GetCurrentEnemy()
     {
@@ -137,6 +139,9 @@ public class EnemySpawner : MonoBehaviour
         //load all the enemies from our folder
         enemies = Resources.LoadAll<GameObject>("Prefabs/Enemies");
 
+        //get a reference to player action tracker
+        player_actions = FindObjectOfType<PlayerActionTracker>();
+
         SetWaveUIText();
 
         InvokeRepeating("InitializeEnemies", timeBetweenWaves, spawnerInterval);
@@ -159,6 +164,8 @@ public class EnemySpawner : MonoBehaviour
                 if(GameObject.FindGameObjectsWithTag("Enemy").Length == 0)
                 {
                     waveManager.IncrementWaveIndex();
+                    //tell the player action tracker to predict and update its current buff type
+                    player_actions.SetBuffCategory();
                     SetWaveUIText();
                     CancelInvoke("InitializeEnemies");
                     InvokeRepeating("InitializeEnemies", timeBetweenWaves, spawnerInterval);
