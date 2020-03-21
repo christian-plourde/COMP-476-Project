@@ -260,8 +260,8 @@ MonoBehaviour:
   tier: 2
   health: 250
   description: 'Upgrade to the Cannon Tower.\nDamage : 10 -> 25 on impact + 10 ->
-    25 within 1 -> 1.5)\nAttack cooldown : 1.75s\nRange : 7 -> 10\nMaximum aim time
-    : 3s\nHealth : 150 -> 250\nPrice : 500'
+    25 within 1 -> 1.5)\nAttack cooldown : 1.75s\nRange : 7 -> 10\nHeight limit :
+    1.15 -> 1.535Maximum aim time : 3s\nHealth : 150 -> 250\nPrice : 500'
   upgrade: {fileID: 0}
 --- !u!114 &-5769318891380437015
 MonoBehaviour:
@@ -279,7 +279,7 @@ MonoBehaviour:
   damage: 16
   range: 10
   rotationSpeed: 3
-  heightLimit: 3.85
+  heightLimit: 1.535
   inaccuracy: 0.45
   projectile: {fileID: 3823272756201023609, guid: f2a4533ff0e177142886b300140104ac,
     type: 3}

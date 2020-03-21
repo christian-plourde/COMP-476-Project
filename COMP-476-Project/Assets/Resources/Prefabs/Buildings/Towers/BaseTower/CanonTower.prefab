@@ -261,7 +261,7 @@ MonoBehaviour:
   health: 150
   description: 'A long range but innacurate tower that shoots explosive canonballs,
     damaging all enemies within range.\nDamage : 10 on impact + 10 within 1)\nAttack
-    cooldown : 1.75s\nRange : 7\nHeight limit : 2.3\nMaximum aim time : 3s\nHealth
+    cooldown : 1.75s\nRange : 7\nHeight limit : 1.15\nMaximum aim time : 3s\nHealth
     : 150\nPrice : 150'
   upgrade: {fileID: 165880, guid: e91e1a7e972c3b845b31560369c3e1db, type: 3}
 --- !u!114 &-5769318891380437015
@@ -280,7 +280,7 @@ MonoBehaviour:
   damage: 7
   range: 7
   rotationSpeed: 3
-  heightLimit: 2.3
+  heightLimit: 1.15
   inaccuracy: 0.45
   projectile: {fileID: 3823272756201023609, guid: f2a4533ff0e177142886b300140104ac,
     type: 3}
