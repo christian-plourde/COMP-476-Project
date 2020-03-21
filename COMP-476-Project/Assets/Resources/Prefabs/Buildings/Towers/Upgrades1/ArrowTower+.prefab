@@ -173,7 +173,7 @@ MonoBehaviour:
   price: 250
   tier: 2
   health: 150
-  description: 'Arrow Tower upgrade.\nDamage : 10 -> 20\nAttack cooldown : 1\nRange
+  description: 'Arrow Tower upgrade.\nDamage : 4 -> 9\nAttack cooldown : 1\nRange
     : 5 -> 6\nMaximum aim time : Instant\nHealth : 100 -> 150\nPrice : 250'
   upgrade: {fileID: 0}
 --- !u!23 &-7430049837553062543

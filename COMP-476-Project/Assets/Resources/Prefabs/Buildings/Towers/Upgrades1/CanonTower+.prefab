@@ -259,9 +259,9 @@ MonoBehaviour:
   price: 500
   tier: 2
   health: 250
-  description: 'Upgrade to the Cannon Tower.\nDamage : 10 -> 25 on impact + 10 ->
-    25 within 1 -> 1.5)\nAttack cooldown : 1.75s\nRange : 7 -> 10\nHeight limit :
-    1.15 -> 1.535Maximum aim time : 3s\nHealth : 150 -> 250\nPrice : 500'
+  description: 'Upgrade to the Cannon Tower.\nDamage : 7 -> 16 on impact + 10 -> 25
+    within 1 -> 1.5)\nAttack cooldown : 1.75s\nRange : 7 -> 10\nHeight limit : 1.15
+    -> 1.535Maximum aim time : 3s\nHealth : 150 -> 250\nPrice : 500'
   upgrade: {fileID: 0}
 --- !u!114 &-5769318891380437015
 MonoBehaviour:
