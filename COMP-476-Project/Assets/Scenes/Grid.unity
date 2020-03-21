@@ -11933,7 +11933,7 @@ MonoBehaviour:
   NeighborDepthForSpawnBuilding: 2
   BuildMenuPrefab: {fileID: 4826993790784907808, guid: 19d95743b2a92584dad4140eb3bbe0aa,
     type: 3}
-  ManageMenuPrefab: {fileID: 727127899446876067, guid: 3e4eb6fe0df325b4fb8dbce17ab0c2d2,
+  ManageMenuPrefab: {fileID: 5907884565063712615, guid: 9a9c0b7ce5fd6714faebaaacf48bc46b,
     type: 3}
   Canvas: {fileID: 1237766181}
 --- !u!1001 &743321833
