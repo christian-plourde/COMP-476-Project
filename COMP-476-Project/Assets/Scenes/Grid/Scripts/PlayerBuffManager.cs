@@ -449,6 +449,24 @@ public class Buff
     {
         return name;
     }
+
+    public string PrerequisitesToString()
+    {
+        string temp = "";
+        foreach (int i in this.prerequisites)
+        {
+            foreach (Buff b in buffList.buffs)
+            {
+                if(i == b.uid)
+                {
+                    temp += b.name + "(" + (this.level+1) + ")";
+                    break;
+                }
+            }
+            temp += ", ";
+        }
+        return temp;
+    }
 }
 
 [System.Serializable]

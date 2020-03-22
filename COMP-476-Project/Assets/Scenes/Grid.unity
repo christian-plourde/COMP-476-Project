@@ -12345,6 +12345,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   runTimerSeconds: 1.5
   attackCount: 3
+  UIPrefab: {fileID: 6142711943849645332, guid: 4c871659418538344b180eba47cec610,
+    type: 3}
+  Canvas: {fileID: 1237766181}
 --- !u!4 &798268519
 Transform:
   m_ObjectHideFlags: 0
