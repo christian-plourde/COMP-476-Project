@@ -1,7 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
-using System;
 
 public class EnemyBehaviour : MonoBehaviour
 {
@@ -141,18 +139,18 @@ public class EnemyBehaviour : MonoBehaviour
         Vector3 playerpos;
         try
         {
-           playerpos  = this.m_Player.position;
+            playerpos = this.m_Player.position;
         }
 
         catch
         {
             if (m_OutputDebugLogs)
             {
-                Debug.Log("Enemy NOT facing player!");
+                Debug.Log("Player position doesn't exist!");
             }
             return false;
         }
-        
+
         float dot = Vector3.Dot(this.transform.forward, (playerpos - enemypos).normalized);
         //If our dot product is exactly 1, then the player is exactly in front of us
         float desired_result = 1.0f;
@@ -169,10 +167,11 @@ public class EnemyBehaviour : MonoBehaviour
         {
             message += "Enemy is facing the player. ";
 
-            Vector3 origin = this.transform.position;
-            Vector3 direction = (this.m_Player.transform.position - this.transform.position).normalized;
+            Vector3 height_offset = new Vector3(0.0f, 0.5f, 0.0f);
+            Vector3 origin = this.transform.position + height_offset;
+            Vector3 direction = (this.m_Player.transform.position - origin).normalized;
             //Put end [range of vision] units toward the player
-            Vector3 end = this.transform.position + direction * this.m_RangeOfVision;
+            Vector3 end = origin + direction * this.m_RangeOfVision;
             Debug.DrawLine(origin, end, Color.white, 1.0f);
 
             RaycastHit hit;
@@ -229,21 +228,6 @@ public class EnemyBehaviour : MonoBehaviour
                 result = true;
                 break;
 
-                //RaycastHit hit;
-                //if(Physics.Raycast(this.transform.position, transform.TransformDirection(Vector3.forward), out hit, this.m_RangeOfVision))
-                //{
-                //    if you hit a graph node and it's closed, it has a tower, and that means you saw a tower
-                //if (hit.transform.tag == "GraphNode")
-                //{
-                //    if (!hit.transform.gameObject.getComponent<LevelNode>().Open)
-                //    {
-                //        target_tower = g;
-                //        return true;
-                //    }
-                //    return false
-                //}
-                //}
-                //return false;
             }//end if
 
             //The closer you are, the harder it gets to see a tower.
