@@ -24855,7 +24855,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Player: {fileID: 0}
-  m_OutputDebugLogs: 0
+  m_OutputDebugLogs: 1
   grid_generator: {fileID: 0}
   m_WhatIsNearby: 1
   m_VisionErrorMargin: 0.2

@@ -156,38 +156,46 @@ public class EnemyBehaviour : MonoBehaviour
         float dot = Vector3.Dot(this.transform.forward, (playerpos - enemypos).normalized);
         //If our dot product is exactly 1, then the player is exactly in front of us
         float desired_result = 1.0f;
-        bool facing_player = (desired_result - m_VisionErrorMargin <= dot && dot <= desired_result + m_VisionErrorMargin);
-        //string message = (facing_player) ? "Player spotted!" : "Player NOT spotted!";
-        //Debug.Log(message);
+        float distance_to_player = (playerpos - enemypos).magnitude;
+        float m = this.m_RangeOfVision / distance_to_player;
+        if (m > 2.0f) { m = 2.0f; }
+        //bool facing_player = (desired_result - m_VisionErrorMargin <= dot);
+        bool facing_player = (desired_result - m <= dot);
 
+        bool result = false;
+        string message = "";
         //if we're facing the target, then we can consider a raycast
         if (facing_player)
         {
-            //Reset the timer on seeing the player
-            this.m_PlayerLastSeenTimer = 0.0f;
-            //Increment it just a touch, to get HasSeenPlayerRecently moving
-            this.m_PlayerLastSeenTimer += DELTA_T;
+            message += "Enemy is facing the player. ";
 
-            if (m_OutputDebugLogs)
+            Vector3 origin = this.transform.position;
+            Vector3 direction = (this.m_Player.transform.position - this.transform.position).normalized;
+            //Put end [range of vision] units toward the player
+            Vector3 end = this.transform.position + direction * this.m_RangeOfVision;
+            Debug.DrawLine(origin, end, Color.white, 1.0f);
+
+            RaycastHit hit;
+            if (Physics.Raycast(origin, direction, out hit, this.m_RangeOfVision))
             {
-                Debug.Log("Enemy IS facing player!");
-            }
-            return true;
+                if (hit.collider.gameObject.GetComponent<PlayerMovement>() != null)
+                {
+                    //Reset the timer on seeing the player
+                    this.m_PlayerLastSeenTimer = 0.0f;
+                    //Increment it just a touch, to get HasSeenPlayerRecently moving
+                    this.m_PlayerLastSeenTimer += DELTA_T;
 
-            //RaycastHit hit;
-            //if (Physics.Raycast(this.transform.position, transform.TransformDirection(Vector3.forward), out hit, this.m_RangeOfVision))
-            //{
-            //    if (hit.transform.tag == "Player")
-            //    {
-            //        return true;
-            //    }
-            //}
+                    result = true;
+                }
+            }
         }
         if (m_OutputDebugLogs)
         {
-            Debug.Log("Enemy NOT facing player!");
+            string template = " see the player.";
+            message += (result ? " Enemy DOES": " Enemy DOES NOT") + template;
+            Debug.Log(message);
         }
-        return false;
+        return result;
     }
 
     //For now I'll assume that if the tower is somewhat in front of us, even if it's behind a wall, we can see it.
@@ -449,32 +457,6 @@ public class EnemyBehaviour : MonoBehaviour
     {
         grid_generator = FindObjectOfType<GenerateGrid>();
         this.m_Player = FindObjectOfType<PlayerMovement>().gameObject.transform;
-
-        //Set our decision tree
-        //Conditions
-        //DTNode.ConditionNode r1n1 = new DTNode.ConditionNode(SeesTower);
-        //DTNode.ConditionNode r2n1 = new DTNode.ConditionNode(TowerNearby);
-        //DTNode.ConditionNode r2n2 = new DTNode.ConditionNode(SeesPlayer);
-        //DTNode.ConditionNode r3n3 = new DTNode.ConditionNode(PlayerNearby);
-
-        ////Actions
-        //DTNode.ActionNode r3n1 = new DTNode.ActionNode(AttackTower);
-        //DTNode.ActionNode r3n2 = new DTNode.ActionNode(MoveToTower);
-        //DTNode.ActionNode r3n4 = new DTNode.ActionNode(Default);
-        //DTNode.ActionNode r4n1 = new DTNode.ActionNode(AttackPlayer);
-        //DTNode.ActionNode r4n2 = new DTNode.ActionNode(MoveToPlayer);
-
-        ////Row 1
-        //r1n1.affirmative = r2n1;
-        //r1n1.negative = r2n2;
-        ////Row 2
-        //r2n1.affirmative = r3n1;
-        //r2n1.negative = r3n2;
-        //r2n2.affirmative = r3n3;
-        //r2n2.negative = r3n4;
-        ////Row 3
-        //r3n3.affirmative = r4n1;
-        //r3n3.negative = r4n2;
 
         /*
         The convention for the naming of the nodes is as follows: r => row, n => number, where: r1n1 means "the first node on the first row"
