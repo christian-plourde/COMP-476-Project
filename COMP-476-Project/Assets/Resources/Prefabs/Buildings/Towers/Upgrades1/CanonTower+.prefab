@@ -259,10 +259,10 @@ MonoBehaviour:
   price: 500
   tier: 2
   health: 250
-  description: 'Upgrade to the Cannon Tower.\nDamage : 7 -> 16 on impact + 10 -> 25
-    within 1 -> 1.5)\nAttack cooldown : 1.75s\nRange : 7 -> 10\nHeight limit : 1.15
-    -> 1.535Maximum aim time : 3s\nHealth : 150 -> 250\nPrice : 500'
-  upgrade: {fileID: 0}
+  description: 'Damage : 7 -> 16 on impact + 5 -> 12 within 1 -> 1.5)\nAttack cooldown
+    : 1.75s\nRange : 7 -> 10\nHeight limit : 1.15 -> 1.535\nMaximum aim time : 3s\nHealth
+    : 150 -> 250\nPrice : 500'
+  upgrade: {fileID: 165880, guid: f5912896d882eaf47aa92a882d48d35f, type: 3}
 --- !u!114 &-5769318891380437015
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -281,9 +281,9 @@ MonoBehaviour:
   rotationSpeed: 3
   heightLimit: 1.535
   inaccuracy: 0.45
-  projectile: {fileID: 3823272756201023609, guid: f2a4533ff0e177142886b300140104ac,
+  projectile: {fileID: 3823272756201023609, guid: 72ab88360f7c5694298775663e272101,
     type: 3}
-  projectileSpawnPointOffset: {x: 0, y: 1.535, z: 0.6}
+  projectileSpawnPointOffset: {x: 0, y: 1.535, z: 0.5}
   possibleTargets: ground
   projectileType: ballistic
 --- !u!136 &3932064249321642741

@@ -123,5 +123,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   effect: explode
-  value1: 10
+  value1: 5
   value2: 1

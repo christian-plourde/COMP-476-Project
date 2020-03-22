@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class DamageArea : MonoBehaviour
 {
-    public int cooldown;
-    public float damage, range;
+    public float damage, range, cooldown;
 
     private int scanTimer, cooldownTimer;
 
     void Start()
     {
+        // Convert from seconds to frames
         cooldown *= 60;
     }
 

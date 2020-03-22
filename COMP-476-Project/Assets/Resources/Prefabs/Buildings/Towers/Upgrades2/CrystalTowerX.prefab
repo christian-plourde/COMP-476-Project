@@ -481,7 +481,7 @@ GameObject:
   - component: {fileID: 8279432291139415989}
   - component: {fileID: 5497288676935950410}
   m_Layer: 0
-  m_Name: CrystalTower+
+  m_Name: CrystalTowerX
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -496,7 +496,7 @@ Transform:
   m_GameObject: {fileID: 187918}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.9, y: 1.2, z: 0.9}
+  m_LocalScale: {x: 1, y: 1.4, z: 1}
   m_Children:
   - {fileID: 409546}
   - {fileID: 458352}
@@ -538,12 +538,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 003d88c9bd2b60447b3c825526b35a9e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  price: 400
-  tier: 2
-  health: 100
-  description: 'Damage :6 -> 15\nAttack cooldown : 0.8s -> 0.6s\nRange : 2.5 -> 3\nMaximum
-    aim time : Instant\nHealth : 100\nPrice : 100'
-  upgrade: {fileID: 187918, guid: 19ddf8fe95d2e2d439fb055370d7176f, type: 3}
+  price: 1000
+  tier: 3
+  health: 250
+  description: 'Damage :15 -> 35\nAttack cooldown : 0.6s\nRange : 3\nMaximum aim time
+    : Instant\nHealth : 100 -> 250\nPrice : 1000'
+  upgrade: {fileID: 0}
 --- !u!114 &5497288676935950410
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -557,13 +557,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackSpeed: 0.6
-  damage: 15
+  damage: 35
   range: 3
   rotationSpeed: 0
   heightLimit: 0
   inaccuracy: 0
   projectile: {fileID: 682383995980441880, guid: 954904e99a69b16409a1b73368766f22,
     type: 3}
-  projectileSpawnPointOffset: {x: 0, y: 1.44, z: 0}
+  projectileSpawnPointOffset: {x: 0, y: 1.68, z: 0}
   possibleTargets: both
   projectileType: homing
