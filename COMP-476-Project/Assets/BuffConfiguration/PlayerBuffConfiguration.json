@@ -7,7 +7,8 @@
       "description": "Increases damage dealt to enemies by towers. - Britney Spears, 1965",
       "category": "BUILD",
       "prerequisites": [],
-      "method": "BuffTowerDamage"
+      "method": "BuffTowerDamage",
+      "repeatable": false
     },
     {
       "uid": 1,
@@ -15,7 +16,8 @@
       "description": "Increases damage dealt by player attacks. - Mohamed Ali, 2020",
       "category": "ATTACK",
       "prerequisites": [],
-      "method": "BuffAttackDamage"
+      "method": "BuffAttackDamage",
+      "repeatable": false
     },
     {
       "uid": 2,
@@ -23,7 +25,8 @@
       "description": "Increases the player movement speed. - Sonic the Hedgehog, 1850",
       "category": "RUN",
       "prerequisites": [],
-      "method": "BuffPlayerSpeed"
+      "method": "BuffPlayerSpeed",
+      "repeatable": false
     },
     {
       "uid": 3,
@@ -35,19 +38,21 @@
         0,
         2
       ],
-      "method": "BuffRallyingCall"
+      "method": "BuffRallyingCall",
+      "repeatable": true
     },
     {
       "uid": 4,
       "name": "Cement Soup",
-      "description": "Repairs all towers a small amount when an enemy is killed. - Bob the Builder, 1992",
+      "description": "Repairs all towers a small amount when an enemy is killed or player levels up. - Bob the Builder, 1992",
       "category": "BUILD",
       "prerequisites":
       [
         0,
         1
       ],
-      "method": "BuffCementSoup"
+      "method": "BuffCementSoup",
+      "repeatable": false
     },
     {
       "uid": 5,
@@ -59,19 +64,21 @@
         0,
         1
       ],
-      "method": "BuffArtOfWar"
+      "method": "BuffArtOfWar",
+      "repeatable": true
     },
     {
       "uid": 6,
       "name": "Fastest Man Alive",
-      "description": "Charges a special attack meter while moving. Can be discharged when full for a damage boost to the next attack. - Barry Allen, 200 B.C.",
+      "description": "Charges a special attack meter while moving. When fully charged, player gets a damage boost for a limited time. - Barry Allen, 200 B.C.",
       "category": "ATTACK",
       "prerequisites":
       [
         1,
         2
       ],
-      "method": "BuffFastestManAlive"
+      "method": "BuffFastestManAlive",
+      "repeatable": true
     },
     {
       "uid": 7,
@@ -83,7 +90,8 @@
         1,
         2
       ],
-      "method": "BuffThriller"
+      "method": "BuffThriller",
+      "repeatable": true
     },
     {
       "uid": 8,
@@ -95,7 +103,8 @@
         2,
         0
       ],
-      "method": "BuffDivideAndConquer"
+      "method": "BuffDivideAndConquer",
+      "repeatable": true
     }
   ]
 }

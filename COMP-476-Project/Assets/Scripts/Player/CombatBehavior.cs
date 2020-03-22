@@ -15,6 +15,8 @@ public class CombatBehavior : MonoBehaviour
     public Transform AttackTarget;
 
     public float baseDamage = 5;
+    private float artOfWarMultiplier = 1;
+    private float fastestManAliveMultiplier = 1;
 
     Transform PlayerMesh;
 
@@ -42,6 +44,18 @@ public class CombatBehavior : MonoBehaviour
     [Header("Cooldown Time Parameters")]
     public float howLongUltimateCooldown;
     public float howLongSecondaryCooldown;
+
+    public float ArtOfWarMultiplier
+    {
+        get { return artOfWarMultiplier; }
+        set { artOfWarMultiplier = value; }
+    }
+
+    public float FastestManAliveMultiplier
+    {
+        get { return fastestManAliveMultiplier; }
+        set { fastestManAliveMultiplier = value; }
+    }
 
     void Start()
     {
@@ -267,7 +281,7 @@ public class CombatBehavior : MonoBehaviour
                     obj = Instantiate(ProjectilePrefab, LaunchPoint.position, Quaternion.identity);
                     try
                     {
-                        obj.GetComponent<Arrow>().SetArrowDamage(baseDamage);
+                        obj.GetComponent<Arrow>().SetArrowDamage(baseDamage * artOfWarMultiplier * fastestManAliveMultiplier);
                         //Debug.Log("Arrow damage is: " + obj.GetComponent<Arrow>().baseDamage);
                     }
 

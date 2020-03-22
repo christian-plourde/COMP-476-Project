@@ -441,6 +441,7 @@ public class NGramManager
     int depth_of_prediction; //the depth of prediction. If three, we create a 3 gram heirarchy and when predicting we look
     //at last two observations to guess the third
     int samples_for_prediction; //the number of samples required for prediction by ngram
+    private PlayerBuffManager player_buffs; //the player buffs
 
     public int SamplesForPrediction
     {
@@ -458,8 +459,9 @@ public class NGramManager
     /// <param name="string_capacity">The size of the live circular training data set</param>
     /// <param name="depth_of_prediction">The number of samples it looks at for predicting (the input string length)</param>
     /// <param name="samples_for_prediction">The number of samples required for prediction. Should be larger than 0.</param>
-    public NGramManager(int string_capacity, int depth_of_prediction, int samples_for_prediction)
+    public NGramManager(int string_capacity, int depth_of_prediction, int samples_for_prediction, PlayerBuffManager player_buffs)
     {
+        this.player_buffs = player_buffs;
         ngrams = new List<NGram>();
         player_actions = new NGramString(string_capacity);
         this.depth_of_prediction = depth_of_prediction;
@@ -478,7 +480,7 @@ public class NGramManager
 
     //if ngram predict fails we move to the next ngram, in descending order since they are in increasing order of
     //complxity in ouyr collection
-    public PlayerAction Predict()
+    public List<Buff> Predict()
     {
         int i = ngrams.Count - 1;
 
@@ -486,10 +488,22 @@ public class NGramManager
         {
             try
             {
-                return ngrams[i].Predict();
+                string res = ngrams[i].Predict().ToString();
+
+                List<Buff> toReturn = new List<Buff>();
+                foreach(Buff b in player_buffs.Buffs)
+                {
+                    if(b.category == res)
+                    {
+                        toReturn.Add(b);
+                    }
+                }
+
+                return toReturn;
+
             }
 
-            catch(Exception e)
+            catch
             {
                 i--;
             }

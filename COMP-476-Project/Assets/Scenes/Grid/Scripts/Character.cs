@@ -70,6 +70,8 @@ public class Character : NPC
     /// </summary>
     public BEHAVIOUR_TYPE BehaviourType
     {
+        get { return this.behaviour_type; }
+
         set { behaviour_type = value; 
         
             switch(behaviour_type)

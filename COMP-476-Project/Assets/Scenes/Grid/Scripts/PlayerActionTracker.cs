@@ -17,18 +17,19 @@ public class PlayerActionTracker : Observer
     private int attackCounter = 0; //the current attack count (how many times the player has attacked). only reset when it exceeds
                                    //threshold for adding an action to training data.
 
-    private PlayerAction buff_category; //the predicted action at the end of the wave. determines which buffs player has access to
+    private List<Buff> available_buffs; //the predicted action at the end of the wave. determines which buffs player has access to
 
-    public PlayerAction BuffCategory
-    {
-        get { return buff_category; }
-    }
+    private PlayerBuffManager player_buffs; //all of the buffs available to player
+
+
 
     // Start is called before the first frame update
     void Start()
     {
-        n_gram = new NGramManager(100, 3, 2); //set ngram manager to get our heirarchy
+        player_buffs = FindObjectOfType<PlayerBuffManager>();
+        n_gram = new NGramManager(100, 3, 2, player_buffs); //set ngram manager to get our heirarchy
         //Debug.Log(n_gram);
+        
     }
 
     // Update is called once per frame
@@ -73,8 +74,9 @@ public class PlayerActionTracker : Observer
         try
         {
             //set the buff category using the n grams prediction.
-            buff_category = n_gram.Predict();
+            available_buffs = n_gram.Predict();
             //Debug.Log(buff_category);
+            //
             //instantiate the UI prefab where the player can select which buff he'd like to get.
 
         }

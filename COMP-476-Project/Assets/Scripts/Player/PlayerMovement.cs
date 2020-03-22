@@ -46,6 +46,20 @@ public class PlayerMovement : MonoBehaviour
     public GridSquare currentGridSquare;
     public GenerateGrid grid;
 
+    private float thrillerMultiplier = 1;
+    private float divideAndConquerMultiplier = 1; 
+
+    public float ThrillerMultiplier
+    {
+        get { return thrillerMultiplier; }
+        set { thrillerMultiplier = value; }
+    }
+
+    public float DivideAndConquerMultiplier
+    {
+        get { return divideAndConquerMultiplier; }
+        set { divideAndConquerMultiplier = value; }
+    }
 
     public GridSquare GridSquare
     {
@@ -117,7 +131,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (Input.GetKey(KeyCode.W))
         {
-            transform.Translate(transform.forward.normalized *sprintMultiplier* mSpeed * Time.deltaTime);
+            transform.Translate(transform.forward.normalized *sprintMultiplier * mSpeed * ThrillerMultiplier * DivideAndConquerMultiplier * Time.deltaTime);
             FacingDirection += transform.forward;
             //delegate align towards facing direction.
             AlignOrientation(FacingDirection);
@@ -125,7 +139,7 @@ public class PlayerMovement : MonoBehaviour
         }
         if (Input.GetKey(KeyCode.S))
         {
-            transform.Translate(-1 * transform.forward.normalized * sprintMultiplier * mSpeed * Time.deltaTime);
+            transform.Translate(-1 * transform.forward.normalized * sprintMultiplier * mSpeed * ThrillerMultiplier * DivideAndConquerMultiplier * Time.deltaTime);
             FacingDirection+= (transform.forward * -1);
             //delegate align towards facing direction.
             AlignOrientation(FacingDirection);
@@ -133,7 +147,7 @@ public class PlayerMovement : MonoBehaviour
         }
         if (Input.GetKey(KeyCode.D))
         {
-            transform.Translate(transform.right.normalized * sprintMultiplier * mSpeed * Time.deltaTime);
+            transform.Translate(transform.right.normalized * sprintMultiplier * mSpeed * ThrillerMultiplier * DivideAndConquerMultiplier * Time.deltaTime);
             FacingDirection += transform.right;
             //delegate align towards facing direction.
             AlignOrientation(FacingDirection);
@@ -141,7 +155,7 @@ public class PlayerMovement : MonoBehaviour
         }
         if (Input.GetKey(KeyCode.A))
         {
-            transform.Translate(-1 * transform.right.normalized * sprintMultiplier * mSpeed * Time.deltaTime);
+            transform.Translate(-1 * transform.right.normalized * sprintMultiplier * mSpeed * ThrillerMultiplier * DivideAndConquerMultiplier * Time.deltaTime);
             FacingDirection += (transform.right * -1);
             //delegate align towards facing direction.
             AlignOrientation(FacingDirection);
