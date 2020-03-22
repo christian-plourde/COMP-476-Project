@@ -12,15 +12,22 @@ public class TowerAttack : MonoBehaviour
     public string possibleTargets, projectileType;
 
     //TODO : make these fields private
-    private float attackTimer, attackCooldown, targetScanTimer;
+    private float attackTimer, attackCooldown, targetScanTimer, rallyingCallMultiplier;
     private GameObject target;
     private bool targetLinedUp = false;
     private Dictionary<string, int> multipliers = new Dictionary<string, int>();
     private Vector3 adjustedRotation = new Vector3(0,0,0);
     private Vector3 adjustedProjectileSpawnPoint;
 
+    public float RallyingCallMultiplier
+    {
+        get { return rallyingCallMultiplier; }
+        set { rallyingCallMultiplier = value; }
+    }
+
     void Start()
     {
+        RallyingCallMultiplier = 1.0f;
         attackCooldown = attackSpeed * 60;
         attackTimer = attackCooldown;
         targetScanTimer = 20f;
@@ -33,6 +40,8 @@ public class TowerAttack : MonoBehaviour
 
     void Update()
     {
+        attackCooldown = attackSpeed * 60 * rallyingCallMultiplier;
+
         if (attackTimer < attackCooldown) attackTimer++;
         if (target && validTarget(target) == true)
         {

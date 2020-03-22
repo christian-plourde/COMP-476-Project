@@ -24,11 +24,15 @@ public class EnemyAttributes : MonoBehaviour
     [Range(0,1)]
     public float healthDropRate;
 
+
+    private PlayerBuffManager player_buffs;
+
     // Start is called before the first frame update
     void Start()
     {       
         maxHealth = health;
         animator = GetComponent<Animator>();
+        player_buffs = FindObjectOfType<PlayerBuffManager>();
     }
 
     public float GetHeightOffset()
@@ -60,6 +64,8 @@ public class EnemyAttributes : MonoBehaviour
 
     public void KillEnemy()
     {
+        player_buffs.ApplyCementSoup();
+
         animator.SetBool("Dead", true);
         isDead = true;
         GameObject playerRef = GameObject.FindGameObjectWithTag("Player");

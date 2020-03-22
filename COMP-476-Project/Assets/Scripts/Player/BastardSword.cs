@@ -6,7 +6,7 @@ public class BastardSword : MonoBehaviour
 {
     [Range(0, 100)]
     public int criticalChance;
-    public int baseDMG=4;
+    public float baseDMG=4;
 
     public GameObject popUpDMG_Prefab;
 
@@ -20,7 +20,7 @@ public class BastardSword : MonoBehaviour
         if (other.tag == "Enemy")
         {
             // roll critical
-            int dmg = baseDMG;
+            float dmg = baseDMG;
             int r = Random.Range(0, 100);
             bool crit=false;
             if (r < criticalChance)
