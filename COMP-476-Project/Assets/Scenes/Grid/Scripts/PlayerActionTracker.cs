@@ -10,6 +10,9 @@ public class PlayerActionTracker : Observer
     public float runTimerSeconds = 1.0f; //how many seconds player must run for it to count as a run action for ngram
     [Tooltip("The number of attack the player must make for the ngram to register an attack action")]
     public int attackCount = 6; //how many hits player must do to count as an attack in n gram
+    [Tooltip("UI Prefab")]
+    public GameObject UIPrefab;
+    public GameObject Canvas;
 
     private float runTimer = 0.0f; //the current run timer (how long the player has been running). only reset when it exceeds
                                    //threshold for adding an action to training data
@@ -78,6 +81,9 @@ public class PlayerActionTracker : Observer
             //Debug.Log(buff_category);
             //
             //instantiate the UI prefab where the player can select which buff he'd like to get.
+            GameObject temp = Instantiate(UIPrefab, UIPrefab.transform.position, Quaternion.identity);
+            temp.transform.SetParent(Canvas.transform, false);
+            temp.GetComponent<BuffUIScript>().BList = available_buffs;
 
         }
 
