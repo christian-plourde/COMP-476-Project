@@ -2958,7 +2958,7 @@ MonoBehaviour:
   m_Player: {fileID: 0}
   m_OutputDebugLogs: 0
   grid_generator: {fileID: 0}
-  m_WhatIsNearby: 0.2
+  m_WhatIsNearby: 1
   m_VisionErrorMargin: 0.2
   m_RangeOfVision: 10
   m_AttackFrequency: 1.5
