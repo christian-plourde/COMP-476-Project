@@ -27,7 +27,7 @@ public class ProjectileMovement : MonoBehaviour
     {
         movePerFrame = moveSpeed / 60;
 
-        // Div by 2.5 for ballistic to give an approximate equivalence so that users can move speed in intuitive units per second and function handles the rest
+        // Div by 2.5 for ballistic to give an approximate equivalence so that users can enter move speed in intuitive unit and function handles the rest
         if (movementType == "ballistic") movePerFrame /= 2.5f;
 
         // sounds
@@ -39,9 +39,12 @@ public class ProjectileMovement : MonoBehaviour
 
     void Update()
     {
+        if (target == null)
+                {
+                    Destroy(gameObject);
+                }
         switch(movementType){
-            case "homing":
-
+            case "homing":      
                 // Movement
                 transform.position = Vector3.MoveTowards(transform.position, target.transform.position + aimAtTheirChest, movePerFrame);
                 transform.rotation = Quaternion.LookRotation(target.transform.position + aimAtTheirChest - transform.position);

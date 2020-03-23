@@ -93,7 +93,7 @@ GameObject:
   - component: {fileID: -7430049837553062543}
   - component: {fileID: 8601157671451435589}
   m_Layer: 0
-  m_Name: ArrowTower+
+  m_Name: ArrowTowerX
   m_TagString: Tower
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -108,7 +108,7 @@ Transform:
   m_GameObject: {fileID: 2818103337241428834}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 3.29, y: 0, z: -2.03}
-  m_LocalScale: {x: 0.1, y: 0.35, z: 0.1}
+  m_LocalScale: {x: 0.06, y: 0.2, z: 0.06}
   m_Children:
   - {fileID: 2818103337241141056}
   - {fileID: 2818103337241141062}
@@ -147,7 +147,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f4e6ef9d7a44e84d9342acfd2e6e1fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackSpeed: 1
+  attackSpeed: 0.3
   damage: 9
   range: 6
   rotationSpeed: 0
@@ -155,7 +155,7 @@ MonoBehaviour:
   inaccuracy: 0
   projectile: {fileID: 2196552046661029865, guid: 9ac0c50f179b1624f9b3e3508943980d,
     type: 3}
-  projectileSpawnPointOffset: {x: 0, y: 4.5, z: 0}
+  projectileSpawnPointOffset: {x: 0, y: 1.82, z: 0}
   possibleTargets: both
   projectileType: homing
 --- !u!114 &1231994795544744464
@@ -170,11 +170,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 003d88c9bd2b60447b3c825526b35a9e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  price: 250
-  tier: 2
-  health: 150
-  description: 'Arrow Tower upgrade.\nDamage : 10 -> 20\nAttack cooldown : 1\nRange
-    : 5 -> 6\nMaximum aim time : Instant\nHealth : 100 -> 150\nPrice : 250'
+  price: 750
+  tier: 3
+  health: 300
+  description: 'Damage :9\nAttack cooldown : 1 -> 0.3\nRange : 6\nMaximum aim time
+    : Instant\nHealth : 150 -> 300\nPrice : 750'
   upgrade: {fileID: 0}
 --- !u!23 &-7430049837553062543
 MeshRenderer:

@@ -258,7 +258,8 @@ public class PlayerMovement : MonoBehaviour
 
         animator.SetBool("Dead", true);
         animator.SetLayerWeight(1, 0);
-        animator.SetLayerWeight(2, 0);
+        if(playerClass=="Warrior")
+            animator.SetLayerWeight(2, 0);
 
         GameObject gb=GameObject.FindGameObjectWithTag("BuildMenu");
         if (gb != null)

@@ -34,8 +34,21 @@ public class TowerUIObject : MonoBehaviour
         towerNameUI.text = "" + towerName;
         costUI.text = "Cost: " + towerCost;
 
-        damageText.text = "Damage: " + towerPrefab.GetComponent<TowerAttack>().damage;
-        rangeText.text = "Range: " + towerPrefab.GetComponent<TowerAttack>().range;
+        if (towerPrefab.GetComponent<TowerAttack>() != null)
+        {
+            damageText.text = "Damage: " + towerPrefab.GetComponent<TowerAttack>().damage;
+            rangeText.text = "Range: " + towerPrefab.GetComponent<TowerAttack>().range;
+        }
+        else if (towerPrefab.GetComponent<DamageArea>()!=null)
+        {
+            damageText.text = "Damage: " + towerPrefab.GetComponent<DamageArea>().damage;
+            rangeText.text = "Range: " + towerPrefab.GetComponent<DamageArea>().range;
+        }
+        else
+        {
+            damageText.text = "Damage: -";
+            rangeText.text = "Range: -";
+        }
         healthText.text = "Health: " + towerPrefab.GetComponent<BuildingStats>().health;
 
 

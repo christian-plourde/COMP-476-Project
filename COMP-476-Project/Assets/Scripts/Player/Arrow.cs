@@ -38,6 +38,7 @@ public class Arrow : MonoBehaviour
         
         if (collision.collider.tag != "Player")
         {
+            /*
             GameObject gb;
             if (collision.collider.tag=="Map")
                 gb = Instantiate(arrowPrefab, transform.position, transform.rotation);
@@ -46,11 +47,11 @@ public class Arrow : MonoBehaviour
 
             gb.transform.Translate(gb.transform.forward * 0.8f);
             Destroy(gb.gameObject, 10f);            // destroy spawned arrow after 60 secs
-
+            
             // for scale adjustment on static arrows
             gb.transform.localScale = new Vector3(scaleFactor,scaleFactor,scaleFactor);
             //gb.transform.localScale = new Vector3(gb.transform.localScale.x*0.25f, gb.transform.localScale.x * 0.25f, gb.transform.localScale.x * 0.25f);
-
+            */
             // damage if its an enemy
             if (collision.collider.tag == "Enemy")
             {

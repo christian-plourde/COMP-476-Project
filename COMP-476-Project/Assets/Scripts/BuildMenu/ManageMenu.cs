@@ -55,8 +55,16 @@ public class ManageMenu : MonoBehaviour
 
 
         // comparison old
-        OldDMG.text = currentTower.GetComponent<TowerAttack>().damage+"";
-        OldRange.text = currentTower.GetComponent<TowerAttack>().range+"";
+        if (currentTower.GetComponent<TowerAttack>() != null)
+        {
+            OldDMG.text = currentTower.GetComponent<TowerAttack>().damage + "";
+            OldRange.text = currentTower.GetComponent<TowerAttack>().range + "";
+        }
+        else if (currentTower.GetComponent<DamageArea>() != null)
+        {
+            OldDMG.text = currentTower.GetComponent<DamageArea>().damage + "";
+            OldRange.text = currentTower.GetComponent<DamageArea>().range + "";
+        }
         OldHP.text = currentTower.GetComponent<BuildingStats>().MaxHealth+"";
         OldTier.text = currentTower.GetComponent<BuildingStats>().tier + "";
 
@@ -70,8 +78,16 @@ public class ManageMenu : MonoBehaviour
             upgradeCostText.text = "Cost: " + upgradeCost;
 
             // comparison new
-            NewDMG.text = upgradedTower.GetComponent<TowerAttack>().damage + "";
-            NewRange.text = upgradedTower.GetComponent<TowerAttack>().range + "";
+            if (currentTower.GetComponent<TowerAttack>() != null)
+            {
+                NewDMG.text = upgradedTower.GetComponent<TowerAttack>().damage + "";
+                NewRange.text = upgradedTower.GetComponent<TowerAttack>().range + "";
+            }
+            else if (currentTower.GetComponent<DamageArea>() != null)
+            {
+                NewDMG.text = upgradedTower.GetComponent<DamageArea>().damage + "";
+                NewRange.text = upgradedTower.GetComponent<DamageArea>().range + "";
+            }
             NewHP.text = upgradedTower.GetComponent<BuildingStats>().health + "";
             NewTier.text = upgradedTower.GetComponent<BuildingStats>().tier + "";
 
@@ -130,7 +146,8 @@ public class ManageMenu : MonoBehaviour
         //replace towers on that node.
         Transform TowerNode = currentTower.transform.parent;
 
-        GameObject newTower=Instantiate(currentTower.GetComponent<BuildingStats>().upgrade.gameObject, currentTower.transform.position, Quaternion.identity);
+        //GameObject newTower=Instantiate(currentTower.GetComponent<BuildingStats>().upgrade.gameObject, currentTower.transform.position, Quaternion.identity);
+        GameObject newTower=Instantiate(currentTower.GetComponent<BuildingStats>().upgrade.gameObject, currentTower.transform.position, currentTower.transform.rotation);
         newTower.transform.SetParent(TowerNode);
 
         Destroy(currentTower.gameObject);
