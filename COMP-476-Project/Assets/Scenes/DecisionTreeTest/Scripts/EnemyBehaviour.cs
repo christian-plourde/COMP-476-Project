@@ -132,6 +132,7 @@ public class EnemyBehaviour : MonoBehaviour
     /// <summary>
     /// Tells us whether the player is within sight of the enemy; to be used in the decision tree.
     /// Reinitializes [m_PlayerLastSeenTimer] on enemy sees player.
+    /// The closer the enemy is to the target, the more likely the enemy will see the target.
     /// </summary>
     /// <returns></returns>
     protected virtual bool SeesPlayer()
@@ -205,7 +206,7 @@ public class EnemyBehaviour : MonoBehaviour
     //For now I'll assume that if the tower is somewhat in front of us, even if it's behind a wall, we can see it.
     /// <summary>
     /// Tells us whether a tower is within sight of the enemy; condition function to be used in the decision tree.
-    /// Note: also implements a failsafe distance check and arbitrarily returns true if the tower is close enough to the enemy. This is to compensate for the tower being progressively harder to see as you get closer to it.
+    /// The closer the enemy is to its target, the more likely the enemy is to see the target.
     /// </summary>
     /// <returns></returns>
     protected virtual bool SeesTower()
@@ -213,41 +214,15 @@ public class EnemyBehaviour : MonoBehaviour
         Vector3 enemypos = this.transform.position;
         bool result = false;
 
+        //For each node where we have a tower
         foreach(GameObject tower_node in tower_nodes)
         {
-            //float dot = Vector3.Dot(this.transform.forward, (tower_node.transform.position - enemypos).normalized);
-            ////If our dot product is exactly 1, then the tower is exactly in front of us
-            //float desired_result = 1.0f;
-            //bool facing_tower = (desired_result - m_VisionErrorMargin <= dot && dot <= desired_result + m_VisionErrorMargin);
-
-            ////if we're facing the target, then we can consider a raycast
-            //if (facing_tower)
-            //{
-
-            //    //TEMPORARY
-            //    m_TargetTowerNode = tower_node;
-            //    //Debug.Log(message);
-            //    result = true;
-            //    break;
-
-            //}//end if
-
-            ////The closer you are, the harder it gets to see a tower.
-            ////As a failsafe, if you come within some minimum distance of a tower, just attack it, you're blind and it's next to you.
-            //float distance = (tower_node.transform.position - this.transform.position).magnitude;
-            //if (distance <= m_WhatIsNearby)
-            //{
-            //    //Debug.Log("Enemy doesn't see tower but is passing next to one; attacking!");
-            //    result = true;
-            //    break;
-            //}
-
-            // ***
+            //get me the LevelNode of that node
             LevelNode node = tower_node.GetComponent<LevelNode>();
-            //ensure the tower at our node exists
+            //ensure the tower at our LevelNode exists
             if (node.Tower != null)
             {
-                //if our tower exists, tell me whether we see it
+                //if our tower exists, tell me whether we can actually see it
                 Vector3 tower_height_offset = new Vector3(0.0f, 1.0f, 0.0f);
                 Vector3 towerpos = node.Tower.transform.position + tower_height_offset;
                 float dot = Vector3.Dot(this.transform.forward, (towerpos - enemypos).normalized);
