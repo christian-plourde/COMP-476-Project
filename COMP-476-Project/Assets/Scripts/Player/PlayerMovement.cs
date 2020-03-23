@@ -14,7 +14,9 @@ public class PlayerMovement : MonoBehaviour
     public float health = 100f;
     public float maxHealth;
     public int gold = 200;
-    public bool invincible;
+    public bool invincible;                              // if on, wont take damage at all.
+    [Range(0,1)]
+    public float dmgResistance;                          // take dmgResistance percentage times less damage. e.g. 0.2 resistance = 20% damage reduction, 1 will make player invincible
     Vector3 respawnPos;
 
 
@@ -46,6 +48,20 @@ public class PlayerMovement : MonoBehaviour
     public GridSquare currentGridSquare;
     public GenerateGrid grid;
 
+    private float thrillerMultiplier = 1;
+    private float divideAndConquerMultiplier = 1; 
+
+    public float ThrillerMultiplier
+    {
+        get { return thrillerMultiplier; }
+        set { thrillerMultiplier = value; }
+    }
+
+    public float DivideAndConquerMultiplier
+    {
+        get { return divideAndConquerMultiplier; }
+        set { divideAndConquerMultiplier = value; }
+    }
 
     public GridSquare GridSquare
     {
@@ -117,7 +133,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (Input.GetKey(KeyCode.W))
         {
-            transform.Translate(transform.forward.normalized *sprintMultiplier* mSpeed * Time.deltaTime);
+            transform.Translate(transform.forward.normalized *sprintMultiplier * mSpeed * ThrillerMultiplier * DivideAndConquerMultiplier * Time.deltaTime);
             FacingDirection += transform.forward;
             //delegate align towards facing direction.
             AlignOrientation(FacingDirection);
@@ -125,7 +141,7 @@ public class PlayerMovement : MonoBehaviour
         }
         if (Input.GetKey(KeyCode.S))
         {
-            transform.Translate(-1 * transform.forward.normalized * sprintMultiplier * mSpeed * Time.deltaTime);
+            transform.Translate(-1 * transform.forward.normalized * sprintMultiplier * mSpeed * ThrillerMultiplier * DivideAndConquerMultiplier * Time.deltaTime);
             FacingDirection+= (transform.forward * -1);
             //delegate align towards facing direction.
             AlignOrientation(FacingDirection);
@@ -133,7 +149,7 @@ public class PlayerMovement : MonoBehaviour
         }
         if (Input.GetKey(KeyCode.D))
         {
-            transform.Translate(transform.right.normalized * sprintMultiplier * mSpeed * Time.deltaTime);
+            transform.Translate(transform.right.normalized * sprintMultiplier * mSpeed * ThrillerMultiplier * DivideAndConquerMultiplier * Time.deltaTime);
             FacingDirection += transform.right;
             //delegate align towards facing direction.
             AlignOrientation(FacingDirection);
@@ -141,7 +157,7 @@ public class PlayerMovement : MonoBehaviour
         }
         if (Input.GetKey(KeyCode.A))
         {
-            transform.Translate(-1 * transform.right.normalized * sprintMultiplier * mSpeed * Time.deltaTime);
+            transform.Translate(-1 * transform.right.normalized * sprintMultiplier * mSpeed * ThrillerMultiplier * DivideAndConquerMultiplier * Time.deltaTime);
             FacingDirection += (transform.right * -1);
             //delegate align towards facing direction.
             AlignOrientation(FacingDirection);
@@ -222,7 +238,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (!invincible && !isDead)
         {
-            health -= dmg;
+            health -= dmg-(dmg*dmgResistance);
             if (health <= 0)
             {
                 health = 0;

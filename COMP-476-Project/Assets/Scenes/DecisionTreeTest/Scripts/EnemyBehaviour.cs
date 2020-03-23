@@ -120,7 +120,9 @@ public class EnemyBehaviour : MonoBehaviour
             result = this.m_EnemyAttributes.health > 0.0f;
         }
 
-        catch { }
+        catch {
+            result = true;        
+        }
         
         if (m_OutputDebugLogs)
         {
@@ -359,7 +361,26 @@ public class EnemyBehaviour : MonoBehaviour
         {
             //Debug.Log("Dealing damage to tower");
             //Attack Tower
-            float attack_damage = this.GetComponent<EnemyAttributes>().damage;
+            float attack_damage = 0.0f;
+            try
+            {
+                attack_damage = this.GetComponent<EnemyAttributes>().damage;
+            }
+
+            catch 
+            {
+                try
+                {
+                    for (int i = 0; i < this.transform.childCount; i++)
+                    {
+                        attack_damage += this.transform.GetChild(i).gameObject.GetComponent<EnemyAttributes>().damage;
+                    }
+                }
+
+                catch { }
+                
+            }
+            //Debug.Log("attacking with damage: " + attack_damage);
             this.m_TargetTowerNode.GetComponent<LevelNode>().Tower.GetComponent<BuildingStats>().Damage(attack_damage);
             this.m_AttackTimer += DELTA_T;
         }
@@ -389,7 +410,25 @@ public class EnemyBehaviour : MonoBehaviour
         {
             //Debug.Log("Dealing damage to player");
             //Attack player
-            float attack_damage = this.GetComponent<EnemyAttributes>().damage;
+            float attack_damage = 0.0f;
+            try
+            {
+                attack_damage = this.GetComponent<EnemyAttributes>().damage;
+            }
+
+            catch 
+            {
+                try
+                {
+                    for (int i = 0; i < this.transform.childCount; i++)
+                    {
+                        attack_damage += this.transform.GetChild(i).gameObject.GetComponent<EnemyAttributes>().damage;
+                    }
+                }
+
+                catch { }
+            }
+            
             this.m_Player.GetComponent<PlayerMovement>().DealDamage(attack_damage);
             this.m_AttackTimer += DELTA_T;
         }

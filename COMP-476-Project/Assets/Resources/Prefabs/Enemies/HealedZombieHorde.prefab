@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 8852857386946175733}
   m_Layer: 0
   m_Name: HealedZombieHorde
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -67,7 +67,7 @@ MonoBehaviour:
   m_Player: {fileID: 0}
   m_OutputDebugLogs: 0
   grid_generator: {fileID: 0}
-  m_WhatIsNearby: 0.2
+  m_WhatIsNearby: 2
   m_VisionErrorMargin: 0.2
   m_RangeOfVision: 10
   m_AttackFrequency: 1.5
@@ -98,6 +98,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8852857386946175690}
     m_Modifications:
+    - target: {fileID: 3559358110198280962, guid: 7f34f6d588198a740ac8d11c6164c519,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5976620684907872521, guid: 7f34f6d588198a740ac8d11c6164c519,
         type: 3}
       propertyPath: m_Name
@@ -239,6 +244,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Zombie (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 2976649899171738362, guid: 3373c39bdd74c1e469e49eea9402fea3,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3373c39bdd74c1e469e49eea9402fea3, type: 3}
 --- !u!1 &1805284188406076880 stripped
@@ -320,6 +330,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Zombie
       objectReference: {fileID: 0}
+    - target: {fileID: 2976649899171738362, guid: 3373c39bdd74c1e469e49eea9402fea3,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3373c39bdd74c1e469e49eea9402fea3, type: 3}
 --- !u!1 &523617750791945410 stripped
@@ -400,6 +415,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Zombie (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2976649899171738362, guid: 3373c39bdd74c1e469e49eea9402fea3,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3373c39bdd74c1e469e49eea9402fea3, type: 3}

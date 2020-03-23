@@ -18,6 +18,9 @@ public class WarriorCombatBehavior : MonoBehaviour
     [Header("Weapon Slots")]
     public GameObject BackSword;
     public GameObject HandSword;
+    public float baseDamage = 4;
+    private float artOfWarMultiplier = 1;
+    private float fastestManAliveMultiplier = 1;
     //public GameObject HeldArrow;
     //public GameObject AbilityCircle;
 
@@ -60,6 +63,24 @@ public class WarriorCombatBehavior : MonoBehaviour
     [Header("Leg Reference For Kickin")]
     public GameObject LeftLeg;
 
+    public float ArtOfWarMultiplier
+    {
+        get { return artOfWarMultiplier; }
+        set { artOfWarMultiplier = value; }
+    }
+
+    public float FastestManAliveMultiplier
+    {
+        get { return fastestManAliveMultiplier; }
+        set { fastestManAliveMultiplier = value; }
+    }
+
+    public float BaseDamage
+    {
+        get { return baseDamage; }
+        set { baseDamage = value; }
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -67,7 +88,7 @@ public class WarriorCombatBehavior : MonoBehaviour
         PlayerMesh = transform.GetChild(0);
 
         HandSword.SetActive(false);
-        BackSword.SetActive(false);
+        BackSword.SetActive(true);
 
         PlayerMovementRef = GetComponent<PlayerMovement>();
 
@@ -77,6 +98,16 @@ public class WarriorCombatBehavior : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //set the damage of the sword from the player's base damage
+        try
+        {
+            HandSword.GetComponent<BastardSword>().baseDMG = this.baseDamage * this.artOfWarMultiplier * this.fastestManAliveMultiplier;
+        }
+
+        catch
+        { }
+
+
         if (!PlayerMovementRef.isDead)
             Controls();
 

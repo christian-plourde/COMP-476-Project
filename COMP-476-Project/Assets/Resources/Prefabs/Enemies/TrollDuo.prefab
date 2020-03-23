@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 8852857386946175733}
   m_Layer: 0
   m_Name: TrollDuo
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -65,7 +65,7 @@ MonoBehaviour:
   m_Player: {fileID: 0}
   m_OutputDebugLogs: 0
   grid_generator: {fileID: 0}
-  m_WhatIsNearby: 0.2
+  m_WhatIsNearby: 2
   m_VisionErrorMargin: 0.2
   m_RangeOfVision: 10
   m_AttackFrequency: 1.5
@@ -154,6 +154,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: EvilTroll
       objectReference: {fileID: 0}
+    - target: {fileID: 4287646296606865425, guid: a27f2c6fff0aa7745988ebce9c62fd3b,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a27f2c6fff0aa7745988ebce9c62fd3b, type: 3}
 --- !u!1 &5923285700099911434 stripped
@@ -234,6 +239,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: CaveTroll
+      objectReference: {fileID: 0}
+    - target: {fileID: 727261008920275103, guid: 7d19d3454f03a904ea38f31d75a3735d,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7d19d3454f03a904ea38f31d75a3735d, type: 3}

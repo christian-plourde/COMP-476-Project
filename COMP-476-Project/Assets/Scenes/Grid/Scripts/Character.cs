@@ -70,15 +70,33 @@ public class Character : NPC
     /// </summary>
     public BEHAVIOUR_TYPE BehaviourType
     {
-        set { behaviour_type = value; 
-        
-            switch(behaviour_type)
+        get { return this.behaviour_type; }
+
+        set { behaviour_type = value; if (player.isDead && behaviour_type ==BEHAVIOUR_TYPE.ATTACK_PLAYER) { behaviour_type = BEHAVIOUR_TYPE.BASE_SEEK; }
+
+            
+            for (int i = 0; i < this.transform.childCount; i++)
             {
-                case BEHAVIOUR_TYPE.ATTACK_PLAYER: GetComponent<Animator>().SetBool("Attacking", true); break;
-                case BEHAVIOUR_TYPE.ATTACK_TOWER: GetComponent<Animator>().SetBool("Attacking", true); break;
-                case BEHAVIOUR_TYPE.BASE_SEEK: break;
-                case BEHAVIOUR_TYPE.MOVE_TO_PLAYER: break;
-                case BEHAVIOUR_TYPE.MOVE_TO_TOWER: break;
+                try
+                {
+                    this.transform.GetChild(i).gameObject.GetComponent<Character>().BehaviourType = this.behaviour_type;       
+                }
+
+                catch { }
+            }
+            
+
+            switch (behaviour_type)
+            {
+                case BEHAVIOUR_TYPE.ATTACK_PLAYER: try { GetComponent<Animator>().SetBool("Attacking", true); } catch { } break;
+                
+                case BEHAVIOUR_TYPE.ATTACK_TOWER: try { GetComponent<Animator>().SetBool("Attacking", true); } catch { } break;
+                
+                case BEHAVIOUR_TYPE.BASE_SEEK: try { GetComponent<Animator>().SetBool("Attacking", false); } catch { } break;
+                
+                case BEHAVIOUR_TYPE.MOVE_TO_PLAYER: try { GetComponent<Animator>().SetBool("Attacking", false); } catch { } break;
+                
+                case BEHAVIOUR_TYPE.MOVE_TO_TOWER: try { GetComponent<Animator>().SetBool("Attacking", false); } catch { } break;
             }
         
         }
@@ -321,14 +339,26 @@ public class Character : NPC
         //if something goes wrong with the next node I want to visit, just return the base node closest to the player
         catch
         {
-            LevelNode ln = this.gameObject.GetComponent<ZombieBehaviour>().m_TargetTowerNode.gameObject.GetComponent<LevelNode>();
-            Path = graph.ShortestPath(current_node, ln.GraphNode).ToArray<GraphNode<LevelNode>>();
+            try
+            {
+                LevelNode ln = this.gameObject.GetComponent<ZombieBehaviour>().m_TargetTowerNode.gameObject.GetComponent<LevelNode>();
+                Path = graph.ShortestPath(current_node, ln.GraphNode).ToArray<GraphNode<LevelNode>>();
+            }
+
+            catch { }
+            
         }
 
         //Call NPC.Update, which ensures we keep moving until we arrive at our destination
         //as long as we are not at tower keep moving
-        if (this.gameObject.GetComponent<ZombieBehaviour>().m_TargetTowerNode.gameObject.GetComponent<LevelNode>().GridSquare != CurrentNode.Value.GridSquare)
-            base.Update();
+        try
+        {
+            if (this.gameObject.GetComponent<ZombieBehaviour>().m_TargetTowerNode.gameObject.GetComponent<LevelNode>().GridSquare != CurrentNode.Value.GridSquare)
+                base.Update();
+        }
+
+        catch { }
+        
     }
 
     /// <summary>

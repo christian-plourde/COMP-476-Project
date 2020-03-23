@@ -1319,7 +1319,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1322159950133820559}
-  m_LocalRotation: {x: -0.029767752, y: 0.11945083, z: 0.08611501, w: 0.9886504}
+  m_LocalRotation: {x: -0.029767754, y: 0.11945083, z: 0.08611502, w: 0.9886504}
   m_LocalPosition: {x: -0.13359664, y: -0.003372879, z: 0.04100296}
   m_LocalScale: {x: 0.9999999, y: 0.99999905, z: 1.0000012}
   m_Children:
@@ -2882,10 +2882,10 @@ Animator:
   m_GameObject: {fileID: 1322159951115188047}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 8f7380da49034cd488ddff94b1ac35d1, type: 3}
-  m_Controller: {fileID: 9100000, guid: 3bfd03cddea22c642918fdb732787a4b, type: 2}
+  m_Controller: {fileID: 9100000, guid: 7383e8455b6d0764f9ca12777802129a, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
-  m_ApplyRootMotion: 1
+  m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
@@ -2958,7 +2958,7 @@ MonoBehaviour:
   m_Player: {fileID: 0}
   m_OutputDebugLogs: 0
   grid_generator: {fileID: 0}
-  m_WhatIsNearby: 0.2
+  m_WhatIsNearby: 1
   m_VisionErrorMargin: 0.2
   m_RangeOfVision: 10
   m_AttackFrequency: 1.5

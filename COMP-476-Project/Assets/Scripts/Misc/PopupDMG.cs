@@ -17,7 +17,7 @@ public class PopupDMG : MonoBehaviour
         transform.Translate(Vector3.up * 0.2f * Time.deltaTime);
     }
 
-    public void SetDMG(int value, bool critical)
+    public void SetDMG(float value, bool critical)
     {
         transform.GetChild(0).GetComponent<Text>().text = ""+value;
         if (critical)

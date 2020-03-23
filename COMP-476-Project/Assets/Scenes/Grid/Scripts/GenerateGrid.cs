@@ -155,8 +155,10 @@ public class GenerateGrid : Subject
     [Header("Build Menu Prefab")]
     public GameObject BuildMenuPrefab;
     public GameObject ManageMenuPrefab;
+    public GameObject Canvas;
 
     PlayerMovement playerScriptRef;
+    PlayerBuffManager player_buffs;
 
     private void AddPlayerBaseNode(LevelNode n)
     {
@@ -204,6 +206,12 @@ public class GenerateGrid : Subject
             AttachObserver(c);
         }
 
+        //also add the playeractiontracker
+        foreach(PlayerActionTracker at in FindObjectsOfType<PlayerActionTracker>())
+        {
+            AttachObserver(at);
+        }
+
         //playerScriptRef = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>();
 
     }
@@ -211,6 +219,7 @@ public class GenerateGrid : Subject
     private void Start()
     {
         //playerScriptRef = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>();
+        player_buffs = FindObjectOfType<PlayerBuffManager>();
     }
 
     private bool CanBuild(LevelNode n)
@@ -279,7 +288,8 @@ public class GenerateGrid : Subject
                     if (hit.transform.gameObject.GetComponent<LevelNode>().Open)
                     {
                         //spawn menu
-                        GameObject gb = Instantiate(BuildMenuPrefab);
+                        GameObject gb = Instantiate(BuildMenuPrefab, BuildMenuPrefab.transform.position, Quaternion.identity);
+                        gb.transform.SetParent(Canvas.transform, false);
                         gb.GetComponent<BuildMenu>().spawnPos = hit.transform;
                     }
                 }
@@ -287,8 +297,8 @@ public class GenerateGrid : Subject
                 {
                     //Debug.Log("Clicked tower");
                     playerScriptRef.managingTower = true;
-                    GameObject gb = Instantiate(ManageMenuPrefab);
-                    //Debug.Log("Parent of tower: "+hit.transform.parent.name);
+                    GameObject gb = Instantiate(ManageMenuPrefab, ManageMenuPrefab.transform.position, Quaternion.identity);
+                    gb.transform.SetParent(Canvas.transform, false);
                     gb.GetComponent<ManageMenu>().currentTower = hit.transform.gameObject;
                     gb.GetComponent<ManageMenu>().InitializeMenu();
                 }
@@ -304,7 +314,7 @@ public class GenerateGrid : Subject
         hitLocation.transform.gameObject.GetComponent<LevelNode>().Tower = tower;
         hitLocation.transform.gameObject.GetComponent<LevelNode>().ToggleOpen();
         tower.transform.parent = hitLocation.transform.gameObject.transform;
-
+        player_buffs.PlaceTowerCallback();
         Notify();
     }
 
@@ -315,6 +325,17 @@ public class GenerateGrid : Subject
 
         Destroy(Tower.gameObject);
 
+        // close manage menu
+        if (refund == 0)         // which means it was destoryed by enemies
+        {
+            GameObject gb = GameObject.FindGameObjectWithTag("ManageMenu");
+            if (gb != null)
+            {
+                Destroy(gb.gameObject);
+                playerScriptRef.managingTower = false;
+                playerScriptRef.controlLock = false;
+            }
+        }
         Notify();
     }
 

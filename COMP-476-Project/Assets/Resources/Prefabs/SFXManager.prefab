@@ -152,6 +152,24 @@ MonoBehaviour:
     pitch: 1
     loop: 0
     source: {fileID: 0}
+  - name: WaveStart
+    clip: {fileID: 8300000, guid: 319594e9422bf004bbed34141416ce1b, type: 3}
+    volume: 0.5
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: WavePrep
+    clip: {fileID: 8300000, guid: ac30ed24a00d83443a99b5eee539979d, type: 3}
+    volume: 0.5
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: 
+    clip: {fileID: 0}
+    volume: 0.5
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
   - name: 
     clip: {fileID: 0}
     volume: 0.5

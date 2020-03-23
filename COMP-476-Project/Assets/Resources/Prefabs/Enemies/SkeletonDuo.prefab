@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 8852857386946175733}
   m_Layer: 0
   m_Name: SkeletonDuo
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -65,7 +65,7 @@ MonoBehaviour:
   m_Player: {fileID: 0}
   m_OutputDebugLogs: 0
   grid_generator: {fileID: 0}
-  m_WhatIsNearby: 0.2
+  m_WhatIsNearby: 2
   m_VisionErrorMargin: 0.2
   m_RangeOfVision: 10
   m_AttackFrequency: 1.5
@@ -94,6 +94,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8852857386946175690}
     m_Modifications:
+    - target: {fileID: 4416341976618337035, guid: 732587b5dd970bd49a38ca75c4b7d6f7,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7002725174103596159, guid: 732587b5dd970bd49a38ca75c4b7d6f7,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -175,6 +180,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8852857386946175690}
     m_Modifications:
+    - target: {fileID: 4416341976618337035, guid: 732587b5dd970bd49a38ca75c4b7d6f7,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7002725174103596159, guid: 732587b5dd970bd49a38ca75c4b7d6f7,
         type: 3}
       propertyPath: m_LocalPosition.x

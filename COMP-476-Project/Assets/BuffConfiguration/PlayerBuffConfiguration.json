@@ -1,0 +1,110 @@
+{
+  "buffs":
+  [
+    {
+      "uid": 0,
+      "name": "Tower Damage",
+      "description": "Increases damage dealt to enemies by towers. - Britney Spears, 1965",
+      "category": "BUILD",
+      "prerequisites": [],
+      "method": "BuffTowerDamage",
+      "repeatable": false
+    },
+    {
+      "uid": 1,
+      "name": "Attack Damage",
+      "description": "Increases damage dealt by player attacks. - Mohamed Ali, 2020",
+      "category": "ATTACK",
+      "prerequisites": [],
+      "method": "BuffAttackDamage",
+      "repeatable": false
+    },
+    {
+      "uid": 2,
+      "name": "Speed Boost",
+      "description": "Increases the player movement speed. - Sonic the Hedgehog, 1850",
+      "category": "RUN",
+      "prerequisites": [],
+      "method": "BuffPlayerSpeed",
+      "repeatable": false
+    },
+    {
+      "uid": 3,
+      "name": "Rallying Call",
+      "description": "Increases tower attack speed when player is nearby. - Generic Anime Protagonist, Yesterday",
+      "category": "BUILD",
+      "prerequisites":
+      [
+        0,
+        2
+      ],
+      "method": "BuffRallyingCall",
+      "repeatable": true
+    },
+    {
+      "uid": 4,
+      "name": "Cement Soup",
+      "description": "Repairs all towers a small amount when an enemy is killed or player levels up. - Bob the Builder, 1992",
+      "category": "BUILD",
+      "prerequisites":
+      [
+        0,
+        1
+      ],
+      "method": "BuffCementSoup",
+      "repeatable": false
+    },
+    {
+      "uid": 5,
+      "name": "Art of War",
+      "description": "Player damage is proportional to number of towers in play. - Sun Tzu, 1971",
+      "category": "ATTACK",
+      "prerequisites":
+      [
+        0,
+        1
+      ],
+      "method": "BuffArtOfWar",
+      "repeatable": true
+    },
+    {
+      "uid": 6,
+      "name": "Fastest Man Alive",
+      "description": "Charges a special attack meter while moving. When fully charged, player gets a damage boost for a limited time. - Barry Allen, 200 B.C.",
+      "category": "ATTACK",
+      "prerequisites":
+      [
+        1,
+        2
+      ],
+      "method": "BuffFastestManAlive",
+      "repeatable": true
+    },
+    {
+      "uid": 7,
+      "name": "Thriller",
+      "description": "Obtain a boost to movement speed while being chased by an enemy. - Michael Jackson, Tomorrow",
+      "category": "RUN",
+      "prerequisites":
+      [
+        1,
+        2
+      ],
+      "method": "BuffThriller",
+      "repeatable": true
+    },
+    {
+      "uid": 8,
+      "name": "Divide and Conquer",
+      "description": "Obtain a boost to movement speed after building a tower. - Tolbjorn, 2030",
+      "category": "RUN",
+      "prerequisites":
+      [
+        2,
+        0
+      ],
+      "method": "BuffDivideAndConquer",
+      "repeatable": true
+    }
+  ]
+}
