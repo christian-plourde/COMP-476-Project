@@ -21,6 +21,7 @@ public class ManageMenu : MonoBehaviour
     public Text upgradeCostText;
     public Text destroyRefundText;
     public Text TowerName;
+    public Text LiveHealth;
 
     [Header("Comparision Text UI")]
     public Text OldDMG;
@@ -36,7 +37,7 @@ public class ManageMenu : MonoBehaviour
 
     void Start()
     {
-
+        LiveHealth.text = "Health: " + currentTower.GetComponent<BuildingStats>().health;
     }
 
     public void InitializeMenu()
@@ -55,7 +56,7 @@ public class ManageMenu : MonoBehaviour
         // comparison old
         OldDMG.text = currentTower.GetComponent<TowerAttack>().damage+"";
         OldRange.text = currentTower.GetComponent<TowerAttack>().range+"";
-        OldHP.text = currentTower.GetComponent<BuildingStats>().health+"";
+        OldHP.text = currentTower.GetComponent<BuildingStats>().MaxHealth+"";
         OldTier.text = currentTower.GetComponent<BuildingStats>().tier + "";
 
         // see if theres an upgrade or if player can afford it.
@@ -93,7 +94,13 @@ public class ManageMenu : MonoBehaviour
             RepairButton.interactable = true;
         }
     }
-    
+
+    private void Update()
+    {
+        //currentTower
+        LiveHealth.text = "Health: " + currentTower.GetComponent<BuildingStats>().health;
+    }
+
 
     public void Cancel()
     {
@@ -163,6 +170,10 @@ public class ManageMenu : MonoBehaviour
             {
                 UpgradeButton.interactable = true;
             }
+        }
+        if (gold >= repairCost)
+        {
+            RepairButton.interactable = true;
         }
     }
 }
