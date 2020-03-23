@@ -88,7 +88,7 @@ public class WarriorCombatBehavior : MonoBehaviour
         PlayerMesh = transform.GetChild(0);
 
         HandSword.SetActive(false);
-        BackSword.SetActive(false);
+        BackSword.SetActive(true);
 
         PlayerMovementRef = GetComponent<PlayerMovement>();
 

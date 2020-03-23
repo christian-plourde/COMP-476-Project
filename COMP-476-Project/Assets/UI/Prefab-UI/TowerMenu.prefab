@@ -1105,7 +1105,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: 'Repair: 100'
+  m_Text: 'Repair: 0'
 --- !u!1 &5907884563924901504
 GameObject:
   m_ObjectHideFlags: 0
