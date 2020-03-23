@@ -174,7 +174,10 @@ public class EnemyBehaviour : MonoBehaviour
             Vector3 direction = (this.m_Player.transform.position - origin).normalized;
             //Put end [range of vision] units toward the player
             Vector3 end = origin + direction * this.m_RangeOfVision;
-            Debug.DrawLine(origin, end, Color.white, 1.0f);
+            if (m_OutputDebugLogs)
+            {
+                Debug.DrawLine(origin, end, Color.red, 1.0f);
+            }
 
             RaycastHit hit;
             if (Physics.Raycast(origin, direction, out hit, this.m_RangeOfVision))
@@ -189,7 +192,7 @@ public class EnemyBehaviour : MonoBehaviour
                     result = true;
                 }
             }
-        }
+        }//end if facing player
         if (m_OutputDebugLogs)
         {
             string template = " see the player.";
@@ -212,41 +215,94 @@ public class EnemyBehaviour : MonoBehaviour
 
         foreach(GameObject tower_node in tower_nodes)
         {
-            float dot = Vector3.Dot(this.transform.forward, (tower_node.transform.position - enemypos).normalized);
-            //If our dot product is exactly 1, then the tower is exactly in front of us
-            float desired_result = 1.0f;
-            bool facing_tower = (desired_result - m_VisionErrorMargin <= dot && dot <= desired_result + m_VisionErrorMargin);
+            //float dot = Vector3.Dot(this.transform.forward, (tower_node.transform.position - enemypos).normalized);
+            ////If our dot product is exactly 1, then the tower is exactly in front of us
+            //float desired_result = 1.0f;
+            //bool facing_tower = (desired_result - m_VisionErrorMargin <= dot && dot <= desired_result + m_VisionErrorMargin);
 
-            //Debug.Log(message + " (" + dot + ")");//More specific logs
-            //string message = (facing_tower) ? "Tower spotted" : "Tower NOT spotted";
-            //Debug.Log(message);
-            //if we're facing the target, then we can consider a raycast
-            if (facing_tower)
+            ////if we're facing the target, then we can consider a raycast
+            //if (facing_tower)
+            //{
+
+            //    //TEMPORARY
+            //    m_TargetTowerNode = tower_node;
+            //    //Debug.Log(message);
+            //    result = true;
+            //    break;
+
+            //}//end if
+
+            ////The closer you are, the harder it gets to see a tower.
+            ////As a failsafe, if you come within some minimum distance of a tower, just attack it, you're blind and it's next to you.
+            //float distance = (tower_node.transform.position - this.transform.position).magnitude;
+            //if (distance <= m_WhatIsNearby)
+            //{
+            //    //Debug.Log("Enemy doesn't see tower but is passing next to one; attacking!");
+            //    result = true;
+            //    break;
+            //}
+
+            // ***
+            LevelNode node = tower_node.GetComponent<LevelNode>();
+            //ensure the tower at our node exists
+            if (node.Tower != null)
             {
-                
-                //TEMPORARY
-                m_TargetTowerNode = tower_node;
-                //Debug.Log(message);
-                result = true;
-                break;
+                //if our tower exists, tell me whether we see it
+                Vector3 tower_height_offset = new Vector3(0.0f, 1.0f, 0.0f);
+                Vector3 towerpos = node.Tower.transform.position + tower_height_offset;
+                float dot = Vector3.Dot(this.transform.forward, (towerpos - enemypos).normalized);
+                //If our dot product is exactly 1, then the tower is exactly in front of us
+                float desired_result = 1.0f;
+                float distance_to_tower = (towerpos - enemypos).magnitude;
+                float m = this.m_RangeOfVision / distance_to_tower;
+                if (m > 2.0f) { m = 2.0f; }
 
-            }//end if
+                //The closer we are, the lower our threshold for "facing" the target is. If we are very close to the target, even if we are facing away from the target, we will consider that we are "facing" the target.
+                bool facing_tower = (desired_result - m <= dot);
 
-            //The closer you are, the harder it gets to see a tower.
-            //As a failsafe, if you come within some minimum distance of a tower, just attack it, you're blind and it's next to you.
-            float distance = (tower_node.transform.position - this.transform.position).magnitude;
-            if (distance <= m_WhatIsNearby)
-            {
-                //Debug.Log("Enemy doesn't see tower but is passing next to one; attacking!");
-                result = true;
-                break;
-            }
-        }
+                string message = "";
+                //if we're facing the target, then we can consider a raycast
+                if (facing_tower)
+                {
+                    message += "Enemy is facing the tower. ";
 
-        if (m_OutputDebugLogs)
-        {
-            Debug.Log("Tower " + (result ? "IS " : "ISN'T") + " seen!");
-        }
+                    Vector3 height_offset = new Vector3(0.0f, 0.5f, 0.0f);
+                    Vector3 origin = this.transform.position + height_offset;
+                    Vector3 direction = (towerpos - origin).normalized;
+                    //Put end [range of vision] units toward the tower
+                    Vector3 end = origin + direction * this.m_RangeOfVision;
+                    if (m_OutputDebugLogs)
+                    {
+                        Debug.DrawLine(origin, end, Color.blue, 1.0f);
+                    }
+
+                    RaycastHit hit;
+                    //if we hit something with our raycast...
+                    if (Physics.Raycast(origin, direction, out hit, this.m_RangeOfVision))
+                    {
+                        //...and if that something is a tower...
+                        if (hit.collider.gameObject.GetComponent<TowerAttack>() != null)
+                        {
+                            //...then update our target tower node, to tell us where to run to
+                            m_TargetTowerNode = tower_node;
+
+                            //return true and break us out of here.
+                            result = true;
+                        }
+                    }
+                }//end if facing player
+                //output logs if needed, before breaking out
+                if (m_OutputDebugLogs)
+                {
+                    string template = " see the tower.";
+                    message += (result ? " Enemy DOES" : " Enemy DOES NOT") + template;
+                    Debug.Log(message);
+                }
+                //if we have result is true, then return now.
+                if (result) { return result; }
+            }//end if tower exists
+        }//end foreach
+
         return result;
     }
 
