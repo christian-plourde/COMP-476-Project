@@ -348,7 +348,7 @@ public class Character : NPC
         {
             try
             {
-                LevelNode ln = this.gameObject.GetComponent<ZombieBehaviour>().m_TargetTowerNode.gameObject.GetComponent<LevelNode>();
+                LevelNode ln = this.gameObject.GetComponent<EnemyBehaviour>().m_TargetTowerNode.gameObject.GetComponent<LevelNode>();
                 Path = graph.ShortestPath(current_node, ln.GraphNode).ToArray<GraphNode<LevelNode>>();
             }
 
@@ -360,7 +360,7 @@ public class Character : NPC
         //as long as we are not at tower keep moving
         try
         {
-            if (this.gameObject.GetComponent<ZombieBehaviour>().m_TargetTowerNode.gameObject.GetComponent<LevelNode>().GridSquare != CurrentNode.Value.GridSquare)
+            if (this.gameObject.GetComponent<EnemyBehaviour>().m_TargetTowerNode.gameObject.GetComponent<LevelNode>().GridSquare != CurrentNode.Value.GridSquare)
                 base.Update();
         }
 
