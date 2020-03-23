@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 2177221533173961138}
   - component: {fileID: -3208218874885460583}
   - component: {fileID: 5504580605989950113}
+  - component: {fileID: 3710993970867396122}
   m_Layer: 0
   m_Name: PulseTower
   m_TagString: Tower
@@ -28,7 +29,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2177221533171765106}
   m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -0.52968085, z: 0.52329594}
   m_LocalScale: {x: 1, y: 1, z: 0.83876747}
   m_Children: []
   m_Father: {fileID: 0}
@@ -111,6 +112,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07e72590ee8da1b48b529de8a11664a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cooldown: 2
   damage: 6
   range: 2
+  cooldown: 2
+--- !u!136 &3710993970867396122
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2177221533171765106}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.14
+  m_Height: 1.38
+  m_Direction: 2
+  m_Center: {x: 0, y: -0.00000003725291, z: 0.57}

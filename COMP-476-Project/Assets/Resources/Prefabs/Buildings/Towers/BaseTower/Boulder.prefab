@@ -11,11 +11,11 @@ GameObject:
   - component: {fileID: 463262}
   - component: {fileID: 3363934}
   - component: {fileID: 2329704}
-  - component: {fileID: 9577434}
   - component: {fileID: -8246628246480388180}
+  - component: {fileID: 1433338883190184940}
   m_Layer: 0
   m_Name: Boulder
-  m_TagString: Boulder
+  m_TagString: Tower
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -80,25 +80,6 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!95 &9577434
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 171314}
-  m_Enabled: 0
-  m_Avatar: {fileID: 9000000, guid: 958342af5f0dc934396b7257c9b6800e, type: 3}
-  m_Controller: {fileID: 0}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!114 &-8246628246480388180
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -116,3 +97,18 @@ MonoBehaviour:
   health: 60
   description: 'A simple wall that cannot attack but may be used to block and funnel
     enemies. \nHealth : 60\nPrice : 40'
+  upgrade: {fileID: 0}
+--- !u!136 &1433338883190184940
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 171314}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.35941803
+  m_Height: 0.7612472
+  m_Direction: 1
+  m_Center: {x: 0.014641419, y: 0.027341455, z: -0.0026054382}

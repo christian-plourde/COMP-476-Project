@@ -480,9 +480,10 @@ GameObject:
   - component: {fileID: 9566220}
   - component: {fileID: 8279432291139415989}
   - component: {fileID: 5497288676935950410}
+  - component: {fileID: 4720514931206164718}
   m_Layer: 0
   m_Name: CrystalTowerX
-  m_TagString: Untagged
+  m_TagString: Tower
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -567,3 +568,17 @@ MonoBehaviour:
   projectileSpawnPointOffset: {x: 0, y: 1.68, z: 0}
   possibleTargets: both
   projectileType: homing
+--- !u!136 &4720514931206164718
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 187918}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.3
+  m_Height: 1.24
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.55, z: 0}

@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 2177221533173961138}
   - component: {fileID: -3208218874885460583}
   - component: {fileID: 5504580605989950113}
+  - component: {fileID: 3949165466387757542}
   m_Layer: 0
   m_Name: PulseTower+
   m_TagString: Tower
@@ -113,3 +114,17 @@ MonoBehaviour:
   damage: 9
   range: 2.5
   cooldown: 2
+--- !u!136 &3949165466387757542
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2177221533171765106}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.14
+  m_Height: 1.38
+  m_Direction: 2
+  m_Center: {x: 0, y: -0.00000003725291, z: 0.57}
