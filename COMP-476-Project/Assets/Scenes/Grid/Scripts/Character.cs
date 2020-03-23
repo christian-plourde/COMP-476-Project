@@ -70,15 +70,17 @@ public class Character : NPC
     /// </summary>
     public BEHAVIOUR_TYPE BehaviourType
     {
-        set { behaviour_type = value; 
+        get { return this.behaviour_type; }
+
+        set { behaviour_type = value; if (player.isDead && behaviour_type ==BEHAVIOUR_TYPE.ATTACK_PLAYER) { behaviour_type = BEHAVIOUR_TYPE.BASE_SEEK; }
         
             switch(behaviour_type)
             {
                 case BEHAVIOUR_TYPE.ATTACK_PLAYER: GetComponent<Animator>().SetBool("Attacking", true); break;
                 case BEHAVIOUR_TYPE.ATTACK_TOWER: GetComponent<Animator>().SetBool("Attacking", true); break;
-                case BEHAVIOUR_TYPE.BASE_SEEK: break;
-                case BEHAVIOUR_TYPE.MOVE_TO_PLAYER: break;
-                case BEHAVIOUR_TYPE.MOVE_TO_TOWER: break;
+                case BEHAVIOUR_TYPE.BASE_SEEK: GetComponent<Animator>().SetBool("Attacking", false); break;
+                case BEHAVIOUR_TYPE.MOVE_TO_PLAYER: GetComponent<Animator>().SetBool("Attacking", false); break;
+                case BEHAVIOUR_TYPE.MOVE_TO_TOWER: GetComponent<Animator>().SetBool("Attacking", false); break;
             }
         
         }

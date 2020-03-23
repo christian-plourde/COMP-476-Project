@@ -2479,6 +2479,7 @@ MonoBehaviour:
   maxHealth: 0
   gold: 300
   invincible: 0
+  dmgResistance: 0.15
   mSpeed: 5
   sprintMultiplier: 1
   isRunning: 0
@@ -2511,6 +2512,7 @@ MonoBehaviour:
     type: 3}
   LaunchPoint: {fileID: 7144771478849193477}
   AttackTarget: {fileID: 0}
+  baseDamage: 5
   BackBow: {fileID: 7144771479073231431}
   HandBow: {fileID: 409911272641694986}
   HeldArrow: {fileID: 7144771478694317849}

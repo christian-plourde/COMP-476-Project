@@ -50,7 +50,8 @@ public class BuildMenu : MonoBehaviour
         int count = 0;
         for (int i = 0; i < listTransform.transform.childCount; i++)
         {
-            GameObject temp = listTransform.transform.GetChild(i).GetChild(0).gameObject;
+            //GameObject temp = listTransform.transform.GetChild(i).GetChild(0).gameObject;
+            GameObject temp = listTransform.transform.GetChild(i).gameObject;
             if (temp.GetComponent<TowerUIObject>().towerCost <= currentGold)
             {
                 temp.GetComponent<TowerUIObject>().buildButton.interactable = true;
