@@ -56,7 +56,8 @@ public class EnemyAttributes : MonoBehaviour
         if (health <= 0)
         {
             health = 0;
-            KillEnemy();
+            if(!isDead)
+                KillEnemy();
         }
         float healthPercent = ((health * 1.0f) / maxHealth);
         HealthUI.transform.localScale =new Vector3( healthPercent,1,1);

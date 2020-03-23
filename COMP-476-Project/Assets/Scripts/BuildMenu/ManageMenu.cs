@@ -21,6 +21,7 @@ public class ManageMenu : MonoBehaviour
     public Text upgradeCostText;
     public Text destroyRefundText;
     public Text TowerName;
+    public Text LiveHealth;
 
     [Header("Comparision Text UI")]
     public Text OldDMG;
@@ -36,7 +37,7 @@ public class ManageMenu : MonoBehaviour
 
     void Start()
     {
-
+        LiveHealth.text = "Health: " + currentTower.GetComponent<BuildingStats>().health;
     }
 
     public void InitializeMenu()
@@ -45,7 +46,8 @@ public class ManageMenu : MonoBehaviour
         playerScriptRef.controlLock = true;
         playerScriptRef.StopWalkingAnim();
 
-        refund = (currentTower.GetComponent<BuildingStats>().price / 2);
+        float dmgPercentage = 1-(currentTower.GetComponent<BuildingStats>().health / currentTower.GetComponent<BuildingStats>().MaxHealth*1f);
+        refund = (int)((currentTower.GetComponent<BuildingStats>().price / 2) - (currentTower.GetComponent<BuildingStats>().price / 2) * dmgPercentage);
         destroyRefundText.text = "Refund: " + refund;
         string str= "" + currentTower.GetComponent<BuildingStats>().name;
         //TowerName.text = "" + currentTower.GetComponent<BuildingStats>().name;
@@ -55,7 +57,7 @@ public class ManageMenu : MonoBehaviour
         // comparison old
         OldDMG.text = currentTower.GetComponent<TowerAttack>().damage+"";
         OldRange.text = currentTower.GetComponent<TowerAttack>().range+"";
-        OldHP.text = currentTower.GetComponent<BuildingStats>().health+"";
+        OldHP.text = currentTower.GetComponent<BuildingStats>().MaxHealth+"";
         OldTier.text = currentTower.GetComponent<BuildingStats>().tier + "";
 
         // see if theres an upgrade or if player can afford it.
@@ -88,12 +90,33 @@ public class ManageMenu : MonoBehaviour
         if(currentTower.GetComponent<BuildingStats>().health < currentTower.GetComponent<BuildingStats>().MaxHealth)
         {
             repairCost = (int)Mathf.Ceil(currentTower.GetComponent<BuildingStats>().price * (1-(currentTower.GetComponent<BuildingStats>().health / currentTower.GetComponent<BuildingStats>().MaxHealth)));
+            repairCost -= (int)(repairCost * 0.25f);              // reduction in repair cost so repairing is economic then building new ones
 
             RepairCostText.text = "Repair: " + repairCost;
             RepairButton.interactable = true;
         }
     }
-    
+
+    private void Update()
+    {
+        //currentTower
+        LiveHealth.text = "Health: " + currentTower.GetComponent<BuildingStats>().health;
+
+        // dynamically update the repair cost
+        if (currentTower.GetComponent<BuildingStats>().health < currentTower.GetComponent<BuildingStats>().MaxHealth)
+        {
+            repairCost = (int)Mathf.Ceil(currentTower.GetComponent<BuildingStats>().price * (1 - (currentTower.GetComponent<BuildingStats>().health / currentTower.GetComponent<BuildingStats>().MaxHealth)));
+            repairCost -= (int)(repairCost * 0.25f);              // reduction in repair cost so repairing is economic then building new ones
+            RepairCostText.text = "Repair: " + repairCost;
+            RepairButton.interactable = true;
+        }
+
+        // refund cost
+        float dmgPercentage = 1 - (currentTower.GetComponent<BuildingStats>().health / currentTower.GetComponent<BuildingStats>().MaxHealth * 1f);
+        refund = (int)((currentTower.GetComponent<BuildingStats>().price / 2) - (currentTower.GetComponent<BuildingStats>().price / 2)*dmgPercentage);
+        destroyRefundText.text = "Refund: " + refund;
+    }
+
 
     public void Cancel()
     {
@@ -163,6 +186,10 @@ public class ManageMenu : MonoBehaviour
             {
                 UpgradeButton.interactable = true;
             }
+        }
+        if (gold >= repairCost && currentTower.GetComponent<BuildingStats>().health < currentTower.GetComponent<BuildingStats>().MaxHealth)
+        {
+            RepairButton.interactable = true;
         }
     }
 }

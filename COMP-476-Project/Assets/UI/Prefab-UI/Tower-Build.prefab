@@ -830,7 +830,7 @@ GameObject:
   - component: {fileID: 9093855646539679582}
   m_Layer: 5
   m_Name: Tower-Build
-  m_TagString: Untagged
+  m_TagString: TowerObjectUI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

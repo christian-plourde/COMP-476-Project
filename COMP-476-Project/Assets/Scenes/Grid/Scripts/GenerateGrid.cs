@@ -325,6 +325,17 @@ public class GenerateGrid : Subject
 
         Destroy(Tower.gameObject);
 
+        // close manage menu
+        if (refund == 0)         // which means it was destoryed by enemies
+        {
+            GameObject gb = GameObject.FindGameObjectWithTag("ManageMenu");
+            if (gb != null)
+            {
+                Destroy(gb.gameObject);
+                playerScriptRef.managingTower = false;
+                playerScriptRef.controlLock = false;
+            }
+        }
         Notify();
     }
 

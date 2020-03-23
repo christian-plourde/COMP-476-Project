@@ -14,7 +14,9 @@ public class PlayerMovement : MonoBehaviour
     public float health = 100f;
     public float maxHealth;
     public int gold = 200;
-    public bool invincible;
+    public bool invincible;                              // if on, wont take damage at all.
+    [Range(0,1)]
+    public float dmgResistance;                          // take dmgResistance percentage times less damage. e.g. 0.2 resistance = 20% damage reduction, 1 will make player invincible
     Vector3 respawnPos;
 
 
@@ -236,7 +238,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (!invincible && !isDead)
         {
-            health -= dmg;
+            health -= dmg-(dmg*dmgResistance);
             if (health <= 0)
             {
                 health = 0;

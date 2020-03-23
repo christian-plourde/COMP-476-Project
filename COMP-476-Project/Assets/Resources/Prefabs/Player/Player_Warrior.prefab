@@ -3097,7 +3097,8 @@ MonoBehaviour:
   maxHealth: 0
   gold: 300
   invincible: 0
-  mSpeed: 3.5
+  dmgResistance: 0.45
+  mSpeed: 4
   sprintMultiplier: 1
   isRunning: 0
   controlLock: 0
@@ -3125,6 +3126,7 @@ MonoBehaviour:
   Attacking: 0
   BackSword: {fileID: 987015570313525955}
   HandSword: {fileID: 6723450573597335792}
+  baseDamage: 4
   attackingSword: 0
   fastAttack1: 0
   fastAttack2: 0
@@ -3141,7 +3143,7 @@ MonoBehaviour:
   howLongSecondaryCooldown: 15
   WarriorAOEPefab: {fileID: 7640490156675273857, guid: 4946fcfbc0c007f4fbf3b344bcea47b0,
     type: 3}
-  AOETime: 2.2
+  AOETime: 1.9
   LeftLeg: {fileID: 437391845}
 --- !u!114 &1684717825
 MonoBehaviour:
