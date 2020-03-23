@@ -72,7 +72,14 @@ public class Character : NPC
     {
         get { return this.behaviour_type; }
 
-        set { behaviour_type = value; if (player.isDead && behaviour_type ==BEHAVIOUR_TYPE.ATTACK_PLAYER) { behaviour_type = BEHAVIOUR_TYPE.BASE_SEEK; }
+        set {
+
+            if (value != behaviour_type)
+                Path = null;
+
+            behaviour_type = value;
+            
+            if (player.isDead && behaviour_type ==BEHAVIOUR_TYPE.ATTACK_PLAYER) { behaviour_type = BEHAVIOUR_TYPE.BASE_SEEK; }
 
             
             for (int i = 0; i < this.transform.childCount; i++)
