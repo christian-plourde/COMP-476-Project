@@ -75,13 +75,12 @@ public class Character : NPC
         set {
 
             if (value != behaviour_type)
-                Path = null;
+                Path = null;      
 
             behaviour_type = value;
             
-            if (player.isDead && behaviour_type ==BEHAVIOUR_TYPE.ATTACK_PLAYER) { behaviour_type = BEHAVIOUR_TYPE.BASE_SEEK; }
+            if (player.isDead && behaviour_type == BEHAVIOUR_TYPE.ATTACK_PLAYER) { behaviour_type = BEHAVIOUR_TYPE.BASE_SEEK; }
 
-            
             for (int i = 0; i < this.transform.childCount; i++)
             {
                 try
@@ -136,7 +135,8 @@ public class Character : NPC
     public GraphNode<LevelNode>[] Path
     {
         get { return path; }
-        set { path = value;
+        set {
+            path = value;
             t = 0.0f;
             current_path_node_index = 0;
         }
@@ -286,6 +286,8 @@ public class Character : NPC
     /// </summary>
     private void MoveToTowerUpdate()
     {
+        //string s = string.Empty;
+
         //Debug.Log("Character : Seeking tower");
         try
         {
@@ -303,7 +305,7 @@ public class Character : NPC
                 }
 
                 //if our index is out of bounds, deal with it
-                catch (Exception)
+                catch
                 {
                     current_path_node_index = Path.Length;
                     Movement.Target = current_node.Value.transform.position;
@@ -319,8 +321,12 @@ public class Character : NPC
 
         try
         {
+            
             if (current_path_node_index < 0 || current_path_node_index >= Path.Length)
+            {
+                //s += "bad index ";
                 throw new Exception();
+            }
 
             //If we've arrived...
             if (Movement.HasArrived)
@@ -338,33 +344,43 @@ public class Character : NPC
                     t = 0;
                 }
 
+
                 //Interpolate to some point between our current position and next target
+                //s += "here ";
+
                 Movement.Target = Vector3.Lerp(current_node.Value.transform.position, currentTarget.Value.transform.position, t);
+
+                //s += "here 2";
+                
             }
 
         }
         //if something goes wrong with the next node I want to visit, just return the base node closest to the player
         catch
         {
+            //s += "bad thing ";
             try
             {
                 LevelNode ln = this.gameObject.GetComponent<EnemyBehaviour>().m_TargetTowerNode.gameObject.GetComponent<LevelNode>();
                 Path = graph.ShortestPath(current_node, ln.GraphNode).ToArray<GraphNode<LevelNode>>();
             }
 
-            catch { }
+            catch 
+            {
+   
+            }
             
         }
 
         //Call NPC.Update, which ensures we keep moving until we arrive at our destination
         //as long as we are not at tower keep moving
-        try
+
+        if (this.gameObject.GetComponent<EnemyBehaviour>().m_TargetTowerNode.gameObject.GetComponent<LevelNode>().GridSquare != CurrentNode.Value.GridSquare)
         {
-            if (this.gameObject.GetComponent<EnemyBehaviour>().m_TargetTowerNode.gameObject.GetComponent<LevelNode>().GridSquare != CurrentNode.Value.GridSquare)
-                base.Update();
+            base.Update();
         }
 
-        catch { }
+        //Debug.Log(s);
         
     }
 
@@ -501,12 +517,12 @@ public class Character : NPC
     // Update is called once per frame
     protected override void Update()
     {
+
         if (grid.PlayerBaseNodes.Contains(current_node.Value))
             Destroy(this.gameObject);
 
         if(!Immobilized)
         {
-            
             switch (behaviour_type)
             {
                 case BEHAVIOUR_TYPE.BASE_SEEK: BaseSeekUpdate(); break;
