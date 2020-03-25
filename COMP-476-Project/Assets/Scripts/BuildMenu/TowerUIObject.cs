@@ -17,6 +17,7 @@ public class TowerUIObject : MonoBehaviour
     public Button buildButton;
     public Text towerNameUI;
     public Text costUI;
+    public Image towerImageUI;
 
     //stats
     [Header("Tower Stats")]
@@ -30,6 +31,7 @@ public class TowerUIObject : MonoBehaviour
 
         towerCost = towerPrefab.GetComponent<BuildingStats>().price;
         towerName = towerPrefab.GetComponent<BuildingStats>().name;
+        Sprite towerImage = towerPrefab.GetComponent<BuildingStats>().towerImage;
 
         towerNameUI.text = "" + towerName;
         costUI.text = "Cost: " + towerCost;
@@ -50,6 +52,7 @@ public class TowerUIObject : MonoBehaviour
             rangeText.text = "Range: -";
         }
         healthText.text = "Health: " + towerPrefab.GetComponent<BuildingStats>().health;
+        towerImageUI.sprite = towerImage;
 
 
         CheckIfAffordable();

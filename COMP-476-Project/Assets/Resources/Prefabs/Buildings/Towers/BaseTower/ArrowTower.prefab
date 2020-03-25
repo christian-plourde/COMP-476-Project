@@ -172,6 +172,7 @@ MonoBehaviour:
   price: 100
   tier: 1
   health: 100
+  towerImage: {fileID: 21300000, guid: f6fd2d85c7cb38d479118634e50fbadd, type: 3}
   description: 'A simple, balanced tower with decent stats accross the board.\nDamage
     : 4\nAttack cooldown : 1\nRange : 5\nMaximum aim time : Instant\nHealth : 100\nPrice
     : 100'

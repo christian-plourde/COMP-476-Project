@@ -8,6 +8,7 @@ public class BuildingStats : MonoBehaviour
     public int price, tier;
     public float health;
     float maxHealth;
+    public Sprite towerImage;
     public Dictionary<string, int> multipliers = new Dictionary<string, int>();
     public string description;
 
