@@ -489,32 +489,6 @@ public class EnemyBehaviour : MonoBehaviour
         grid_generator = FindObjectOfType<GenerateGrid>();
         this.m_Player = FindObjectOfType<PlayerMovement>().gameObject.transform;
 
-        //Set our decision tree
-        //Conditions
-        //DTNode.ConditionNode r1n1 = new DTNode.ConditionNode(SeesTower);
-        //DTNode.ConditionNode r2n1 = new DTNode.ConditionNode(TowerNearby);
-        //DTNode.ConditionNode r2n2 = new DTNode.ConditionNode(SeesPlayer);
-        //DTNode.ConditionNode r3n3 = new DTNode.ConditionNode(PlayerNearby);
-
-        ////Actions
-        //DTNode.ActionNode r3n1 = new DTNode.ActionNode(AttackTower);
-        //DTNode.ActionNode r3n2 = new DTNode.ActionNode(MoveToTower);
-        //DTNode.ActionNode r3n4 = new DTNode.ActionNode(Default);
-        //DTNode.ActionNode r4n1 = new DTNode.ActionNode(AttackPlayer);
-        //DTNode.ActionNode r4n2 = new DTNode.ActionNode(MoveToPlayer);
-
-        ////Row 1
-        //r1n1.affirmative = r2n1;
-        //r1n1.negative = r2n2;
-        ////Row 2
-        //r2n1.affirmative = r3n1;
-        //r2n1.negative = r3n2;
-        //r2n2.affirmative = r3n3;
-        //r2n2.negative = r3n4;
-        ////Row 3
-        //r3n3.affirmative = r4n1;
-        //r3n3.negative = r4n2;
-
         /*
         The convention for the naming of the nodes is as follows: r => row, n => number, where: r1n1 means "the first node on the first row"
         This corresponds to the diagram referred to in this Initialize function's associated summary.

@@ -5,13 +5,31 @@ using UnityEngine.UI;
 
 public class EnemyAttributes : MonoBehaviour
 {
+    /// <summary>
+    /// The amount of health the enemy currently has
+    /// </summary>
     public float health;
     float maxHealth;
+    /// <summary>
+    /// The damage the enemy inflicts on the player
+    /// </summary>
     public float damage;
+    /// <summary>
+    /// The damage the enemy inflicts on the player base
+    /// </summary>
     public int damageToBase;
-    public float speed;
+    /// <summary>
+    /// Whether or not the enemy is alive
+    /// </summary>
+    [HideInInspector]
     public bool isDead;
+    /// <summary>
+    /// The distance between the plane floor and the enemy's centre
+    /// </summary>
     public float heightOffset;
+    /// <summary>
+    /// The amount of gold dropped  by the enemy on death.
+    /// </summary>
     public int goldDrop;
 
     Animator animator;

@@ -8,16 +8,25 @@ public class BoidManager : MonoBehaviour
     /// An empty gameobject containing the boid anchor
     /// </summary>
     [SerializeField] GameObject m_BoidContainer;
+    /// <summary>
+    /// The boid prefab to clone
+    /// </summary>
     [SerializeField] GameObject m_BoidObject;
-    
+    /// <summary>
+    /// The number of boids we instantiate.
+    /// </summary>
     public int m_NumBoids;
 
     Transform m_Anchor;
 
     List<Boid> m_Boids = new List<Boid>();
-
+    /// <summary>
+    /// Our time constant
+    /// </summary>
     public static float DELTA_T = 0.025f;
-
+    /// <summary>
+    /// The padding the boids are to keep between each other
+    /// </summary>
     public static float PADDING = 1.5f;
 
     // Start is called before the first frame update
@@ -32,9 +41,10 @@ public class BoidManager : MonoBehaviour
             Vector3 spawn_pos = this.m_Anchor.position + new Vector3(spawn_radius * Mathf.Cos(angle), spawn_radius * Mathf.Sin(angle));
             this.m_Boids.Add(GameObject.Instantiate(this.m_BoidObject, spawn_pos, new Quaternion(), this.m_BoidContainer.transform).GetComponent<Boid>());
             this.m_Boids[i].Initialize(this.m_Anchor);
-            
         }
 
+        //Initialize the FlyingEnemyBehaviour Decision Tree
+        this.m_BoidContainer.GetComponent<FlyingEnemyBehaviour>().Initialize();
     }
 
     void UpdateBoids()
