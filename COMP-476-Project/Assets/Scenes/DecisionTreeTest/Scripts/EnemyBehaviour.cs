@@ -17,22 +17,22 @@ public class EnemyBehaviour : MonoBehaviour
     /// <summary>
     /// list of all target_tower_node objects in the game
     /// </summary>
-    private List<GameObject> tower_nodes;
+    protected List<GameObject> tower_nodes;
 
     /// <summary>
     /// List of all level node scripts in the game
     /// </summary>
-    private List<LevelNode> tower_level_nodes;
+    protected List<LevelNode> tower_level_nodes;
 
     /// <summary>
     /// The game object representation of the node (the green disc).
     /// </summary>
-    private GameObject target_tower_node;
+    protected GameObject target_tower_node;
 
     /// <summary>
     /// The level node script on the target_tower_node.
     /// </summary>
-    private LevelNode target_tower_level_node;
+    protected LevelNode target_tower_level_node;
 
     /// <summary>
     /// The public accessible property corresponding to our target tower level node
@@ -53,7 +53,7 @@ public class EnemyBehaviour : MonoBehaviour
         }
     }
 
-    [SerializeField] private bool m_OutputDebugLogs = false;
+    [SerializeField] protected bool m_OutputDebugLogs = false;
 
     /// <summary>
     /// A reference to the global game grid generator (who contains the actual grid)
@@ -84,15 +84,15 @@ public class EnemyBehaviour : MonoBehaviour
     /// <summary>
     /// A timer to keep track of when the last time we attacked was.
     /// </summary>
-    private float m_AttackTimer = 0.0f;
+    protected float m_AttackTimer = 0.0f;
     /// <summary>
     /// A timer to keep track of when we last saw the player.
     /// </summary>
-    private float m_PlayerLastSeenTimer = 0.0f;
+    protected float m_PlayerLastSeenTimer = 0.0f;
     /// <summary>
     /// A timer to keep track of when we last saw a tower.
     /// </summary>
-    private float m_TowerLastSeenTimer = 0.0f;
+    protected float m_TowerLastSeenTimer = 0.0f;
     /// <summary>
     /// The rate at which we increase our timer variable
     /// </summary>
@@ -377,11 +377,11 @@ public class EnemyBehaviour : MonoBehaviour
     /// <summary>
     /// The function to be executed on !isAlive
     /// </summary>
-    protected virtual void DoNothing()
+    protected virtual void BeDead()
     {
         if (m_OutputDebugLogs)
         {
-            Debug.Log("Doing nothing!");
+            Debug.Log("Being dead!");
         }
         return;
     }
@@ -530,7 +530,7 @@ public class EnemyBehaviour : MonoBehaviour
     /// A pseudoconstructor to allow us to easily spawn and initialize enemy AI movement types
     /// Refer to this diagram https://docs.google.com/drawings/d/1qOOZjceQnmuGH2RxBY521rWqPFpAjUt2HtGHsXuAP04/edit
     /// </summary>
-    public void Initialize()
+    public virtual void Initialize()
     {
         grid_generator = FindObjectOfType<GenerateGrid>();
         this.m_Player = FindObjectOfType<PlayerMovement>().gameObject.transform;
@@ -552,7 +552,7 @@ public class EnemyBehaviour : MonoBehaviour
         DTNode.ConditionNode r5n3 = new DTNode.ConditionNode(IsPlayerNearby);
 
         //Actions
-        DTNode.ActionNode r2n2 = new DTNode.ActionNode(DoNothing);
+        DTNode.ActionNode r2n2 = new DTNode.ActionNode(BeDead);
         DTNode.ActionNode r4n1 = new DTNode.ActionNode(AttackTower);
         DTNode.ActionNode r4n2 = new DTNode.ActionNode(MoveToTower);
         DTNode.ActionNode r5n1 = new DTNode.ActionNode(AttackPlayer);
@@ -602,7 +602,7 @@ public class EnemyBehaviour : MonoBehaviour
     }
 
     // Update is called once per frame
-    protected void Update()
+    private void Update()
     {
         tower_nodes = new List<GameObject>();
         tower_level_nodes = new List<LevelNode>();
