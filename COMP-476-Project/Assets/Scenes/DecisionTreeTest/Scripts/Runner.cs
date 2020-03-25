@@ -7,6 +7,7 @@ public class Runner : EnemyBehaviour
     #region Condition Functions
     protected virtual bool IsSomethingBlockingTheWayToThePlayerBase()
     {
+        
         return false;
     }
 

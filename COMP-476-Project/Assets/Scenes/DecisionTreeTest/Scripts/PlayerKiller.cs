@@ -12,7 +12,7 @@ public class PlayerKiller : EnemyBehaviour
     public override void Initialize()
     {
 
-        Debug.Log("Hello?");
+        //Debug.Log("Hello?");
 
         grid_generator = FindObjectOfType<GenerateGrid>();
         this.m_Player = FindObjectOfType<PlayerMovement>().gameObject.transform;
