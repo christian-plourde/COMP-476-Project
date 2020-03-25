@@ -94,6 +94,16 @@ public class WaveManager
 
 public class EnemySpawner : MonoBehaviour
 {
+    /// <summary>
+    /// Whether or not we're debugging
+    /// </summary>
+    [SerializeField] private bool Debugging;
+    /// <summary>
+    /// A JSON containing the config for a single wave with a single enemy
+    /// </summary>
+    public TextAsset DebugWaveConfig; 
+
+
     public int timeBetweenWaves = 2;
     public int spawnerInterval = 10;
     private GameObject[] enemies;
@@ -130,8 +140,16 @@ public class EnemySpawner : MonoBehaviour
 
     void Start()
     {
-        //load all of the waves from the json file
-        waveManager = JsonUtility.FromJson<WaveManager>(WaveConfigurationFile.text);
+        if (!Debugging)
+        {
+            //load all of the waves from the json file
+            waveManager = JsonUtility.FromJson<WaveManager>(WaveConfigurationFile.text);
+        }
+        else
+        {
+            //load all of the waves from the json file
+            waveManager = JsonUtility.FromJson<WaveManager>(DebugWaveConfig.text);
+        }
 
         //load all info about enemies levels
         enemy_level_info = JsonUtility.FromJson<EnemyLevelInfo>(EnemyLevelFile.text);

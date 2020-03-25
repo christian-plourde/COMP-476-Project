@@ -9,9 +9,19 @@ public class Subject : MonoBehaviour
 {
     private LinkedList<Observer> observers;
 
+    public LinkedList<Observer> Observers
+    {
+        get { return observers; }
+    }
+
     public Subject()
     {
         observers = new LinkedList<Observer>();
+    }
+
+    public void ClearObservers()
+    {
+        observers.Clear();
     }
 
     public void AttachObserver(Observer o)

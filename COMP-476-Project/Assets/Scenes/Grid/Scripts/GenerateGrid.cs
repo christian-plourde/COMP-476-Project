@@ -201,10 +201,6 @@ public class GenerateGrid : Subject
         this.initializeSquares();
 
         //add each of the characters to the observer list
-        foreach(Character c in FindObjectsOfType<Character>())
-        {
-            AttachObserver(c);
-        }
 
         //also add the playeractiontracker
         foreach(PlayerActionTracker at in FindObjectsOfType<PlayerActionTracker>())
@@ -273,7 +269,23 @@ public class GenerateGrid : Subject
 
     void Update()
     {
-        if(playerScriptRef==null)
+        //try to attach current characters to the observer list
+        ClearObservers();
+        foreach (Character c in FindObjectsOfType<Character>())
+        {
+            try
+            {
+                if(!Observers.Contains(c))
+                {
+                    AttachObserver(c);
+                }
+            }
+
+            catch { }
+            
+        }
+
+        if (playerScriptRef==null)
             playerScriptRef = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>();
 
         if (Input.GetMouseButtonDown(0) && playerScriptRef.inBuildMode && !playerScriptRef.building && !playerScriptRef.managingTower && !playerScriptRef.isDead)
@@ -309,10 +321,8 @@ public class GenerateGrid : Subject
     }
 
     public void PlaceTower(GameObject towerPrefab, Transform hitLocation)
-    {
-        //GameObject tower = Instantiate(towerPrefab, hitLocation.transform.position, Quaternion.identity);        
+    {      
         GameObject tower = Instantiate(towerPrefab, hitLocation.transform.position, towerPrefab.transform.rotation); // to fix pulse tower's weird rotation
-
         hitLocation.transform.gameObject.GetComponent<LevelNode>().Tower = tower;
         hitLocation.transform.gameObject.GetComponent<LevelNode>().ToggleOpen();
         tower.transform.parent = hitLocation.transform.gameObject.transform;
