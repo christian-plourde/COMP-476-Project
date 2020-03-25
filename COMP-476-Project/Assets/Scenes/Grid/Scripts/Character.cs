@@ -215,6 +215,7 @@ public class Character : NPC
     private void BaseSeekUpdate()
     {
         //Debug.Log("Character : Seeking base");
+
         try
         {
             //if we haven't set a target yet, or if the target has been closed,... 
@@ -517,7 +518,6 @@ public class Character : NPC
     // Update is called once per frame
     protected override void Update()
     {
-
         if (grid.PlayerBaseNodes.Contains(current_node.Value))
             Destroy(this.gameObject);
 

@@ -90,6 +90,10 @@ public class EnemyBehaviour : MonoBehaviour
     /// </summary>
     private float m_PlayerLastSeenTimer = 0.0f;
     /// <summary>
+    /// A timer to keep track of when we last saw a tower.
+    /// </summary>
+    private float m_TowerLastSeenTimer = 0.0f;
+    /// <summary>
     /// The rate at which we increase our timer variable
     /// </summary>
     private const float DELTA_T = 0.025f;
@@ -256,10 +260,13 @@ public class EnemyBehaviour : MonoBehaviour
                     if (Physics.Raycast(origin, direction, out hit, this.m_RangeOfVision))
                     {
                         //...and if that something is a tower...
-                        if (hit.collider.gameObject.GetComponent<TowerAttack>() != null)
+                        if (hit.collider.gameObject.GetComponent<BuildingStats>() != null)
                         {
                             //...then update our target tower node, to tell us where to run to
                             m_TargetTowerNode = tower_node;
+
+                            this.m_TowerLastSeenTimer = 0.0f;
+                            this.m_TowerLastSeenTimer += DELTA_T;
 
                             //return true and break us out of here.
                             result = true;
@@ -328,6 +335,22 @@ public class EnemyBehaviour : MonoBehaviour
         if (m_OutputDebugLogs)
         {
             Debug.Log("Enemy " + (timer_in_range ? "HAS " : "HASN'T") + " seen player recently!");
+        }
+        return timer_in_range;
+    }
+
+    protected virtual bool HasSeenTowerRecently()
+    {
+        //On seeing tower, we reset the timer to 0 and add DELTA T.
+        bool timer_in_range = this.m_TowerLastSeenTimer > 0.0f && this.m_TowerLastSeenTimer < this.m_AttentionSpan;
+
+        if(timer_in_range)
+        {
+            this.m_TowerLastSeenTimer += DELTA_T;
+            if(this.m_TowerLastSeenTimer > this.m_AttentionSpan)
+            {
+                this.m_TowerLastSeenTimer = 0.0f;
+            }
         }
         return timer_in_range;
     }
@@ -521,6 +544,7 @@ public class EnemyBehaviour : MonoBehaviour
         //Conditions
         DTNode.ConditionNode r1n1 = new DTNode.ConditionNode(IsAlive);
         DTNode.ConditionNode r2n1 = new DTNode.ConditionNode(SeesTower);
+        DTNode.ConditionNode r2n3 = new DTNode.ConditionNode(HasSeenTowerRecently);
         DTNode.ConditionNode r3n1 = new DTNode.ConditionNode(IsTowerNearby);
         DTNode.ConditionNode r3n2 = new DTNode.ConditionNode(SeesPlayer);
         DTNode.ConditionNode r4n3 = new DTNode.ConditionNode(IsPlayerNearby);
@@ -545,8 +569,13 @@ public class EnemyBehaviour : MonoBehaviour
         //Row 2
         //Do you see a tower?
         r2n1.affirmative = r3n1;//Then is the tower nearby?
-        r2n1.negative = r3n2;//Then do you see the player?
-        
+        r2n1.negative = r2n3;//Have you seen a tower recently?
+
+        //Row 3
+        //Have you seen a tower recently?
+        r2n3.affirmative = r3n1; //Is tower nearby?
+        r2n3.negative = r3n2; //Do you see the player?
+
         //Row 3
         //Is the tower nearby?
         r3n1.affirmative = r4n1;//Then attack the tower
