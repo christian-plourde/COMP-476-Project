@@ -321,9 +321,8 @@ public class GenerateGrid : Subject
     }
 
     public void PlaceTower(GameObject towerPrefab, Transform hitLocation)
-    {
-        
-        GameObject tower = Instantiate(towerPrefab, hitLocation.transform.position, Quaternion.identity);
+    {      
+        GameObject tower = Instantiate(towerPrefab, hitLocation.transform.position, towerPrefab.transform.rotation); // to fix pulse tower's weird rotation
         hitLocation.transform.gameObject.GetComponent<LevelNode>().Tower = tower;
         hitLocation.transform.gameObject.GetComponent<LevelNode>().ToggleOpen();
         tower.transform.parent = hitLocation.transform.gameObject.transform;

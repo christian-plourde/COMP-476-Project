@@ -550,6 +550,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2114802322}
+  - component: {fileID: 2114802323}
+  - component: {fileID: 2114802324}
   m_Layer: 0
   m_Name: Container
   m_TagString: Untagged
@@ -572,3 +574,37 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2114802323
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2114802321}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aaec248e2e9532549866ab01e51bbb0f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 5
+  damage: 2
+  damageToBase: 2
+  isDead: 0
+  heightOffset: 0
+  goldDrop: 0
+  HealthUI: {fileID: 0}
+  healthDropPrefab: {fileID: 0}
+  healthDropRate: 0
+--- !u!114 &2114802324
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2114802321}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 123d841a91e4f482ca6810da0396f552, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_OutputDebugLogs: 1

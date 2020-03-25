@@ -154,7 +154,7 @@ MonoBehaviour:
   inaccuracy: 0
   projectile: {fileID: 2196552046661029865, guid: 9ac0c50f179b1624f9b3e3508943980d,
     type: 3}
-  projectileSpawnPointOffset: {x: 0, y: 2.5, z: 0}
+  projectileSpawnPointOffset: {x: 0, y: 1, z: 0}
   possibleTargets: both
   projectileType: homing
 --- !u!114 &1231994795544744464
@@ -173,7 +173,7 @@ MonoBehaviour:
   tier: 1
   health: 100
   description: 'A simple, balanced tower with decent stats accross the board.\nDamage
-    : 10\nAttack cooldown : 1\nRange : 5\nMaximum aim time : Instant\nHealth : 100\nPrice
+    : 4\nAttack cooldown : 1\nRange : 5\nMaximum aim time : Instant\nHealth : 100\nPrice
     : 100'
   upgrade: {fileID: 2818103337241428834, guid: 24042aff9816d214095c1dfd630a9280, type: 3}
 --- !u!136 &5822081443085063723
