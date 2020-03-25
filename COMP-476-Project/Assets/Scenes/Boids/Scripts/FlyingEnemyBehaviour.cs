@@ -204,6 +204,7 @@ public class FlyingEnemyBehaviour : MonoBehaviour
         return result;
     }
     #endregion
+
     #region Action Functions
     //Actions
 
