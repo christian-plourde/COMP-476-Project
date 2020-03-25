@@ -26,7 +26,7 @@ public class FlyingEnemyBehaviour : MonoBehaviour
     /// A pseudoconstructor to allow us to easily spawn and initialize enemy AI movement types
     /// Refer to this diagram https://docs.google.com/drawings/d/1qOOZjceQnmuGH2RxBY521rWqPFpAjUt2HtGHsXuAP04/edit
     /// </summary>
-    public void Initialize()
+    public  void Initialize()
     {
         //this.m_Player = FindObjectOfType<PlayerMovement>().gameObject.transform;
 

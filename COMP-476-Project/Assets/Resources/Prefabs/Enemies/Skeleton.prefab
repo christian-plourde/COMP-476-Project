@@ -740,8 +740,8 @@ GameObject:
   - component: {fileID: 7006175679869431234}
   - component: {fileID: 7006175679869431232}
   - component: {fileID: 7006175679869431233}
-  - component: {fileID: 4416341976618337035}
   - component: {fileID: -1074788961236186216}
+  - component: {fileID: -5400604660666814008}
   m_Layer: 0
   m_Name: Skeleton
   m_TagString: Enemy
@@ -801,7 +801,6 @@ MonoBehaviour:
   health: 20
   damage: 7
   damageToBase: 30
-  speed: 0
   isDead: 0
   heightOffset: 0
   goldDrop: 20
@@ -839,26 +838,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
---- !u!114 &4416341976618337035
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7006175679869431235}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e621c67f52a704139ac4ba18634499e8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Player: {fileID: 0}
-  m_OutputDebugLogs: 0
-  grid_generator: {fileID: 0}
-  m_WhatIsNearby: 1
-  m_VisionErrorMargin: 0.2
-  m_RangeOfVision: 10
-  m_AttackFrequency: 1
-  m_AttentionSpan: 2
 --- !u!114 &-1074788961236186216
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -874,6 +853,26 @@ MonoBehaviour:
   MAX_VELOCITY: 1
   MAX_ANGULAR_VELOCITY: 300
   MAX_ANGULAR_ACCELERATION: 2000
+--- !u!114 &-5400604660666814008
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7006175679869431235}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 116f915303f0e46c2b792ac6f1c6a57d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Player: {fileID: 0}
+  m_OutputDebugLogs: 1
+  grid_generator: {fileID: 0}
+  m_WhatIsNearby: 1
+  m_VisionErrorMargin: 0.2
+  m_RangeOfVision: 10
+  m_AttackFrequency: 1
+  m_AttentionSpan: 2
 --- !u!1 &7006184110024238621
 GameObject:
   m_ObjectHideFlags: 0

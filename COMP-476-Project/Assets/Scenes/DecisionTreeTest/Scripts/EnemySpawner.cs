@@ -172,7 +172,7 @@ public class EnemySpawner : MonoBehaviour
             try
             {
                 GameObject new_enemy = GameObject.Instantiate(GetCurrentEnemy()); //load random enemy
-                ZombieBehaviour zm = new_enemy.GetComponent<ZombieBehaviour>();
+                EnemyBehaviour zm = new_enemy.GetComponent<EnemyBehaviour>();
                 zm.Initialize();
                 waveManager.CurrentWave.IncrementIndex();
             }
