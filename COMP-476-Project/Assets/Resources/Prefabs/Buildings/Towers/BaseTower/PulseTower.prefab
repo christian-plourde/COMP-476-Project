@@ -96,6 +96,7 @@ MonoBehaviour:
   price: 300
   tier: 1
   health: 100
+  towerImage: {fileID: 21300000, guid: b7db2d97935d3b0478ca7328eaea80c3, type: 3}
   description: 'A mystical tower that blasts all enemies within its range.\nDamage
     : 6\nAttack cooldown : 2\nRange : 2\nMaximum aim time : Instant\nHealth : 100\nPrice
     : 300'
