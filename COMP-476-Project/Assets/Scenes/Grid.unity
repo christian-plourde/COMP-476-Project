@@ -18535,7 +18535,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f4ee31875ec44498aab87f87058bad3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Debugging: 0
+  Debugging: 1
   DebugWaveConfig: {fileID: 4900000, guid: e4ebe5aa63cf149e3a57402c60a74d64, type: 3}
   timeBetweenWaves: 10
   spawnerInterval: 2
