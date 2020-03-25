@@ -107,8 +107,7 @@ public class EnemyBehaviour : MonoBehaviour
     /// </summary>
     protected EnemyAttributes m_EnemyAttributes;
 
-
-    //Our decision tree condition nodes
+    #region Condition Functions
 
     /// <summary>
     /// Tells us whether the enemy is still alive; this will in turn determine whether the rest of the decision tree should be considered at all.
@@ -374,6 +373,10 @@ public class EnemyBehaviour : MonoBehaviour
         return (result);
     }
 
+    #endregion
+
+    #region Action Functions
+
     /// <summary>
     /// The function to be executed on !isAlive
     /// </summary>
@@ -525,6 +528,8 @@ public class EnemyBehaviour : MonoBehaviour
         }
         this.m_Character.BehaviourType = BEHAVIOUR_TYPE.BASE_SEEK;
     }
+
+    #endregion
 
     /// <summary>
     /// A pseudoconstructor to allow us to easily spawn and initialize enemy AI movement types
