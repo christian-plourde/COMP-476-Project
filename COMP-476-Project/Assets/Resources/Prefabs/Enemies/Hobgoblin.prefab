@@ -987,8 +987,8 @@ GameObject:
   - component: {fileID: 2966996465614581285}
   - component: {fileID: 2966996465611312836}
   - component: {fileID: 2966996465611312843}
-  - component: {fileID: -4463088309049337563}
   - component: {fileID: 8933611431667604863}
+  - component: {fileID: 1388400459616225089}
   m_Layer: 0
   m_Name: Hobgoblin
   m_TagString: Enemy
@@ -1085,7 +1085,6 @@ MonoBehaviour:
   health: 25
   damage: 9
   damageToBase: 35
-  speed: 2
   isDead: 0
   heightOffset: 0
   goldDrop: 30
@@ -1093,26 +1092,6 @@ MonoBehaviour:
   healthDropPrefab: {fileID: 2698641719317733580, guid: d8e5e7034a69a5747b7b675c7622bd8a,
     type: 3}
   healthDropRate: 0.4
---- !u!114 &-4463088309049337563
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2966996465611312837}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e621c67f52a704139ac4ba18634499e8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Player: {fileID: 0}
-  m_OutputDebugLogs: 0
-  grid_generator: {fileID: 0}
-  m_WhatIsNearby: 1
-  m_VisionErrorMargin: 0.2
-  m_RangeOfVision: 10
-  m_AttackFrequency: 1
-  m_AttentionSpan: 2
 --- !u!114 &8933611431667604863
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1128,6 +1107,26 @@ MonoBehaviour:
   MAX_VELOCITY: 1
   MAX_ANGULAR_VELOCITY: 300
   MAX_ANGULAR_ACCELERATION: 2000
+--- !u!114 &1388400459616225089
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2966996465611312837}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 116f915303f0e46c2b792ac6f1c6a57d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Player: {fileID: 0}
+  m_OutputDebugLogs: 0
+  grid_generator: {fileID: 0}
+  m_WhatIsNearby: 1
+  m_VisionErrorMargin: 0.2
+  m_RangeOfVision: 10
+  m_AttackFrequency: 1.5
+  m_AttentionSpan: 2
 --- !u!1 &2966996465611312839
 GameObject:
   m_ObjectHideFlags: 0

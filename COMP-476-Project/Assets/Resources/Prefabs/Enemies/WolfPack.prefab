@@ -10,8 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 8852857386946175690}
   - component: {fileID: 8852857386946175691}
-  - component: {fileID: 8852857386946175688}
   - component: {fileID: 8852857386946175733}
+  - component: {fileID: 4211786914822267665}
   m_Layer: 0
   m_Name: WolfPack
   m_TagString: Enemy
@@ -51,26 +51,6 @@ MonoBehaviour:
   MAX_VELOCITY: 1
   MAX_ANGULAR_VELOCITY: 300
   MAX_ANGULAR_ACCELERATION: 2000
---- !u!114 &8852857386946175688
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8852857386946175689}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e621c67f52a704139ac4ba18634499e8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Player: {fileID: 0}
-  m_OutputDebugLogs: 0
-  grid_generator: {fileID: 0}
-  m_WhatIsNearby: 2
-  m_VisionErrorMargin: 0.2
-  m_RangeOfVision: 10
-  m_AttackFrequency: 1.5
-  m_AttentionSpan: 2
 --- !u!114 &8852857386946175733
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -89,6 +69,26 @@ MonoBehaviour:
   - {fileID: 7438153672641327964}
   formation_type: 2
   formation_scale: 0.5
+--- !u!114 &4211786914822267665
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8852857386946175689}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e0293e1698fa403e87c7fd9f1c9617c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Player: {fileID: 0}
+  m_OutputDebugLogs: 0
+  grid_generator: {fileID: 0}
+  m_WhatIsNearby: 2
+  m_VisionErrorMargin: 0.2
+  m_RangeOfVision: 10
+  m_AttackFrequency: 1.5
+  m_AttentionSpan: 2
 --- !u!1001 &13803841266452489
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -104,6 +104,16 @@ PrefabInstance:
     - target: {fileID: -5188962610406153263, guid: f1352b79ca4c4b84981a6807f78df512,
         type: 3}
       propertyPath: m_OutputDebugLogs
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 240953211028028228, guid: f1352b79ca4c4b84981a6807f78df512,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3025519479054485193, guid: f1352b79ca4c4b84981a6807f78df512,
+        type: 3}
+      propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7424372955921067893, guid: f1352b79ca4c4b84981a6807f78df512,
@@ -192,6 +202,16 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 240953211028028228, guid: f1352b79ca4c4b84981a6807f78df512,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3025519479054485193, guid: f1352b79ca4c4b84981a6807f78df512,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7424372955921067893, guid: f1352b79ca4c4b84981a6807f78df512,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -274,6 +294,16 @@ PrefabInstance:
     m_TransformParent: {fileID: 8852857386946175690}
     m_Modifications:
     - target: {fileID: -5188962610406153263, guid: f1352b79ca4c4b84981a6807f78df512,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 240953211028028228, guid: f1352b79ca4c4b84981a6807f78df512,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3025519479054485193, guid: f1352b79ca4c4b84981a6807f78df512,
         type: 3}
       propertyPath: m_Enabled
       value: 0

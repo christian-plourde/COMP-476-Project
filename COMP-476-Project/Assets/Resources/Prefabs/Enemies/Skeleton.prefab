@@ -741,7 +741,7 @@ GameObject:
   - component: {fileID: 7006175679869431232}
   - component: {fileID: 7006175679869431233}
   - component: {fileID: -1074788961236186216}
-  - component: {fileID: -5400604660666814008}
+  - component: {fileID: -4997380191561835919}
   m_Layer: 0
   m_Name: Skeleton
   m_TagString: Enemy
@@ -853,7 +853,7 @@ MonoBehaviour:
   MAX_VELOCITY: 1
   MAX_ANGULAR_VELOCITY: 300
   MAX_ANGULAR_ACCELERATION: 2000
---- !u!114 &-5400604660666814008
+--- !u!114 &-4997380191561835919
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -866,12 +866,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Player: {fileID: 0}
-  m_OutputDebugLogs: 1
+  m_OutputDebugLogs: 0
   grid_generator: {fileID: 0}
   m_WhatIsNearby: 1
   m_VisionErrorMargin: 0.2
   m_RangeOfVision: 10
-  m_AttackFrequency: 1
+  m_AttackFrequency: 1.5
   m_AttentionSpan: 2
 --- !u!1 &7006184110024238621
 GameObject:

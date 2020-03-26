@@ -10,8 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 8852857386946175690}
   - component: {fileID: 8852857386946175691}
-  - component: {fileID: 8852857386946175688}
   - component: {fileID: 8852857386946175733}
+  - component: {fileID: 5944089143422250242}
   m_Layer: 0
   m_Name: TrollDuo
   m_TagString: Enemy
@@ -50,26 +50,6 @@ MonoBehaviour:
   MAX_VELOCITY: 1
   MAX_ANGULAR_VELOCITY: 300
   MAX_ANGULAR_ACCELERATION: 2000
---- !u!114 &8852857386946175688
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8852857386946175689}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e621c67f52a704139ac4ba18634499e8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Player: {fileID: 0}
-  m_OutputDebugLogs: 0
-  grid_generator: {fileID: 0}
-  m_WhatIsNearby: 2
-  m_VisionErrorMargin: 0.2
-  m_RangeOfVision: 10
-  m_AttackFrequency: 1.5
-  m_AttentionSpan: 2
 --- !u!114 &8852857386946175733
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -87,6 +67,26 @@ MonoBehaviour:
   - {fileID: 5923285700099911434}
   formation_type: 3
   formation_scale: 0.7
+--- !u!114 &5944089143422250242
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8852857386946175689}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4895aa360aeae4581b9807629766e819, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Player: {fileID: 0}
+  m_OutputDebugLogs: 0
+  grid_generator: {fileID: 0}
+  m_WhatIsNearby: 2
+  m_VisionErrorMargin: 0.2
+  m_RangeOfVision: 10
+  m_AttackFrequency: 1.5
+  m_AttentionSpan: 2
 --- !u!1001 &5427802156037910714
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -155,6 +155,11 @@ PrefabInstance:
       value: EvilTroll
       objectReference: {fileID: 0}
     - target: {fileID: 4287646296606865425, guid: a27f2c6fff0aa7745988ebce9c62fd3b,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6577200642498509900, guid: a27f2c6fff0aa7745988ebce9c62fd3b,
         type: 3}
       propertyPath: m_Enabled
       value: 0
@@ -241,6 +246,11 @@ PrefabInstance:
       value: CaveTroll
       objectReference: {fileID: 0}
     - target: {fileID: 727261008920275103, guid: 7d19d3454f03a904ea38f31d75a3735d,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7610547608726795632, guid: 7d19d3454f03a904ea38f31d75a3735d,
         type: 3}
       propertyPath: m_Enabled
       value: 0

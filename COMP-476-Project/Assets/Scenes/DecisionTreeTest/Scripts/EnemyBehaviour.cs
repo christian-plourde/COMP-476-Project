@@ -373,6 +373,18 @@ public class EnemyBehaviour : MonoBehaviour
         return (result);
     }
 
+    protected virtual bool IsSomethingBlockingTheWayToThePlayerBase()
+    {
+        foreach (LevelNode n in grid_generator.PlayerBaseNodes)
+        {
+            LinkedList<Graph.GraphNode<LevelNode>> path = grid_generator.Graph.ShortestPath(this.GetComponent<Character>().CurrentNode, n.GraphNode);
+            if (path.Count == 0)
+                return true;
+        }
+
+        return false;
+    }
+
     #endregion
 
     #region Action Functions
@@ -529,6 +541,22 @@ public class EnemyBehaviour : MonoBehaviour
         this.m_Character.BehaviourType = BEHAVIOUR_TYPE.BASE_SEEK;
     }
 
+    protected virtual void MoveToClosestTower()
+    {
+        double smallest_dist = double.MaxValue;
+
+        foreach (LevelNode n in tower_level_nodes)
+        {
+            double dist = (n.transform.position - this.gameObject.transform.position).magnitude;
+            if (dist < smallest_dist)
+            {
+                smallest_dist = dist;
+                this.m_TargetTowerNode = n.gameObject;
+            }
+        }
+        this.m_Character.BehaviourType = BEHAVIOUR_TYPE.MOVE_TO_TOWER;
+    }
+
     #endregion
 
     /// <summary>
@@ -555,6 +583,7 @@ public class EnemyBehaviour : MonoBehaviour
         DTNode.ConditionNode r4n3 = new DTNode.ConditionNode(IsPlayerNearby);
         DTNode.ConditionNode r4n4 = new DTNode.ConditionNode(HasSeenPlayerRecently);
         DTNode.ConditionNode r5n3 = new DTNode.ConditionNode(IsPlayerNearby);
+        DTNode.ConditionNode r6n4 = new DTNode.ConditionNode(IsSomethingBlockingTheWayToThePlayerBase);
 
         //Actions
         DTNode.ActionNode r2n2 = new DTNode.ActionNode(BeDead);
@@ -565,6 +594,8 @@ public class EnemyBehaviour : MonoBehaviour
         DTNode.ActionNode r5n4 = new DTNode.ActionNode(Default);
         DTNode.ActionNode r6n1 = new DTNode.ActionNode(AttackPlayer);
         DTNode.ActionNode r6n2 = new DTNode.ActionNode(MoveToPlayer);
+        DTNode.ActionNode r6n3 = new DTNode.ActionNode(MoveToClosestTower);
+
 
         //Assign the order of the tree, per row in our tree diagram (https://docs.google.com/drawings/d/1qOOZjceQnmuGH2RxBY521rWqPFpAjUt2HtGHsXuAP04/edit)
         //Row 1
@@ -596,7 +627,11 @@ public class EnemyBehaviour : MonoBehaviour
 
         //Have you seen the player recently?
         r4n4.affirmative = r5n3;//then is the player nearby?
-        r4n4.negative = r5n4;//then base seek / default movement
+        r4n4.negative = r6n4;//then base seek / default movement
+
+        //is path blocked
+        r6n4.affirmative = r6n3; //move to closest tower
+        r6n4.negative = r5n4; //move to base/default movement
 
         //Row 5
         //Is the player nearby?

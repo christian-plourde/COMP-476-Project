@@ -24742,7 +24742,7 @@ GameObject:
   - component: {fileID: 7424372955921300265}
   - component: {fileID: 4555673887844122317}
   - component: {fileID: 8675522791493954225}
-  - component: {fileID: 240953211028028228}
+  - component: {fileID: 3025519479054485193}
   m_Layer: 0
   m_Name: wolf
   m_TagString: Enemy
@@ -24856,7 +24856,7 @@ MonoBehaviour:
   MAX_VELOCITY: 1
   MAX_ANGULAR_VELOCITY: 300
   MAX_ANGULAR_ACCELERATION: 2000
---- !u!114 &240953211028028228
+--- !u!114 &3025519479054485193
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -24865,16 +24865,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 7424372955921300309}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 116f915303f0e46c2b792ac6f1c6a57d, type: 3}
+  m_Script: {fileID: 11500000, guid: 0e0293e1698fa403e87c7fd9f1c9617c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Player: {fileID: 0}
-  m_OutputDebugLogs: 1
+  m_OutputDebugLogs: 0
   grid_generator: {fileID: 0}
   m_WhatIsNearby: 1
   m_VisionErrorMargin: 0.2
   m_RangeOfVision: 10
-  m_AttackFrequency: 1
+  m_AttackFrequency: 1.5
   m_AttentionSpan: 2
 --- !u!1 &7424372955921300311
 GameObject:

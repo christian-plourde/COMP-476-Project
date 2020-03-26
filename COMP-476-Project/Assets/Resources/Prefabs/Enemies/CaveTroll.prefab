@@ -287,8 +287,8 @@ GameObject:
   - component: {fileID: 150935734325568645}
   - component: {fileID: 150935734325568644}
   - component: {fileID: 150935734325568647}
-  - component: {fileID: 727261008920275103}
   - component: {fileID: -580081796055264852}
+  - component: {fileID: 7610547608726795632}
   m_Layer: 0
   m_Name: CaveTroll
   m_TagString: Enemy
@@ -385,33 +385,12 @@ MonoBehaviour:
   health: 600
   damage: 50
   damageToBase: 250
-  speed: 0.5
   isDead: 0
   heightOffset: 0
   goldDrop: 400
   HealthUI: {fileID: 2896172432133589368}
   healthDropPrefab: {fileID: 0}
   healthDropRate: 0
---- !u!114 &727261008920275103
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 150935734325568646}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e621c67f52a704139ac4ba18634499e8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Player: {fileID: 0}
-  m_OutputDebugLogs: 0
-  grid_generator: {fileID: 0}
-  m_WhatIsNearby: 1
-  m_VisionErrorMargin: 0.2
-  m_RangeOfVision: 10
-  m_AttackFrequency: 1
-  m_AttentionSpan: 2
 --- !u!114 &-580081796055264852
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -427,6 +406,26 @@ MonoBehaviour:
   MAX_VELOCITY: 1
   MAX_ANGULAR_VELOCITY: 300
   MAX_ANGULAR_ACCELERATION: 2000
+--- !u!114 &7610547608726795632
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 150935734325568646}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 116f915303f0e46c2b792ac6f1c6a57d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Player: {fileID: 0}
+  m_OutputDebugLogs: 0
+  grid_generator: {fileID: 0}
+  m_WhatIsNearby: 1
+  m_VisionErrorMargin: 0.2
+  m_RangeOfVision: 10
+  m_AttackFrequency: 1.5
+  m_AttentionSpan: 2
 --- !u!1 &150940298110016676
 GameObject:
   m_ObjectHideFlags: 0

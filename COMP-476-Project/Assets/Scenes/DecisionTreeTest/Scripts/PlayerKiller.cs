@@ -12,7 +12,7 @@ public class PlayerKiller : EnemyBehaviour
     public override void Initialize()
     {
 
-        Debug.Log("Hello?");
+        //Debug.Log("Hello?");
 
         grid_generator = FindObjectOfType<GenerateGrid>();
         this.m_Player = FindObjectOfType<PlayerMovement>().gameObject.transform;
@@ -31,6 +31,7 @@ public class PlayerKiller : EnemyBehaviour
         DTNode.ConditionNode r4n4 = new DTNode.ConditionNode(SeesTower);
         DTNode.ConditionNode r5n1 = new DTNode.ConditionNode(IsTowerNearby);
         DTNode.ConditionNode r5n2 = new DTNode.ConditionNode(HasSeenTowerRecently);
+        DTNode.ConditionNode r6n4 = new DTNode.ConditionNode(IsSomethingBlockingTheWayToThePlayerBase);
 
         //Actions
         DTNode.ActionNode r2n2 = new DTNode.ActionNode(BeDead);
@@ -39,6 +40,7 @@ public class PlayerKiller : EnemyBehaviour
         DTNode.ActionNode r6n1 = new DTNode.ActionNode(AttackTower);
         DTNode.ActionNode r6n2 = new DTNode.ActionNode(MoveToTower);
         DTNode.ActionNode r6n3 = new DTNode.ActionNode(Default);
+        DTNode.ActionNode r6n5 = new DTNode.ActionNode(MoveToClosestTower);
 
         //Assign the order of the tree, per row in our tree diagram (https://docs.google.com/drawings/d/1qOOZjceQnmuGH2RxBY521rWqPFpAjUt2HtGHsXuAP04/edit)
         //Row 1
@@ -71,7 +73,11 @@ public class PlayerKiller : EnemyBehaviour
 
         //Have you seen a tower recently?
         r5n2.affirmative = r5n1;//then is the tower nearby?
-        r5n2.negative = r6n3;//then wander
+        r5n2.negative = r6n4;//check if path is blocked
+
+        //checking if path is blocked
+        r6n4.affirmative = r6n5; //move to closest tower
+        r6n4.negative = r6n3; //base seek
 
         this.m_DecisionTree = new DecisionTree(r1n1);
     }

@@ -4,14 +4,6 @@ using UnityEngine;
 
 public class Runner : EnemyBehaviour
 {
-    #region Condition Functions
-    protected virtual bool IsSomethingBlockingTheWayToThePlayerBase()
-    {
-        return false;
-    }
-
-    #endregion
-
     /// <summary>
     /// A pseudoconstructor to allow us to easily spawn and initialize enemy AI movement types
     /// Refer to this diagram https://docs.google.com/drawings/d/1qOOZjceQnmuGH2RxBY521rWqPFpAjUt2HtGHsXuAP04/edit
@@ -38,6 +30,7 @@ public class Runner : EnemyBehaviour
         //Actions
         DTNode.ActionNode r2n2 = new DTNode.ActionNode(BeDead);
         DTNode.ActionNode r3n2 = new DTNode.ActionNode(Default);
+        DTNode.ActionNode r5n3 = new DTNode.ActionNode(MoveToClosestTower);
         DTNode.ActionNode r5n1 = new DTNode.ActionNode(AttackTower);
         DTNode.ActionNode r5n2 = new DTNode.ActionNode(MoveToTower);
 
@@ -64,7 +57,7 @@ public class Runner : EnemyBehaviour
 
         //have you seen a tower recently?
         r4n2.affirmative = r4n1;//then is the tower nearby?
-        r4n2.negative = r3n2;//then base seek
+        r4n2.negative = r5n3;//then move to closest tower
 
         this.m_DecisionTree = new DecisionTree(r1n1);
     }
