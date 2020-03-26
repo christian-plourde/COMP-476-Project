@@ -38,6 +38,7 @@ public class PlayerActionTracker : Observer
     // Update is called once per frame
     void Update()
     {
+
         //if player pressed a movement key, increment the run timer by frame time
         if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D))
         {

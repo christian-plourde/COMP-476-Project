@@ -44,6 +44,7 @@ public class PlayerMovement : MonoBehaviour
     [HideInInspector]public bool warriorUltimate;
     [Header("References")]
     public GameObject respawnUIPrefab;
+    GameObject canvas;
 
     public GridSquare currentGridSquare;
     public GenerateGrid grid;
@@ -86,6 +87,8 @@ public class PlayerMovement : MonoBehaviour
 
     void Start()
     {
+        canvas = GameObject.FindObjectOfType<Canvas>().gameObject;
+
         // scale speed according to current scale (because player is smaller in the grid scene)
         mSpeed = mSpeed * transform.localScale.x;
 
@@ -270,7 +273,8 @@ public class PlayerMovement : MonoBehaviour
             Destroy(gb.gameObject);
 
 
-        Instantiate(respawnUIPrefab);
+        gb = Instantiate(respawnUIPrefab, respawnUIPrefab.transform.position, Quaternion.identity);
+        gb.transform.SetParent(canvas.transform, false);
 
         SFXManager.instance.Play("PlayerDeath");
 
