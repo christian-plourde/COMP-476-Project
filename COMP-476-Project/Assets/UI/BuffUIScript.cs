@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class BuffUIScript : MonoBehaviour
 {
     PlayerBuffManager bManager;
+    PlayerMovement playerRef;
     List<Buff> bList;
 
     public GameObject Build;
@@ -21,6 +22,9 @@ public class BuffUIScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        playerRef = FindObjectOfType<PlayerMovement>();
+        playerRef.building = true;
+
         bManager = GameObject.FindObjectOfType<PlayerBuffManager>();
     }
 
@@ -56,6 +60,7 @@ public class BuffUIScript : MonoBehaviour
         if (temp.CanUpgrade())
         {
             bManager.LevelUp(uid);
+            playerRef.building = false;
             Destroy(this.gameObject);
         }
         else
