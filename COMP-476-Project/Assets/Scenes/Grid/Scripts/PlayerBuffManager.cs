@@ -22,6 +22,11 @@ public class BuffMethods
         get { return fastest_man_alive_charge_timer_time / fastest_man_alive_charge_timer_length; }
     }
 
+    public bool Fastest_man_alive_charged
+    {
+        get { return fastest_man_alive_charged; }
+    }
+
     public bool TowerPlaced
     {
         get { return towerPlaced; }

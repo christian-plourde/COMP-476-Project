@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class BuffUIScript : MonoBehaviour
 {
     PlayerBuffManager bManager;
+    BuffShowcaseScript bShowcase;
     PlayerMovement playerRef;
     List<Buff> bList;
 
@@ -26,6 +27,8 @@ public class BuffUIScript : MonoBehaviour
         playerRef.building = true;
 
         bManager = GameObject.FindObjectOfType<PlayerBuffManager>();
+
+        bShowcase = GameObject.FindObjectOfType<BuffShowcaseScript>();
     }
 
     // Update is called once per frame
@@ -60,6 +63,7 @@ public class BuffUIScript : MonoBehaviour
         if (temp.CanUpgrade())
         {
             bManager.LevelUp(uid);
+            bShowcase.AddToList(uid);
             playerRef.building = false;
             Destroy(this.gameObject);
         }

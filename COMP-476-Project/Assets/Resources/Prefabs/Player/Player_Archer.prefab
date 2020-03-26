@@ -2490,7 +2490,7 @@ MonoBehaviour:
   building: 0
   managingTower: 0
   warriorUltimate: 0
-  respawnUIPrefab: {fileID: 2027443529192807965, guid: 1a9f9f1ed06de9f499b232c889715452,
+  respawnUIPrefab: {fileID: 5172543232229837915, guid: bbba4ff9850b4fb408b1813d1e541460,
     type: 3}
   grid: {fileID: 0}
 --- !u!114 &7144771478404947810
