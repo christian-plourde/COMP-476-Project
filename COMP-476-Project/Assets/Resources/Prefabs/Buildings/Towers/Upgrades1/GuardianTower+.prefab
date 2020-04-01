@@ -60,7 +60,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 3c5d2e6de46c95041b3b2b42094f4761, type: 2}
+  - {fileID: 2100000, guid: a8013f6aaf28d4642bea95610f059687, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -96,6 +96,7 @@ MonoBehaviour:
   price: 700
   tier: 2
   health: 2000
+  towerImage: {fileID: 0}
   description: 'Damage : 8 -> 20\nAttack cooldown : 1.5s\nRange : 1 -> 1.5\nHeight
     limit : None\nMaximum aim time : 0s\nHealth : 750 -> 2000\nPrice : 700'
   upgrade: {fileID: 100000, guid: f24d1827889511c428f921b33d19a425, type: 3}

@@ -125,3 +125,6 @@ MonoBehaviour:
   effect: explode
   value1: 12
   value2: 1.5
+  spawnedOnDeath: {fileID: 0}
+  deathParticle: {fileID: 1845955007268882, guid: c8d2c1dcf0870de4fb78ea3e1cb99c7d,
+    type: 3}

@@ -564,7 +564,7 @@ MonoBehaviour:
   rotationSpeed: 0
   heightLimit: 0
   inaccuracy: 0
-  projectile: {fileID: 682383995980441880, guid: 954904e99a69b16409a1b73368766f22,
+  projectile: {fileID: 2994405290326968941, guid: 673c021ff70974d4189cbb2097599821,
     type: 3}
   projectileSpawnPointOffset: {x: 0, y: 1.2, z: 0}
   possibleTargets: both

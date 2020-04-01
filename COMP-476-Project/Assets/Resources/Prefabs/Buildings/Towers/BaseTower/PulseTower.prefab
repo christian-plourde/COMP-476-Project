@@ -30,7 +30,7 @@ Transform:
   m_GameObject: {fileID: 2177221533171765106}
   m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: -0.52968085, z: 0.52329594}
-  m_LocalScale: {x: 1, y: 1, z: 0.83876747}
+  m_LocalScale: {x: 1.2, y: 1.2, z: 0.83876747}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -116,6 +116,7 @@ MonoBehaviour:
   damage: 6
   range: 2
   cooldown: 2
+  explosion: {fileID: 1845955007268882, guid: 71e9023f6e500f5459948f7a1ba58a98, type: 3}
 --- !u!136 &3710993970867396122
 CapsuleCollider:
   m_ObjectHideFlags: 0

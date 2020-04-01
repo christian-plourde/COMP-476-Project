@@ -29,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 100000}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.1, y: 0.15, z: 0.1}
+  m_LocalScale: {x: 0.1, y: 0.18, z: 0.1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -59,7 +59,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 3c5d2e6de46c95041b3b2b42094f4761, type: 2}
+  - {fileID: 2100000, guid: f3767b02ba9bf474d88da75548d2960f, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -95,6 +95,7 @@ MonoBehaviour:
   price: 1250
   tier: 3
   health: 4000
+  towerImage: {fileID: 0}
   description: 'Damage : 20 -> 30\nAttack cooldown : 1.5s -> 1.2s\nRange : 1.5\nHeight
     limit : None\nMaximum aim time : Instant\nHealth : 2000 -> 4000\nPrice : 1250'
   upgrade: {fileID: 0}

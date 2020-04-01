@@ -39,7 +39,7 @@ public class ProjectileMovement : MonoBehaviour
 
     void Update()
     {
-        if (target == null)
+        if (target == null || transform.position.y < 0)
                 {
                     Destroy(gameObject);
                 }

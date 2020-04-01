@@ -57,7 +57,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: c696ba76ada0fae4b9725a7c7a7e325c, type: 2}
+  - {fileID: 2100000, guid: 64618a2e2d30e0548b190ddd5bc84d8f, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -188,7 +188,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: ca7138d56ebeadb4ab3ef5fcb82f946d, type: 2}
+  - {fileID: 2100000, guid: 3e5de3f4a80ca54429d41cf454453116, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -259,6 +259,7 @@ MonoBehaviour:
   price: 500
   tier: 2
   health: 250
+  towerImage: {fileID: 0}
   description: 'Damage : 7 -> 16 on impact + 5 -> 12 within 1 -> 1.5)\nAttack cooldown
     : 1.75s\nRange : 7 -> 10\nHeight limit : 1.15 -> 1.535\nMaximum aim time : 3s\nHealth
     : 150 -> 250\nPrice : 500'
@@ -357,7 +358,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: b128499fa9af31f46981e7e520f91556, type: 2}
+  - {fileID: 2100000, guid: 022bd3b75c030584e95942a8b02fc460, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -435,7 +436,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: dd450e62cd3b7bd4f96ba5a499ed2f5b, type: 2}
+  - {fileID: 2100000, guid: 44109e2b393a6284283b23f6e0150695, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -513,7 +514,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 70c6189c8c8b4cc4da749c5ace637058, type: 2}
+  - {fileID: 2100000, guid: b4e134cfa81cd9144b9c8e5da50b0f78, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
