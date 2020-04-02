@@ -24800,7 +24800,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 15
   damage: 2
-  damageToBase: 20
+  damageToBase: 25
   isDead: 0
   heightOffset: 0
   goldDrop: 15

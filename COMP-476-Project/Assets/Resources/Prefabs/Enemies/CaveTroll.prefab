@@ -382,12 +382,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aaec248e2e9532549866ab01e51bbb0f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 600
-  damage: 50
-  damageToBase: 250
+  health: 350
+  damage: 40
+  damageToBase: 200
   isDead: 0
   heightOffset: 0
-  goldDrop: 400
+  goldDrop: 300
   HealthUI: {fileID: 2896172432133589368}
   healthDropPrefab: {fileID: 0}
   healthDropRate: 0

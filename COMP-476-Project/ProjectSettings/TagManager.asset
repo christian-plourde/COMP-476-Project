@@ -19,6 +19,8 @@ TagManager:
   - GameInfo
   - PlayerBase
   - NoNode
+  - SFXManager
+  - QuitMenu
   layers:
   - Default
   - TransparentFX
