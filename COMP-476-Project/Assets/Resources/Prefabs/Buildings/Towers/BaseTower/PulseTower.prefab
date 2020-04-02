@@ -93,7 +93,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 003d88c9bd2b60447b3c825526b35a9e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  price: 300
+  price: 250
   tier: 1
   health: 100
   towerImage: {fileID: 21300000, guid: b7db2d97935d3b0478ca7328eaea80c3, type: 3}

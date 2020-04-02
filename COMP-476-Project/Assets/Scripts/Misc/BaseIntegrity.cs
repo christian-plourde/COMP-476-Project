@@ -126,8 +126,8 @@ public class BaseIntegrity : MonoBehaviour
         GameObject Player = GameObject.FindGameObjectWithTag("Player");
         Player.GetComponent<PlayerMovement>().controlLock = true;
         Player.GetComponent<PlayerMovement>().invincible = true;
-        // so that they cant move, test if this works
         Player.GetComponent<PlayerMovement>().defeated = true;
+        Player.GetComponent<PlayerMovement>().StopWalkingAnim();
         
         victoryMenu.SetActive(true);
         SFXManager.instance.Play("WavePrep");
