@@ -30,7 +30,7 @@ Transform:
   m_GameObject: {fileID: 2177221533171765106}
   m_LocalRotation: {x: -0.6532815, y: 0.27059805, z: 0.27059805, w: 0.6532815}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.1, y: 1.1, z: 1.1}
+  m_LocalScale: {x: 1.3, y: 1.3, z: 1.1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -60,7 +60,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: bf28ea158b8b6eb4da006a2df0a01d2e, type: 2}
+  - {fileID: 2100000, guid: 3727039514be3644e97d953c767dc874, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -93,9 +93,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 003d88c9bd2b60447b3c825526b35a9e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  price: 800
+  price: 500
   tier: 2
   health: 250
+  towerImage: {fileID: 0}
   description: 'Damage : 6 -> 9\nAttack cooldown : 2\nRange : 2 -> 2.5\nMaximum aim
     time : Instant\nHealth : 250\nPrice : 800'
   upgrade: {fileID: 2177221533171765106, guid: 3778e5723e55a444cac3a24e4d9a985e, type: 3}
@@ -114,6 +115,7 @@ MonoBehaviour:
   damage: 9
   range: 2.5
   cooldown: 2
+  explosion: {fileID: 1845955007268882, guid: 182c32dbe1c5caf41aeafe0eb81849e6, type: 3}
 --- !u!136 &3949165466387757542
 CapsuleCollider:
   m_ObjectHideFlags: 0

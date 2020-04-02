@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 4641989623251224613}
   - component: {fileID: -156809949209546212}
   m_Layer: 0
-  m_Name: Canonball+
+  m_Name: CanonballX
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -60,7 +60,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: ef10063a540afe541b84b7af5ad12787, type: 2}
+  - {fileID: 2100000, guid: 3b5be74d5bb38db448649cf0bb0d10d9, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -123,5 +123,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   effect: explode
-  value1: 12
+  value1: 20
   value2: 1.5
+  spawnedOnDeath: {fileID: 1725317912486240, guid: b80ad287bd5c70545954f17882bfaa42,
+    type: 3}
+  deathParticle: {fileID: 1845955007268882, guid: c8d2c1dcf0870de4fb78ea3e1cb99c7d,
+    type: 3}

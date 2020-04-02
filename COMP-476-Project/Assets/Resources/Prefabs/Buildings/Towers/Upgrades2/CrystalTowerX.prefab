@@ -57,7 +57,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 6e06b6d0c696f9544b327c597d334766, type: 2}
+  - {fileID: 2100000, guid: 1355618a69d88784498f03c15b4df2ec, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -135,7 +135,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 6e06b6d0c696f9544b327c597d334766, type: 2}
+  - {fileID: 2100000, guid: 1355618a69d88784498f03c15b4df2ec, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -213,7 +213,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 6e06b6d0c696f9544b327c597d334766, type: 2}
+  - {fileID: 2100000, guid: f58614ec72fb2634c88fb50bcbe14f5e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -291,7 +291,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 6e06b6d0c696f9544b327c597d334766, type: 2}
+  - {fileID: 2100000, guid: 1355618a69d88784498f03c15b4df2ec, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -369,7 +369,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 6e06b6d0c696f9544b327c597d334766, type: 2}
+  - {fileID: 2100000, guid: 1355618a69d88784498f03c15b4df2ec, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -447,7 +447,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 6e06b6d0c696f9544b327c597d334766, type: 2}
+  - {fileID: 2100000, guid: f58614ec72fb2634c88fb50bcbe14f5e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -497,7 +497,7 @@ Transform:
   m_GameObject: {fileID: 187918}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1.4, z: 1}
+  m_LocalScale: {x: 1, y: 1.65, z: 1}
   m_Children:
   - {fileID: 409546}
   - {fileID: 458352}
@@ -539,9 +539,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 003d88c9bd2b60447b3c825526b35a9e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  price: 1000
+  price: 750
   tier: 3
   health: 250
+  towerImage: {fileID: 0}
   description: 'Damage :15 -> 35\nAttack cooldown : 0.6s\nRange : 3\nMaximum aim time
     : Instant\nHealth : 100 -> 250\nPrice : 1000'
   upgrade: {fileID: 0}
@@ -563,9 +564,9 @@ MonoBehaviour:
   rotationSpeed: 0
   heightLimit: 0
   inaccuracy: 0
-  projectile: {fileID: 682383995980441880, guid: 954904e99a69b16409a1b73368766f22,
+  projectile: {fileID: 2994405290326968941, guid: 92355e4bb6eea1e4da21f7f4e9d99e00,
     type: 3}
-  projectileSpawnPointOffset: {x: 0, y: 1.68, z: 0}
+  projectileSpawnPointOffset: {x: 0, y: 1.8, z: 0}
   possibleTargets: both
   projectileType: homing
 --- !u!136 &4720514931206164718

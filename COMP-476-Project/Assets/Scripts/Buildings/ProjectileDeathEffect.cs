@@ -8,32 +8,27 @@ public class ProjectileDeathEffect : MonoBehaviour
 
     public string effect;
     public float value1, value2;
+    public GameObject spawnedOnDeath, deathParticle;
 
     public void Run()
     {
-        switch (effect)
+        if (spawnedOnDeath != null)
         {
-            case "explode":
-                Collider[] collidersInRange = Physics.OverlapSphere(transform.position, value2);
-                foreach (Collider col in collidersInRange)
-                {
-                    if (col && col.tag == "Enemy" && (col.gameObject.GetComponent<EnemyAttributes>().GetIsDead() == false))
-                    {
-                        //Debug.Log(value1 * (value2 - (col.gameObject.transform.position - transform.position).magnitude / value2));
-                        //Debug.Log(value1);
-                        //Debug.Log(value2);
-                        //Debug.Log(value2 - (col.gameObject.transform.position - transform.position).magnitude);
-                        //Debug.Log(value2 - (col.gameObject.transform.position - transform.position).magnitude / value2);
-                        //Debug.Log((col.gameObject.transform.position - transform.position).magnitude);
-
-
-                        col.gameObject.GetComponent<EnemyAttributes>().DealDamage(value1 * ((value2- (col.gameObject.transform.position - transform.position).magnitude) / value2));
-                    }
-                }
-                break;
-            default:
-                Debug.LogError("Invalid ProjectileDeathEffect effect variable");
-                break;
+            GameObject explosionInstance = Instantiate(spawnedOnDeath, transform.position, Quaternion.identity);
+            Destroy(explosionInstance, 5);
+        }
+        if (deathParticle != null)
+        {
+            GameObject explosionInstance = Instantiate(spawnedOnDeath, transform.position, Quaternion.identity);
+            Destroy(explosionInstance, 2);
+        }
+        Collider[] collidersInRange = Physics.OverlapSphere(transform.position, value2);
+        foreach (Collider col in collidersInRange)
+        {
+            if (col && col.tag == "Enemy" && (col.gameObject.GetComponent<EnemyAttributes>().GetIsDead() == false))
+            {
+                col.gameObject.GetComponent<EnemyAttributes>().DealDamage(value1 * ((value2- (col.gameObject.transform.position - transform.position).magnitude) / value2));
+            }
         }
     }
 }

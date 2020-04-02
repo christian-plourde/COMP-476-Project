@@ -8,6 +8,8 @@ public class DamageArea : MonoBehaviour
 
     private int scanTimer, cooldownTimer;
 
+    public GameObject explosion;
+
     void Start()
     {
         // Convert from seconds to frames
@@ -38,7 +40,11 @@ public class DamageArea : MonoBehaviour
         {
             if (col && validTarget(col.gameObject) == true)
             {
-                // TODO add animation
+                if (explosion != null)
+                {
+                    GameObject explosionInstance = Instantiate(explosion, col.gameObject.transform.position + new Vector3(0, 0.3f, 0), Quaternion.identity);
+                    Destroy(explosionInstance, 2);
+                }                
                 col.gameObject.GetComponent<EnemyAttributes>().DealDamage(damage);
                 cooldownTimer = 0;
             }
