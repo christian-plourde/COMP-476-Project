@@ -108,7 +108,7 @@ public class WarriorCombatBehavior : MonoBehaviour
         { }
 
 
-        if (!PlayerMovementRef.isDead)
+        if (!PlayerMovementRef.isDead && !PlayerMovementRef.inQuitMenu)
             Controls();
 
         if (attackingSword || kicking)
@@ -266,7 +266,7 @@ public class WarriorCombatBehavior : MonoBehaviour
 
 
         //if (Attacking && Input.GetMouseButtonDown(1) && !ultimateCooldown)
-        if (Attacking && Input.GetKeyDown(KeyCode.Q) && !ultimateCooldown)
+        if (Attacking && Input.GetKeyDown(KeyCode.T) && !ultimateCooldown)
         {
             animator.SetLayerWeight(2,1);
             animator.SetBool("FastAttack1", false);

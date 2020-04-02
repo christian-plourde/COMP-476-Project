@@ -52,15 +52,18 @@ public class BaseIntegrity : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "Enemy")
+        if (other.tag == "Enemy" && !defeated)
         {
             BaseHealth -= other.GetComponent<EnemyAttributes>().damageToBase;
-            UpdateUI();
+            
             if (BaseHealth < 0)
             {
+                defeated = true;
                 BaseHealth = 0;
                 // Call defeat Condition
             }
+            UpdateUI();
+
         }
     }
 }

@@ -38,12 +38,14 @@ public class PlayerMovement : MonoBehaviour
     public bool isDead;
     public string playerClass;
     public bool inBuildMode;
+    public bool inQuitMenu;
     public bool building;
     public bool managingTower;
 
     [HideInInspector]public bool warriorUltimate;
     [Header("References")]
     public GameObject respawnUIPrefab;
+    public GameObject quitMenu;
     GameObject canvas;
 
     public GridSquare currentGridSquare;
@@ -113,19 +115,14 @@ public class PlayerMovement : MonoBehaviour
         transform.rotation = Quaternion.Euler(Vector3.zero);
 
 
-        // respawn test:
-        /*
-        if (isDead && Input.GetKeyDown(KeyCode.R))
-            RespawnPlayer(false);
-            */
-
 
         if (!isDead && Input.GetKeyDown(KeyCode.K))
             DealDamage(25f);
         //set the current grid square
         UpdateGridSquare();
 
-
+        // quit menu 
+        QuitMenu();
 
         
     }
@@ -231,6 +228,45 @@ public class PlayerMovement : MonoBehaviour
         mSpeed = ogSpeed;
     }
 
+    /// <summary>
+    /// Menu To quit back to main menu
+    /// </summary>
+    void QuitMenu()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            bool menuOpen = quitMenu.activeSelf;
+            if (menuOpen) // close it
+            {
+                quitMenu.SetActive(false);
+                controlLock = false;
+                inQuitMenu = false;
+
+            }
+            else // open it
+            {
+                quitMenu.SetActive(true);
+                controlLock = true;
+                inQuitMenu = true;
+                StopWalkingAnim();
+
+                //close any already open menus
+                if (building)
+                {
+                    GameObject gb = GameObject.FindGameObjectWithTag("BuildMenu");
+                    building = false;
+                    Destroy(gb.gameObject);
+                }
+                if (managingTower)
+                {
+                    GameObject gb = GameObject.FindGameObjectWithTag("ManageMenu");
+                    managingTower = false;
+                    Destroy(gb.gameObject);
+                }
+            }
+        }
+    }
+
 
 
     /// <summary>
@@ -284,7 +320,8 @@ public class PlayerMovement : MonoBehaviour
 
     public void RespawnPlayer(bool buyback)
     {
-        controlLock = false;
+        if(!inQuitMenu)
+            controlLock = false;
         isDead = false;
         inBuildMode = true;
         building = false;
