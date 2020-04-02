@@ -83,7 +83,7 @@ public class EnemyAttributes : MonoBehaviour
 
     public void KillEnemy()
     {
-        //player_buffs.ApplyCementSoup();
+        player_buffs.ApplyCementSoup();
 
         animator.SetBool("Dead", true);
         isDead = true;
