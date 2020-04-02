@@ -12,10 +12,17 @@ public class BaseIntegrity : MonoBehaviour
     int maxBaseHealth;
     bool defeated;
 
+    public Transform viewPointOfBase;
+
     [Header("UI References")]
     public Image healthBar;
     public Text integrity;
     public Text healthCount;
+
+    [Header("Menus")]
+    public GameObject defeatMenu;
+    public GameObject victoryMenu;
+    public GameObject quitMenu;
 
     private void Start()
     {
@@ -41,8 +48,10 @@ public class BaseIntegrity : MonoBehaviour
             str = "Weak";
         else if (healthPercentage > 0.1)
             str = "Critical!!";
-        else
+        else if (healthPercentage > 0.0)
             str = "Failing!!!";
+        else
+            str = "Destroyed!!!";
              
 
 
@@ -50,17 +59,96 @@ public class BaseIntegrity : MonoBehaviour
     }
 
 
+    void PlayerDefeat()
+    {
+        // close all menus
+        if (quitMenu.activeSelf)
+            quitMenu.SetActive(false);
+
+        GameObject gb = GameObject.FindGameObjectWithTag("BuildMenu");
+        if (gb!=null)
+        {
+            Destroy(gb.gameObject);
+        }
+        gb = GameObject.FindGameObjectWithTag("ManageMenu");
+        if (gb!=null)
+        {
+            Destroy(gb.gameObject);
+        }
+        gb = GameObject.FindGameObjectWithTag("RespawnMenu");
+        if (gb != null)
+        {
+            Destroy(gb.gameObject);
+        }
+
+
+
+        defeatMenu.SetActive(true);
+        GameObject Player = GameObject.FindGameObjectWithTag("Player");
+        Player.GetComponent<PlayerMovement>().controlLock = true;
+        Player.GetComponent<PlayerMovement>().invincible = true;
+        Player.GetComponent<PlayerMovement>().defeated = true;
+
+        SFXManager.instance.Play("Thunder");
+
+        // switch camera target to base
+        Camera.main.GetComponent<CameraBehavior>().Target = viewPointOfBase;
+    }
+
+    public void CheckVictory()
+    {
+        if (BaseHealth > 0)
+            PlayerVictory();
+    }
+
+    void PlayerVictory()
+    {
+        // close all menus
+        if (quitMenu.activeSelf)
+            quitMenu.SetActive(false);
+
+        GameObject gb = GameObject.FindGameObjectWithTag("BuildMenu");
+        if (gb != null)
+        {
+            Destroy(gb.gameObject);
+        }
+        gb = GameObject.FindGameObjectWithTag("ManageMenu");
+        if (gb != null)
+        {
+            Destroy(gb.gameObject);
+        }
+        gb = GameObject.FindGameObjectWithTag("RespawnMenu");
+        if (gb != null)
+        {
+            Destroy(gb.gameObject);
+        }
+
+        GameObject Player = GameObject.FindGameObjectWithTag("Player");
+        Player.GetComponent<PlayerMovement>().controlLock = true;
+        Player.GetComponent<PlayerMovement>().invincible = true;
+        // so that they cant move, test if this works
+        Player.GetComponent<PlayerMovement>().defeated = true;
+        
+        victoryMenu.SetActive(true);
+        SFXManager.instance.Play("WavePrep");
+    }
+
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "Enemy")
+        if (other.tag == "Enemy" && !defeated)
         {
             BaseHealth -= other.GetComponent<EnemyAttributes>().damageToBase;
-            UpdateUI();
+            
             if (BaseHealth < 0)
             {
+                defeated = true;
                 BaseHealth = 0;
                 // Call defeat Condition
+                PlayerDefeat();
+                
             }
+            UpdateUI();
+
         }
     }
 }

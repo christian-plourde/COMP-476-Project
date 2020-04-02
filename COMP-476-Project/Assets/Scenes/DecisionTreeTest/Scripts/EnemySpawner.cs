@@ -92,6 +92,7 @@ public class WaveManager
     }
 }
 
+
 public class EnemySpawner : MonoBehaviour
 {
     /// <summary>
@@ -114,6 +115,8 @@ public class EnemySpawner : MonoBehaviour
     public Text wave_ui_text;
     private PlayerActionTracker player_actions; //the player action tracker, when a wave ends, we should call predict on its
                                                 //ngram
+
+    public GameObject BaseRef;
 
     private GameObject GetCurrentEnemy()
     {
@@ -196,6 +199,8 @@ public class EnemySpawner : MonoBehaviour
         {
             CancelInvoke("InitializeEnemies");
             //Debug.Log("The game has ended.");
+            BaseRef.GetComponent<BaseIntegrity>().CheckVictory();
+
         }
         
     }

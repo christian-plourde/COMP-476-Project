@@ -800,10 +800,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 20
   damage: 7
-  damageToBase: 30
+  damageToBase: 35
   isDead: 0
   heightOffset: 0
-  goldDrop: 20
+  goldDrop: 40
   HealthUI: {fileID: 7125281799168350644}
   healthDropPrefab: {fileID: 2698641719317733580, guid: d8e5e7034a69a5747b7b675c7622bd8a,
     type: 3}

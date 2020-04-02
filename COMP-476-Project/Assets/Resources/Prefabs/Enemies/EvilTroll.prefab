@@ -25655,7 +25655,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 100
   damage: 20
-  damageToBase: 100
+  damageToBase: 135
   isDead: 0
   heightOffset: 0
   goldDrop: 150
