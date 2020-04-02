@@ -41,6 +41,7 @@ public class PlayerMovement : MonoBehaviour
     public bool inQuitMenu;
     public bool building;
     public bool managingTower;
+    public bool defeated;
 
     [HideInInspector]public bool warriorUltimate;
     [Header("References")]
@@ -233,7 +234,7 @@ public class PlayerMovement : MonoBehaviour
     /// </summary>
     void QuitMenu()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape) && !defeated)
         {
             bool menuOpen = quitMenu.activeSelf;
             if (menuOpen) // close it

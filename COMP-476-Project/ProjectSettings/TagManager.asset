@@ -20,6 +20,7 @@ TagManager:
   - PlayerBase
   - NoNode
   - SFXManager
+  - QuitMenu
   layers:
   - Default
   - TransparentFX

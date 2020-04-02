@@ -108,7 +108,7 @@ public class WarriorCombatBehavior : MonoBehaviour
         { }
 
 
-        if (!PlayerMovementRef.isDead && !PlayerMovementRef.inQuitMenu)
+        if (!PlayerMovementRef.isDead && !PlayerMovementRef.inQuitMenu && !PlayerMovementRef.defeated)
             Controls();
 
         if (attackingSword || kicking)

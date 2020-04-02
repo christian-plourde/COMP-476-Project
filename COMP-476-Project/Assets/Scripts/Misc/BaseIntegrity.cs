@@ -12,10 +12,16 @@ public class BaseIntegrity : MonoBehaviour
     int maxBaseHealth;
     bool defeated;
 
+    public Transform viewPointOfBase;
+
     [Header("UI References")]
     public Image healthBar;
     public Text integrity;
     public Text healthCount;
+
+    [Header("DefeatMenu")]
+    public GameObject defeatMenu;
+    public GameObject quitMenu;
 
     private void Start()
     {
@@ -41,14 +47,50 @@ public class BaseIntegrity : MonoBehaviour
             str = "Weak";
         else if (healthPercentage > 0.1)
             str = "Critical!!";
-        else
+        else if (healthPercentage > 0.0)
             str = "Failing!!!";
+        else
+            str = "Destroyed!!!";
              
 
 
             integrity.text = "Base Integrity: "+str;
     }
 
+
+    void PlayerDefeat()
+    {
+        // close all menus
+        if (quitMenu.activeSelf)
+            quitMenu.SetActive(false);
+
+        GameObject gb = GameObject.FindGameObjectWithTag("BuildMenu");
+        if (gb!=null)
+        {
+            Destroy(gb.gameObject);
+        }
+        gb = GameObject.FindGameObjectWithTag("ManageMenu");
+        if (gb!=null)
+        {
+            Destroy(gb.gameObject);
+        }
+        gb = GameObject.FindGameObjectWithTag("RespawnMenu");
+        if (gb != null)
+        {
+            Destroy(gb.gameObject);
+        }
+
+
+
+        defeatMenu.SetActive(true);
+        GameObject Player = GameObject.FindGameObjectWithTag("Player");
+        Player.GetComponent<PlayerMovement>().controlLock = true;
+        Player.GetComponent<PlayerMovement>().invincible = true;
+        Player.GetComponent<PlayerMovement>().defeated = true;
+
+        // switch camera target to base
+        Camera.main.GetComponent<CameraBehavior>().Target = viewPointOfBase;
+    }
 
     private void OnTriggerEnter(Collider other)
     {
@@ -61,6 +103,8 @@ public class BaseIntegrity : MonoBehaviour
                 defeated = true;
                 BaseHealth = 0;
                 // Call defeat Condition
+                PlayerDefeat();
+                
             }
             UpdateUI();
 
