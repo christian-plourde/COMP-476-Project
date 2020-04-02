@@ -243,6 +243,9 @@ public class PlayerMovement : MonoBehaviour
                 controlLock = false;
                 inQuitMenu = false;
 
+                building = false;
+                managingTower = false;
+
             }
             else // open it
             {

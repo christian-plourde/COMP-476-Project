@@ -2919,7 +2919,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 35
   damage: 3
-  damageToBase: 25
+  damageToBase: 30
   isDead: 0
   heightOffset: 0.05
   goldDrop: 20

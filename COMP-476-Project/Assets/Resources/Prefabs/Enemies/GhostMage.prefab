@@ -30928,11 +30928,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 300
-  damage: 45
-  damageToBase: 300
+  damage: 35
+  damageToBase: 150
   isDead: 0
   heightOffset: 0.1
-  goldDrop: 300
+  goldDrop: 200
   HealthUI: {fileID: 3928796927610369947}
   healthDropPrefab: {fileID: 0}
   healthDropRate: 0

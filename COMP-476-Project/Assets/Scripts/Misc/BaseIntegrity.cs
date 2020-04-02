@@ -19,8 +19,9 @@ public class BaseIntegrity : MonoBehaviour
     public Text integrity;
     public Text healthCount;
 
-    [Header("DefeatMenu")]
+    [Header("Menus")]
     public GameObject defeatMenu;
+    public GameObject victoryMenu;
     public GameObject quitMenu;
 
     private void Start()
@@ -90,6 +91,43 @@ public class BaseIntegrity : MonoBehaviour
 
         // switch camera target to base
         Camera.main.GetComponent<CameraBehavior>().Target = viewPointOfBase;
+    }
+
+    public void CheckVictory()
+    {
+        if (BaseHealth > 0)
+            PlayerVictory();
+    }
+
+    void PlayerVictory()
+    {
+        // close all menus
+        if (quitMenu.activeSelf)
+            quitMenu.SetActive(false);
+
+        GameObject gb = GameObject.FindGameObjectWithTag("BuildMenu");
+        if (gb != null)
+        {
+            Destroy(gb.gameObject);
+        }
+        gb = GameObject.FindGameObjectWithTag("ManageMenu");
+        if (gb != null)
+        {
+            Destroy(gb.gameObject);
+        }
+        gb = GameObject.FindGameObjectWithTag("RespawnMenu");
+        if (gb != null)
+        {
+            Destroy(gb.gameObject);
+        }
+
+        GameObject Player = GameObject.FindGameObjectWithTag("Player");
+        Player.GetComponent<PlayerMovement>().controlLock = true;
+        Player.GetComponent<PlayerMovement>().invincible = true;
+        // so that they cant move, test if this works
+        Player.GetComponent<PlayerMovement>().defeated = true;
+        
+        victoryMenu.SetActive(true);
     }
 
     private void OnTriggerEnter(Collider other)
