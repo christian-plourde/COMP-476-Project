@@ -89,6 +89,8 @@ public class BaseIntegrity : MonoBehaviour
         Player.GetComponent<PlayerMovement>().invincible = true;
         Player.GetComponent<PlayerMovement>().defeated = true;
 
+        SFXManager.instance.Play("Thunder");
+
         // switch camera target to base
         Camera.main.GetComponent<CameraBehavior>().Target = viewPointOfBase;
     }
@@ -128,6 +130,7 @@ public class BaseIntegrity : MonoBehaviour
         Player.GetComponent<PlayerMovement>().defeated = true;
         
         victoryMenu.SetActive(true);
+        SFXManager.instance.Play("WavePrep");
     }
 
     private void OnTriggerEnter(Collider other)

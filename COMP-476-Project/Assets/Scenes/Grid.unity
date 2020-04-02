@@ -21627,7 +21627,7 @@ MonoBehaviour:
   integrity: {fileID: 1393041764}
   healthCount: {fileID: 1657094497}
   defeatMenu: {fileID: 2081944352}
-  victoryMenu: {fileID: 0}
+  victoryMenu: {fileID: 926101367}
   quitMenu: {fileID: 759254064}
 --- !u!65 &1254286721
 BoxCollider:
