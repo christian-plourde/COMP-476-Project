@@ -289,7 +289,7 @@ public class GenerateGrid : Subject
             playerScriptRef = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>();
 
         if (Input.GetMouseButtonDown(0) && playerScriptRef.inBuildMode && !playerScriptRef.building && !playerScriptRef.managingTower 
-            && !playerScriptRef.isDead && !playerScriptRef.inQuitMenu)
+            && !playerScriptRef.isDead && !playerScriptRef.inQuitMenu && !playerScriptRef.defeated)
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
