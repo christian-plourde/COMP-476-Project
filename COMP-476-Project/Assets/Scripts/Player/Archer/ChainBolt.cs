@@ -17,18 +17,13 @@ public class ChainBolt : MonoBehaviour
         scaleFactor = GameObject.FindGameObjectWithTag("Player").transform.localScale.x;
         transform.localScale = new Vector3(scaleFactor, scaleFactor, scaleFactor);
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
+    
 
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.collider.tag != "Player")
         {
+            /*
             GameObject gb;
             if (collision.collider.tag == "Map")
                 gb = Instantiate(staticArrowPrefab, transform.position, transform.rotation);
@@ -40,6 +35,7 @@ public class ChainBolt : MonoBehaviour
 
             // for scale adjustment on static arrows
             gb.transform.localScale = new Vector3(scaleFactor, scaleFactor, scaleFactor);
+            */
 
             // damage if its an enemy
             if (collision.collider.tag == "Enemy")

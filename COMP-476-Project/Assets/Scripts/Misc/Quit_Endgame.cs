@@ -27,6 +27,11 @@ public class Quit_Endgame : MonoBehaviour
         if (gb != null)
             Destroy(gb);
 
+
+        gb = GameObject.FindGameObjectWithTag("MusicPlayer");
+        if (gb != null)
+            Destroy(gb);
+
         SceneManager.LoadScene("MainMenu");
 
     }

@@ -6,6 +6,9 @@ using UnityEngine.SceneManagement;
 
 public class MenuButtons : MonoBehaviour
 {
+    public GameObject AllButtonsParent;
+    public GameObject ControlsParent;
+
     public void StartGame()
     {
         // load player class selecter menu
@@ -18,9 +21,16 @@ public class MenuButtons : MonoBehaviour
         //load credits scene
     }
 
-    public void Options()
+    public void Controls()
     {
+        AllButtonsParent.SetActive(false);
+        ControlsParent.SetActive(true);
+    }
 
+    public void BackControls()
+    {
+        AllButtonsParent.SetActive(true);
+        ControlsParent.SetActive(false);
     }
 
 

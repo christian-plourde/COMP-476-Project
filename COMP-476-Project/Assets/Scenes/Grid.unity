@@ -8181,6 +8181,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 437391847, guid: 20763c144caa2dd409c228bbf63db3e1, type: 3}
+      propertyPath: dmg
+      value: 20
+      objectReference: {fileID: 0}
     - target: {fileID: 1684717825, guid: 20763c144caa2dd409c228bbf63db3e1, type: 3}
       propertyPath: health
       value: 
@@ -8296,6 +8300,11 @@ PrefabInstance:
         type: 3}
       propertyPath: howLongUltimateCooldown
       value: 55
+      objectReference: {fileID: 0}
+    - target: {fileID: 7616355016533059369, guid: 20763c144caa2dd409c228bbf63db3e1,
+        type: 3}
+      propertyPath: baseDMG
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 20763c144caa2dd409c228bbf63db3e1, type: 3}
