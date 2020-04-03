@@ -63,13 +63,13 @@ public class CameraBehavior : MonoBehaviour
         // move on z axis
         if (Input.GetKey(KeyCode.RightArrow))
         {
-            if(zOffset<-2)
-                zOffset += 0.2f;
+            if(zOffset<-0.1)
+                zOffset += 0.1f;
         }
         if (Input.GetKey(KeyCode.LeftArrow))
         {
-            if(zOffset>-10)
-                zOffset -= 0.2f;
+            if(zOffset>-4)
+                zOffset -= 0.1f;
         }
     }
 
@@ -77,28 +77,27 @@ public class CameraBehavior : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.KeypadPlus))
         {
-            if(height>2)
-                height -= 0.2f;
-            if(xOffset>2)
-                xOffset -= 0.2f;
-            if(zOffset<-2)
-                zOffset += 0.2f;
+            if(height>0.5)
+                height -= 0.1f;
+            if(xOffset>0.5)
+                xOffset -= 0.1f;
+            if(zOffset<-0.5)
+                zOffset += 0.1f;
         }
 
         if (Input.GetKey(KeyCode.KeypadMinus))
         {
-            if(height<15)
-                height += 0.2f;
-            if(xOffset<15)
-                xOffset += 0.2f;
-            if(zOffset>-15)
-                zOffset -= 0.2f;
+            if(height<3)
+                height += 0.1f;
+            if(xOffset<3)
+                xOffset += 0.1f;
+            if(zOffset>-3)
+                zOffset -= 0.1f;
         }
 
         if (Input.GetKey(KeyCode.R))
         {
             //Reset Camera
-            Debug.Log("Resetting Camera Offsets to Default");
             height = yOldOffset;
             xOffset = xOldOffset;
             zOffset = zOldOffset;

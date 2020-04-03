@@ -2847,14 +2847,38 @@ MonoBehaviour:
     pitch: 1
     loop: 0
     source: {fileID: 0}
-  - name: Gameplay
+  - name: Gameplay1
     clip: {fileID: 8300000, guid: 919d1723cc538434ea7b897d08ae3dd2, type: 3}
     volume: 0.257
     pitch: 1
     loop: 0
     source: {fileID: 0}
-  - name: 
-    clip: {fileID: 0}
+  - name: Gameplay2
+    clip: {fileID: 8300000, guid: 571e8e7c90ff99c49adf3e0df385bcaf, type: 3}
+    volume: 0.257
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: Gameplay3
+    clip: {fileID: 8300000, guid: cd122d6152999d14d9f5140fbe67af64, type: 3}
+    volume: 0.257
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: Gameplay4
+    clip: {fileID: 8300000, guid: bb862d11364fbed48ab51c88483da321, type: 3}
+    volume: 0.257
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: Gameplay5
+    clip: {fileID: 8300000, guid: 789ee87423c2d634d8f93ca24dbf6257, type: 3}
+    volume: 0.257
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: Gameplay6
+    clip: {fileID: 8300000, guid: 789ee87423c2d634d8f93ca24dbf6257, type: 3}
     volume: 0.257
     pitch: 1
     loop: 0
@@ -3369,7 +3393,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   curPlayingAudio: 
   timer: 0
-  stopTime: 0
+  curLength: 0
 --- !u!4 &1444580325
 Transform:
   m_ObjectHideFlags: 0
