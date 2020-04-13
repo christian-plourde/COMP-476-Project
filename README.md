@@ -12,6 +12,7 @@ Samer Yazbeck 40049573 <br />
 Valentin Perrot 27321775 <br />
 
 
-Walkthrough Demo Video link : 
-[![Watch the video](https://img.youtube.com/vi/q0sTDaf-YjY/maxresdefault.jpg)](https://youtu.be/q0sTDaf-YjY)
+Walkthrough Demo Video link :  <br />
+
+[![Watch the video](https://img.youtube.com/vi/q0sTDaf-YjY/1.jpg)](https://youtu.be/q0sTDaf-YjY)
 
