@@ -13,4 +13,5 @@ Valentin Perrot 27321775 <br />
 
 
 Walkthrough Demo Video link : 
-https://youtu.be/q0sTDaf-YjY
+[![Watch the video](https://img.youtube.com/vi/3NI3LvriNbM/maxresdefault.jpg)](https://youtu.be/q0sTDaf-YjY)
+
