@@ -1,7 +1,7 @@
 COMP 476 Project
 -------------------------------
 Towerborn <br />
-Aggressive Pigeon Studios Game Design Document
+Aggressive Pigeon Studios
 
 
 					
